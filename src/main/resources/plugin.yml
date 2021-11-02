@@ -1,0 +1,16 @@
+name: KDFramework
+version: '${project.version}'
+main: io.github.deechtezeeuw.kdframework.KDFramework
+api-version: 1.17
+authors: [ DeZeeuw ]
+description: Kingdom framework plugin
+commands:
+  kingdom:
+    usage: /<command>
+    description: Command to use framework commands
+    aliases:
+      - k
+permissions:
+  k.reload:
+    default: op
+    description: Used to reload the configuration
