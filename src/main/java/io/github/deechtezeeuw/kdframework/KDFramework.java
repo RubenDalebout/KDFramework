@@ -2,6 +2,7 @@ package io.github.deechtezeeuw.kdframework;
 
 import io.github.deechtezeeuw.kdframework.Commands.KingdomCommand;
 import io.github.deechtezeeuw.kdframework.Configuraties.Configuratie;
+import io.github.deechtezeeuw.kdframework.Events.PlayerEvents;
 import io.github.deechtezeeuw.kdframework.SQL.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -59,6 +60,7 @@ public final class KDFramework extends JavaPlugin {
         // Check if connected
         if (SQL.isConnected()) {
             Bukkit.getLogger().info("Database is connected!");
+            SQLInstall.createTables();
         }
 
         // Save config in variable
@@ -66,6 +68,9 @@ public final class KDFramework extends JavaPlugin {
 
          // Register commands
         this.getCommand("kingdom").setExecutor(new KingdomCommand(this));
+
+        // Register events
+        this.getServer().getPluginManager().registerEvents(new PlayerEvents(this), this);
     }
 
     @Override

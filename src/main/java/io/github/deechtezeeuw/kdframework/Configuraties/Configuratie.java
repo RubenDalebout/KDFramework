@@ -11,6 +11,9 @@ public class Configuratie {
 
     // Configuration file general
     private String generalPrefix;
+    private String generalOnFirst;
+    private String generalOnJoin;
+    private String generalOnQuit;
     private String generalCReload;
     private String generalNoPerms;
 
@@ -22,6 +25,18 @@ public class Configuratie {
     // get Configuration file General
     public String getGeneralPrefix() {
         return this.generalPrefix + " &f";
+    }
+
+    public String getGeneralOnFirst() {
+        return this.generalOnFirst;
+    }
+
+    public String getGeneralOnJoin() {
+        return this.generalOnJoin;
+    }
+
+    public String getGeneralOnQuit() {
+        return this.generalOnQuit;
     }
 
     public String getGeneralCReload() {
@@ -36,6 +51,9 @@ public class Configuratie {
 
         // Configuration file general
         this.generalPrefix = plugin.getConfig().getString("general.settings.prefix");
+        this.generalOnFirst = plugin.getConfig().getString("general.messages.on-first");
+        this.generalOnJoin = plugin.getConfig().getString("general.messages.on-join");
+        this.generalOnQuit = plugin.getConfig().getString("general.messages.on-quit");
         this.generalCReload = plugin.getConfig().getString("general.messages.config-reload");
         this.generalNoPerms = plugin.getConfig().getString("general.messages.no-permission");
     }

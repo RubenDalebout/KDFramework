@@ -11,5 +11,8 @@ general:
   settings:
     prefix: '&7&l(&2&lKD&7&l)'
   messages:
+    on-first: '&7&l(&2&l+&7&l) &2&l%player_displayname% &ais voor het eerst op de server!'
+    on-join: '&7&l(&2&l+&7&l) &2&l%player_displayname%'
+    on-quit: '&7&l(&4&l-&7&l) &2&l%player_displayname%'
     config-reload: '&aSuccesvol de &2&lConfiguratie &aherladen!'
     no-permission: '&cJe hebt hiervoor geen permissie'
