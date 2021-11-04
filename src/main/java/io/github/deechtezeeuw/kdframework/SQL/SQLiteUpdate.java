@@ -15,6 +15,37 @@ public class SQLiteUpdate {
     }
 
     // Land update
+    public void update_land(String Kingdom, String Column, String Value) {
+        String sql = null;
+        if (Column.equalsIgnoreCase("prefix")) {
+            sql = "UPDATE lands SET Prefix = ? WHERE Name = ?";
+        }
+        if (Column.equalsIgnoreCase("invite")) {
+            sql = "UPDATE lands SET Invite = ? WHERE Name = ?";
+        }
+        if (Column.equalsIgnoreCase("maximum")) {
+            sql = "UPDATE lands SET Maximum = ? WHERE Name = ?";
+        }
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+
+            // set the corresponding param
+            if (Column.equalsIgnoreCase("prefix")) {
+                pstmt.setString(1, Value);
+            }
+            if (Column.equalsIgnoreCase("invite")) {
+                pstmt.setBoolean(1, Value.equalsIgnoreCase("true") ? true : false);
+            }
+            if (Column.equalsIgnoreCase("maximum")) {
+                pstmt.setInt(1, Integer.parseInt(Value));
+            }
+            pstmt.setString(2, Kingdom);
+            // update
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     // Player update
     public void update_player(Player player) {

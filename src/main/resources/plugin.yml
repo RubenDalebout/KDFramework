@@ -2,7 +2,7 @@ name: KDFramework
 version: '${project.version}'
 main: io.github.deechtezeeuw.kdframework.KDFramework
 api-version: 1.17
-authors: [ DeZeeuw ]
+authors: [ DeZeeuw, 5lutty ]
 description: Kingdom framework plugin
 commands:
   kingdom:
