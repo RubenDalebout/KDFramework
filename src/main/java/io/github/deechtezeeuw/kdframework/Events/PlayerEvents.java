@@ -1,11 +1,15 @@
 package io.github.deechtezeeuw.kdframework.Events;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -51,5 +55,13 @@ public class PlayerEvents implements Listener {
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player,
                 ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralOnQuit())));
+    }
+
+    @EventHandler
+    public void AsyncChatEvent(AsyncPlayerChatEvent e) {
+        Player player = e.getPlayer();
+        Speler speler = plugin.SQLSelect.player_get_by_name(player.getName());
+        Land land = plugin.SQLSelect.land_get_by_player(speler);
+        e.setFormat(ChatColor.translateAlternateColorCodes('&',land.getPrefix()+" &a%s &a&l> &f%s"));
     }
 }

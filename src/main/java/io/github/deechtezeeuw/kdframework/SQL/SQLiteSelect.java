@@ -124,6 +124,35 @@ public class SQLiteSelect {
         return Spelers;
     }
 
+    public Land land_get_by_player(Speler speler) {
+        Land land = null;
+
+        String sql = "SELECT * "
+                + "FROM lands WHERE UUID == ?";
+
+        if (speler.getLand() != null) {
+            try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+                // set the value
+                pstmt.setString(1, speler.getLand().toString());
+                ResultSet results = pstmt.executeQuery();
+
+                while (results.next()) {
+                    land = new Land(
+                            UUID.fromString(results.getString("UUID")),
+                            results.getString("Name"),
+                            results.getString("Prefix"),
+                            results.getBoolean("Invite"),
+                            results.getInt("Maximum"),
+                            plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))));
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return land;
+    }
+
     // Player selects
     public boolean player_exists(Player player) {
         String sql = "SELECT * "
