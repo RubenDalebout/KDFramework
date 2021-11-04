@@ -106,6 +106,13 @@ public class EditLand {
                             plugin.Config.getGeneralPrefix() + "&cJe maximum is al &4&l"+args[4]+"&c!"));
                     return;
                 }
+
+                // Check if its new number is not lower then the current members
+                if (Integer.parseInt(args[4]) < land.getLeden().size()) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cJe nieuwe maximum moet gelijk of hoger zijn dan je leden aantal, je hebt nu &4&l"+land.getLeden().size()+" &cleden!"));
+                    return;
+                }
             }
         } else {
             // Wrong argumentation

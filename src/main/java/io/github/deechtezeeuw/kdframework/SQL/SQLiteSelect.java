@@ -56,7 +56,8 @@ public class SQLiteSelect {
                         results.getString("Name"),
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
-                        results.getInt("Maximum"));
+                        results.getInt("Maximum"),
+                        plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))));
                 lands.add(land);
             }
         } catch (SQLException e) {
@@ -82,12 +83,45 @@ public class SQLiteSelect {
                         results.getString("Name"),
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
-                        results.getInt("Maximum"));
+                        results.getInt("Maximum"),
+                        plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return land;
+    }
+
+    public List<Speler> land_leden(UUID land) {
+        List<Speler> Spelers = new ArrayList<>();
+
+        String sql = "SELECT * "
+                + "FROM players WHERE Land == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, land.toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            while(results.next()) {
+                UUID uuid = UUID.fromString(results.getString("UUID"));
+                String name = results.getString("Name");
+                UUID landid = null;
+                if (results.getString("Land") != null) {
+                    landid = UUID.fromString(results.getString("Land"));
+                }
+                UUID rank = null;
+                if (results.getString("Rank") != null) {
+                    rank = UUID.fromString(results.getString("Rank"));
+                }
+
+                Spelers.add(new Speler(uuid,name,landid,rank));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return Spelers;
     }
 
     // Player selects
@@ -146,12 +180,18 @@ public class SQLiteSelect {
             ResultSet results  = pstmt.executeQuery();
 
             while (results.next()) {
-                speler = new Speler(
-                        UUID.fromString(results.getString("UUID")),
-                        results.getString("Name"),
-                        UUID.fromString(results.getString("Land")),
-                        UUID.fromString(results.getString("Rank"))
-                );
+                UUID uuid = UUID.fromString(results.getString("UUID"));
+                String name = results.getString("Name");
+                UUID land = null;
+                if (results.getString("Land") != null) {
+                    land = UUID.fromString(results.getString("Land"));
+                }
+                UUID rank = null;
+                if (results.getString("Rank") != null) {
+                    rank = UUID.fromString(results.getString("Rank"));
+                }
+
+                speler = new Speler(uuid,name,land,rank);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

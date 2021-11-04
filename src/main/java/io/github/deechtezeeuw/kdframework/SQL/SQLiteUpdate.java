@@ -69,7 +69,11 @@ public class SQLiteUpdate {
         try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
 
             // set the corresponding param
-            pstmt.setString(1, Land.toString());
+            if (Land != null) {
+                pstmt.setString(1, Land.toString());
+            } else {
+                pstmt.setString(1, null);
+            }
             pstmt.setString(2, uuid.toString());
             // update
             pstmt.executeUpdate();

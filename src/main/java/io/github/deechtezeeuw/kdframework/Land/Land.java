@@ -1,5 +1,8 @@
 package io.github.deechtezeeuw.kdframework.Land;
 
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
+
+import java.util.List;
 import java.util.UUID;
 
 public class Land {
@@ -8,12 +11,15 @@ public class Land {
     private String prefix;
     private Boolean invite;
     private Integer maximum;
+    private List<Speler> leden;
 
-    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum) {
+    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, List<Speler> Land_Leden) {
+        this.uuid = Land_ID;
         this.name = Land_Name;
         this.prefix = Land_Prefix;
         this.invite = Land_Invite;
         this.maximum = Land_Maximum;
+        this.leden = Land_Leden;
     }
 
     public UUID getUuid() {
@@ -34,5 +40,9 @@ public class Land {
 
     public Integer getMaximum() {
         return this.maximum;
+    }
+
+    public List<Speler> getLeden() {
+        return this.leden;
     }
 }

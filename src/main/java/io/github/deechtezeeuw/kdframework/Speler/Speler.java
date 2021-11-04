@@ -16,18 +16,18 @@ public class Speler {
     }
 
     public UUID getUuid() {
-        return uuid;
+        return this.uuid;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public UUID getLand() {
-        return land;
+        return this.land;
     }
 
     public UUID getRank() {
-        return rank;
+        return this.rank;
     }
 }

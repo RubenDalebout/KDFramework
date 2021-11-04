@@ -12,7 +12,7 @@ public class CreateLand {
 
     public CreateLand(KDFramework plugin, CommandSender sender, String KDName) {
         this.plugin = plugin;
-        land = new Land(UUID.randomUUID(),KDName, "&7[&f"+KDName+"&7]", true, 25);
+        land = new Land(UUID.randomUUID(),KDName, "&7[&f"+KDName+"&7]", true, 25, null);
 
         create_land(sender);
     }

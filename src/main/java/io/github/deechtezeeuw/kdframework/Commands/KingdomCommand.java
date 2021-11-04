@@ -119,6 +119,8 @@ public class KingdomCommand implements CommandExecutor {
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 "&aMaximum: &2&l"+land.getMaximum()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                "&aLeden: &2&l"+land.getLeden().size()+"&a."));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 "&7&l(&2&l------------ "+plugin.Config.getGeneralPrefix()+"&a------------&7&l)"));
                                         return true;
                                     } else {

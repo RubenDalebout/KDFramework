@@ -57,21 +57,49 @@ public class SetLand {
         // User going into new kingdom
         if (!args[3].equalsIgnoreCase("none")) {
             Land land = plugin.SQLSelect.land_get_by_name(args[3]);
-            if (land.getUuid().equals(speler.getLand())) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&4&l"+speler.getName()+" &czit al in &4&l"+land.getName()+"&c!"));
-                return;
+            // Check if user is in an kingdom
+            if (speler.getLand() != null) {
+                // Check if user is already into that kingdom
+                if (land.getUuid().equals(speler.getLand())) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&4&l" + speler.getName() + " &czit al in &4&l" + land.getName() + "&c!"));
+                    return;
+                }
             }
 
             // Update user kingdom
             plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aSuccesvol &2&l"+speler.getName()+" &ain het land &2&l"+land.getName()+ " &agezet!"));
+
+            // Check if user is online to send him the message
+            if (Bukkit.getPlayer(speler.getUuid()) != null) {
+                Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&aJe bent in het land &2&l"+land.getName()+" &agezet!"));
+            }
         }
 
         // User going into none
         if (args[3].equalsIgnoreCase("none")) {
             Land land = null;
+
+            // Check if user is not in a land
+            if (speler.getLand() == null) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&4&l" + speler.getName() + " &czit al in &4&lgeen kingdom&c!"));
+                return;
+            }
+
+            // Update user kingdom
+            plugin.SQLUpdate.update_player_land(speler.getUuid(), null);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aSuccesvol &2&l"+speler.getName()+" &auit zijn land gezet."));
+
+            // Check if user is online to send him the message
+            if (Bukkit.getPlayer(speler.getUuid()) != null) {
+                Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&aJe bent uit je land gezet!"));
+            }
         }
 
         return;

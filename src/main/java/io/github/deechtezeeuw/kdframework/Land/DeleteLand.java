@@ -1,6 +1,7 @@
 package io.github.deechtezeeuw.kdframework.Land;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
@@ -20,7 +21,11 @@ public class DeleteLand {
         // Check if clan exists
         if (plugin.SQLSelect.land_exists(KDName)) {
             // Land exists
-            plugin.SQLDelete.land_delete(KDName);
+            Land land = plugin.SQLSelect.land_get_by_name(KDName);
+            for (Speler speler : land.getLeden()) {
+                plugin.SQLUpdate.update_player_land(speler.getUuid(), null);
+            }
+            plugin.SQLDelete.land_delete(land.getName());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aHet land &2&l"+KDName+" &ais verwijderd!"));
             return;
