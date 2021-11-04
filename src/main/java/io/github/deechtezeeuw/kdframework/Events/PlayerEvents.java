@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -57,11 +58,17 @@ public class PlayerEvents implements Listener {
                         plugin.Config.getGeneralOnQuit())));
     }
 
-    @EventHandler
-    public void AsyncChatEvent(AsyncPlayerChatEvent e) {
-        Player player = e.getPlayer();
-        Speler speler = plugin.SQLSelect.player_get_by_name(player.getName());
-        Land land = plugin.SQLSelect.land_get_by_player(speler);
-        e.setFormat(ChatColor.translateAlternateColorCodes('&',land.getPrefix()+" &a%s &a&l> &f%s"));
+    @EventHandler(priority = EventPriority.LOW)
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        Player eventPlayer = event.getPlayer();
+        Speler speler = plugin.SQLSelect.player_get_by_name(eventPlayer.getName());
+
+        // If not kingdom member
+        if (speler.getLand()!= null) {
+            Land land = plugin.SQLSelect.land_get_by_player(speler);
+            event.setFormat(ChatColor.translateAlternateColorCodes('&',land.getPrefix()+"[rank] &a%s &a&l> &f%s"));
+        } else {
+            event.setFormat(ChatColor.translateAlternateColorCodes('&',"&7[&cLand-loos&7] &a%s &a&l> &f%s"));
+        }
     }
 }

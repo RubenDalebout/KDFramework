@@ -65,6 +65,12 @@ public class SetLand {
                             plugin.Config.getGeneralPrefix() + "&4&l" + speler.getName() + " &czit al in &4&l" + land.getName() + "&c!"));
                     return;
                 }
+                // Check if land is full
+                if (land.getLeden().size() >= land.getMaximum()) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cFout! &4&l"+land.getName()+" &czit vol!"));
+                    return;
+                }
             }
 
             // Update user kingdom
