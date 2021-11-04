@@ -5,6 +5,8 @@ import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
 import io.github.deechtezeeuw.kdframework.Land.EditLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Set.SetLand;
+import io.github.deechtezeeuw.kdframework.Set.SetRank;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -183,6 +185,40 @@ public class KingdomCommand implements CommandExecutor {
                     plugin.Config.reloadVariables(sender);
                 } else {
                     plugin.Config.noPermission(sender);
+                }
+            }
+
+            // Set
+            if (args[0].equalsIgnoreCase("set")) {
+                // Check if user has permission to do set
+                if (sender.hasPermission("k.set")) {
+                    // Check if it has more then 2 argument
+                    if (args.length >= 2) {
+                        // Check if its set land
+                        if (args[1].equalsIgnoreCase("land")) {
+                            new SetLand(plugin, sender, label, args);
+                            return true;
+                        }
+
+                        // Check if its set rank
+                        if (args[1].equalsIgnoreCase("rank")) {
+                            new SetRank();
+                            return true;
+                        }
+                        // arg 0 is set
+                        // arg 1 is land / rank
+                        // arg 2 is speler
+                        // arg 3 is value
+                    } else {
+                        // Wrong arguments
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" "+args[0]+" [land/rank] <speler> <value>"));
+                        return true;
+                    }
+                } else {
+                    // No permissions
+                    plugin.Config.noPermission(sender);
+                    return true;
                 }
             }
         }

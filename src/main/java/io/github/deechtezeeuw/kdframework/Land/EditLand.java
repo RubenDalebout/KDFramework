@@ -117,5 +117,6 @@ public class EditLand {
         plugin.SQLUpdate.update_land(args[2], args[3], args[4]);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                 plugin.Config.getGeneralPrefix() + "&aSuccesvol de &2&l"+args[3]+" &aaangepast naar &2&l"+args[4]+" &avan het land &2&l"+args[2]+"&a!"));
+        return;
     }
 }

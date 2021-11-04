@@ -2,6 +2,7 @@ package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SQLiteSelect {
     private KDFramework plugin;
@@ -49,7 +51,9 @@ public class SQLiteSelect {
             ResultSet results  = pstmt.executeQuery();
 
             while(results.next()) {
-                Land land = new Land(results.getString("Name"),
+                Land land = new Land(
+                        UUID.fromString(results.getString("UUID")),
+                        results.getString("Name"),
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"));
@@ -73,7 +77,9 @@ public class SQLiteSelect {
             ResultSet results  = pstmt.executeQuery();
 
             while(results.next()) {
-                land = new Land(results.getString("Name"),
+                land = new Land(
+                        UUID.fromString(results.getString("UUID")),
+                        results.getString("Name"),
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"));
@@ -104,6 +110,54 @@ public class SQLiteSelect {
             System.out.println(e.getMessage());
         }
         return false;
+    }
+
+    public boolean player_exists_name(String player) {
+        String sql = "SELECT * "
+                + "FROM players WHERE Name == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+
+            // set the value
+            pstmt.setString(1, player);
+            ResultSet results  = pstmt.executeQuery();
+
+            if (results.next()) {
+                // player is found
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    public Speler player_get_by_name(String Name) {
+        Speler speler = null;
+
+        String sql = "SELECT * "
+                + "FROM players WHERE Name == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+
+            // set the value
+            pstmt.setString(1, Name);
+            ResultSet results  = pstmt.executeQuery();
+
+            while (results.next()) {
+                speler = new Speler(
+                        UUID.fromString(results.getString("UUID")),
+                        results.getString("Name"),
+                        UUID.fromString(results.getString("Land")),
+                        UUID.fromString(results.getString("Rank"))
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return speler;
     }
 
     // Rank selects

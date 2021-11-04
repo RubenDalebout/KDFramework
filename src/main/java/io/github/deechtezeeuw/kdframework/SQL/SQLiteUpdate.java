@@ -63,5 +63,20 @@ public class SQLiteUpdate {
         }
     }
 
+    public void update_player_land(UUID uuid, UUID Land) {
+        String sql = "UPDATE players SET Land = ? WHERE UUID = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+
+            // set the corresponding param
+            pstmt.setString(1, Land.toString());
+            pstmt.setString(2, uuid.toString());
+            // update
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     // Rank update
 }
