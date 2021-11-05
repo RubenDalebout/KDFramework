@@ -2,6 +2,8 @@ package io.github.deechtezeeuw.kdframework.Events;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -127,6 +129,32 @@ public class PlayerTabComplete implements TabCompleter {
                     result.add(a);
             }
             return result;
+        }
+
+        // /k set rank <speler> [rank]
+        if (args.length == 4 && args[0].equalsIgnoreCase("set") && args[1].equalsIgnoreCase("rank")) {
+            // Check if player exists in db
+            if (plugin.SQLSelect.player_exists_name(args[2])) {
+                List<String> ranks = new ArrayList<>();
+                // Get land from player
+                Speler speler = plugin.SQLSelect.player_get_by_name(args[2]);
+                if (speler.getLand() != null) {
+                    Land land = plugin.SQLSelect.land_get_by_player(speler);
+
+                    for (Rank rank : land.getRanks()) {
+                        ranks.add(rank.getName());
+                    }
+                } else {
+                    ranks.add("none");
+                }
+
+                for (String a : ranks) {
+                    if (a.toLowerCase().startsWith(args[3].toLowerCase()))
+                        result.add(a);
+                }
+
+                return result;
+            }
         }
 
         return null;

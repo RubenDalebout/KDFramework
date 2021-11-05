@@ -24,6 +24,7 @@ public class DeleteLand {
             Land land = plugin.SQLSelect.land_get_by_name(KDName);
             for (Speler speler : land.getLeden()) {
                 plugin.SQLUpdate.update_player_land(speler.getUuid(), null);
+                plugin.SQLUpdate.update_player_rank(speler.getUuid(), null);
             }
             plugin.SQLDelete.land_delete(land.getName());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',

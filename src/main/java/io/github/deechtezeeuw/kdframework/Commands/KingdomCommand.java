@@ -211,13 +211,14 @@ public class KingdomCommand implements CommandExecutor {
 
                         // Check if its set rank
                         if (args[1].equalsIgnoreCase("rank")) {
-                            new SetRank();
-                            return true;
+                            if (sender.hasPermission("k.set.rank")) {
+                                new SetRank(plugin, sender, label, args);
+                                return true;
+                            } else {
+                                plugin.Config.noPermission(sender);
+                                return true;
+                            }
                         }
-                        // arg 0 is set
-                        // arg 1 is land / rank
-                        // arg 2 is speler
-                        // arg 3 is value
                     } else {
                         // Wrong arguments
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
