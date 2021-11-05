@@ -15,6 +15,7 @@ public class SQLiteInstall {
     public void createTables() {
         this.table_player();
         this.table_landen();
+        this.table_ranks();
     }
 
     private void table_player() {
@@ -42,6 +43,27 @@ public class SQLiteInstall {
                 + "	Prefix varchar(36) NOT NULL,\n"
                 + "	Invite tinyint(1) NOT NULL,\n"
                 + "	Maximum integer(100) NOT NULL\n"
+                + ");";
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return;
+    }
+
+    public void table_ranks() {
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS ranks (\n"
+                + "	UUID char(36) PRIMARY KEY,\n"
+                + " Land char(36) NOT NULL,\n"
+                + "	Name varchar(16) NOT NULL,\n"
+                + "	Prefix varchar(36) NOT NULL,\n"
+                + "	Level integer(100) NOT NULL,\n"
+                + "	Maximum integer(100),\n"
+                + " KDDefault tinyint(1) NOT NULL\n"
                 + ");";
 
         try (Statement stmt = plugin.SQL.getConnection().createStatement()) {

@@ -26,6 +26,9 @@ public final class KDFramework extends JavaPlugin {
     public SQLiteUpdate SQLUpdate;
     public SQLiteDelete SQLDelete;
 
+    // Placeholders
+    public PlaceHolders KDPlaceholders;
+
 
     @Override
     public void onEnable() {
@@ -73,6 +76,12 @@ public final class KDFramework extends JavaPlugin {
 
         // Register events
         this.getServer().getPluginManager().registerEvents(new PlayerEvents(this), this);
+
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            this.KDPlaceholders = new PlaceHolders(this);
+            KDPlaceholders.register();
+            System.out.println("Placeholders geladen TEST TEST TEST");
+        }
     }
 
     @Override

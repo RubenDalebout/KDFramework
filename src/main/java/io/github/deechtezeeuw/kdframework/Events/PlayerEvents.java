@@ -63,12 +63,8 @@ public class PlayerEvents implements Listener {
         Player eventPlayer = event.getPlayer();
         Speler speler = plugin.SQLSelect.player_get_by_name(eventPlayer.getName());
 
-        // If not kingdom member
-        if (speler.getLand()!= null) {
-            Land land = plugin.SQLSelect.land_get_by_player(speler);
-            event.setFormat(ChatColor.translateAlternateColorCodes('&',land.getPrefix()+"[rank] &a%s &a&l> &f%s"));
-        } else {
-            event.setFormat(ChatColor.translateAlternateColorCodes('&',"&7[&cLand-loos&7] &a%s &a&l> &f%s"));
-        }
+        event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
+                ChatColor.translateAlternateColorCodes('&',
+                        "%kdf_land_prefix%%kdf_rank_prefix% &a%s &a&l> &f%s")));
     }
 }

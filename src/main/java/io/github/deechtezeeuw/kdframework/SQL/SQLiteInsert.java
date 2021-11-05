@@ -3,6 +3,7 @@ package io.github.deechtezeeuw.kdframework.SQL;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -52,4 +53,27 @@ public class SQLiteInsert {
     }
 
     // Rank insert
+    public void rank_create(UUID Land, Rank rank) {
+        String sql = "INSERT INTO "
+                + "ranks(UUID, Land, Name, Prefix, Level, Maximum, KDDefault) "
+                + "VALUES(?,?,?,?,?,?,?)";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, UUID.randomUUID().toString());
+            pstmt.setString(2, Land.toString());
+            pstmt.setString(3, rank.getName());
+            pstmt.setString(4, rank.getPrefix());
+            pstmt.setInt(5, rank.getLevel());
+            if (rank.getMaximum() != null) {
+                pstmt.setInt(6, rank.getMaximum());
+            } else {
+                pstmt.setString(6, null);
+            }
+            pstmt.setBoolean(7, rank.getKdDefault());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

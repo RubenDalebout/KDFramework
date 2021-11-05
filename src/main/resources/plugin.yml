@@ -4,6 +4,7 @@ main: io.github.deechtezeeuw.kdframework.KDFramework
 api-version: 1.16
 authors: [ DeZeeuw, 5lutty ]
 description: Kingdom framework plugin
+softdepend: [PlaceholderAPI]
 commands:
   kingdom:
     usage: /<command>

@@ -11,6 +11,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -118,6 +119,12 @@ public class KingdomCommand implements CommandExecutor {
                                                 "&aInvite: &2&l"+land.getInvite()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 "&aMaximum: &2&l"+land.getMaximum()+"&a."));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                "&aLeiding: &2&l"+land.getLeiding()+"&a."));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                "&aDefault: &2&l"+land.get_defaultRank().getName()+"&a."));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                "&aRanks: &2&l"+land.getRanks().size()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 "&aLeden: &2&l"+land.getLeden().size()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',

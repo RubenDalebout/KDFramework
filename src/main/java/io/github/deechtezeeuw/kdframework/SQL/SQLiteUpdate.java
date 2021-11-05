@@ -83,4 +83,22 @@ public class SQLiteUpdate {
     }
 
     // Rank update
+    public void update_player_rank(UUID uuid, UUID Rank) {
+        String sql = "UPDATE players SET Rank = ? WHERE UUID = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+
+            // set the corresponding param
+            if (Rank != null) {
+                pstmt.setString(1, Rank.toString());
+            } else {
+                pstmt.setString(1, null);
+            }
+            pstmt.setString(2, uuid.toString());
+            // update
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -75,6 +75,7 @@ public class SetLand {
 
             // Update user kingdom
             plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
+            plugin.SQLUpdate.update_player_rank(speler.getUuid(), land.get_defaultRank().getUuid());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aSuccesvol &2&l"+speler.getName()+" &ain het land &2&l"+land.getName()+ " &agezet!"));
 
@@ -98,6 +99,7 @@ public class SetLand {
 
             // Update user kingdom
             plugin.SQLUpdate.update_player_land(speler.getUuid(), null);
+            plugin.SQLUpdate.update_player_rank(speler.getUuid(), null);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aSuccesvol &2&l"+speler.getName()+" &auit zijn land gezet."));
 

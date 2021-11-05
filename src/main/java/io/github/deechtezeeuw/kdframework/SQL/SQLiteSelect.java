@@ -2,6 +2,7 @@ package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.entity.Player;
 
@@ -57,7 +58,8 @@ public class SQLiteSelect {
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"),
-                        plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))));
+                        plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
+                        plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
                 lands.add(land);
             }
         } catch (SQLException e) {
@@ -84,7 +86,8 @@ public class SQLiteSelect {
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"),
-                        plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))));
+                        plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
+                        plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -143,7 +146,8 @@ public class SQLiteSelect {
                             results.getString("Prefix"),
                             results.getBoolean("Invite"),
                             results.getInt("Maximum"),
-                            plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))));
+                            plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
+                            plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -230,4 +234,60 @@ public class SQLiteSelect {
     }
 
     // Rank selects
+    public Rank get_rank(UUID rank) {
+        Rank returnRank = null;
+
+        String sql = "SELECT * "
+                + "FROM ranks WHERE UUID == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, rank.toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            while(results.next()) {
+                returnRank = new Rank(
+                        UUID.fromString(results.getString("UUID")),
+                        results.getString("Name"),
+                        results.getInt("Level"),
+                        results.getInt("Maximum"),
+                        results.getString("Prefix"),
+                        results.getBoolean("KDDefault")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return returnRank;
+    }
+
+    public List<Rank> ranks_list(UUID Land) {
+        List<Rank> ranks = new ArrayList<>();
+
+        String sql = "SELECT * "
+                + "FROM ranks WHERE Land == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, Land.toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            while(results.next()) {
+                Rank rank = new Rank(
+                        UUID.fromString(results.getString("UUID")),
+                        results.getString("Name"),
+                        results.getInt("Level"),
+                        results.getInt("Maximum"),
+                        results.getString("Prefix"),
+                        results.getBoolean("KDDefault")
+                );
+                ranks.add(rank);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return ranks;
+    }
 }
