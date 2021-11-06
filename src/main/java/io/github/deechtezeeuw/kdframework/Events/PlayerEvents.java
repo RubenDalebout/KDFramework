@@ -46,6 +46,8 @@ public class PlayerEvents implements Listener {
             // Create user in database
             plugin.SQLInsert.player_create(player);
         }
+
+        plugin.SpelerPerms.SetupPermissions(player);
     }
 
     @EventHandler
@@ -56,6 +58,8 @@ public class PlayerEvents implements Listener {
         event.setQuitMessage(PlaceholderAPI.setPlaceholders(player,
                 ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralOnQuit())));
+
+        plugin.SpelerPerms.playerPermissions.remove(player.getUniqueId());
     }
 
     @EventHandler(priority = EventPriority.LOW)

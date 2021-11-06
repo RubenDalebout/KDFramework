@@ -5,6 +5,7 @@ import io.github.deechtezeeuw.kdframework.Configuraties.Configuratie;
 import io.github.deechtezeeuw.kdframework.Events.PlayerEvents;
 import io.github.deechtezeeuw.kdframework.Events.PlayerTabComplete;
 import io.github.deechtezeeuw.kdframework.SQL.*;
+import io.github.deechtezeeuw.kdframework.Speler.SpelerPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,6 +29,8 @@ public final class KDFramework extends JavaPlugin {
 
     // Placeholders
     public PlaceHolders KDPlaceholders;
+    // Permissions
+    public SpelerPermissions SpelerPerms;
 
 
     @Override
@@ -82,6 +85,8 @@ public final class KDFramework extends JavaPlugin {
             KDPlaceholders.register();
             System.out.println("Placeholders geladen TEST TEST TEST");
         }
+
+        this.SpelerPerms = new SpelerPermissions(this);
     }
 
     @Override

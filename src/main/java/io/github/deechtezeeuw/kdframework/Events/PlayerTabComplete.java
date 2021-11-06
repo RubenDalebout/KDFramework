@@ -27,7 +27,7 @@ public class PlayerTabComplete implements TabCompleter {
         List<String> result = new ArrayList<String>();
 
         // Temp add commands
-        subCommands.add("help"); subCommands.add("land");subCommands.add("set");
+        subCommands.add("help"); subCommands.add("land");subCommands.add("set");subCommands.add("rank");
 
         if (args.length == 1) {
             for (String a : subCommands) {
@@ -155,6 +155,17 @@ public class PlayerTabComplete implements TabCompleter {
 
                 return result;
             }
+        }
+
+        // /k land [create/edit/delete/info]
+        if (args.length == 2 && args[0].equalsIgnoreCase("rank")) {
+            List<String> landCommands = new ArrayList<>();
+            landCommands.add("create");landCommands.add("edit");landCommands.add("delete");
+            for (String a : landCommands) {
+                if (a.toLowerCase().startsWith(args[1].toLowerCase()))
+                    result.add(a);
+            }
+            return result;
         }
 
         return null;

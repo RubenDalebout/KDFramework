@@ -5,6 +5,7 @@ import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
 import io.github.deechtezeeuw.kdframework.Land.EditLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
+import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
 import org.bukkit.ChatColor;
@@ -200,8 +201,14 @@ public class KingdomCommand implements CommandExecutor {
 
                     // Check if second argument is create/edit/delete
                     if (args[1].equalsIgnoreCase("create")) {
-                        sender.sendMessage("create rank");
-                        return true;
+                        if (sender.hasPermission("k.rank.create")) {
+                            new CreateRank(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            // No permission to do k.rank.create
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
                     }
 
                     if (args[1].equalsIgnoreCase("edit")) {
