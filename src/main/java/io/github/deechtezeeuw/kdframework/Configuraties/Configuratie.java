@@ -1,11 +1,13 @@
 package io.github.deechtezeeuw.kdframework.Configuraties;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,15 +106,15 @@ public class Configuratie {
     }
 
     private void createPermissionConfig() {
-        landConfigFile = new File(plugin.getDataFolder(), "permissions.yml");
-        if (!landConfigFile.exists()) {
-            landConfigFile.getParentFile().mkdirs();
+        permissonConfigFile = new File(plugin.getDataFolder(), "permissions.yml");
+        if (!permissonConfigFile.exists()) {
+            permissonConfigFile.getParentFile().mkdirs();
             plugin.saveResource("permissions.yml", false);
         }
 
-        landConfig= new YamlConfiguration();
+        permissionConfig= new YamlConfiguration();
         try {
-            landConfig.load(landConfigFile);
+            permissionConfig.load(permissonConfigFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -138,11 +140,11 @@ public class Configuratie {
         if(this.permissonConfigFile == null)
             this.permissonConfigFile = new File(this.plugin.getDataFolder(), "permissions.yml");
 
-        this.landConfig = YamlConfiguration.loadConfiguration(this.permissonConfigFile);
+        this.permissionConfig = YamlConfiguration.loadConfiguration(this.permissonConfigFile);
         InputStream defaultStreamPerms = this.plugin.getResource("permissions.yml");
         if (defaultStreamPerms != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStreamPerms));
-            this.landConfig.setDefaults(defaultConfig);
+            this.permissionConfig.setDefaults(defaultConfig);
         }
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',

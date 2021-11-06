@@ -6,8 +6,10 @@ import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
 import io.github.deechtezeeuw.kdframework.Land.EditLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KingdomCommand implements CommandExecutor {
@@ -38,6 +41,37 @@ public class KingdomCommand implements CommandExecutor {
 
             // Sub commands
 
+            // test 1
+            if (args[0].equalsIgnoreCase("test1")) {
+                if (sender.hasPermission("k.test1")) {
+                    sender.sendMessage("permissie tot test 1");
+                    return true;
+                } else {
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+            // test 2
+            if (args[0].equalsIgnoreCase("test2")) {
+                if (sender.hasPermission("k.test2")) {
+                    sender.sendMessage("permissie tot test 2");
+                    return true;
+                } else {
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+            // test 3
+            if (args[0].equalsIgnoreCase("test3")) {
+                if (sender.hasPermission("k.test3")) {
+                    sender.sendMessage("permissie tot test 3");
+                    return true;
+                } else {
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
             // Land
             if (args[0].equalsIgnoreCase("land")) {
                 // Check if user has permission to do k.land

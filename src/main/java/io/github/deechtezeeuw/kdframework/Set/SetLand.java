@@ -81,6 +81,7 @@ public class SetLand {
 
             // Check if user is online to send him the message
             if (Bukkit.getPlayer(speler.getUuid()) != null) {
+                plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(speler.getUuid()));
                 Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aJe bent in het land &2&l"+land.getName()+" &agezet!"));
             }
@@ -105,6 +106,7 @@ public class SetLand {
 
             // Check if user is online to send him the message
             if (Bukkit.getPlayer(speler.getUuid()) != null) {
+                plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(speler.getUuid()));
                 Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aJe bent uit je land gezet!"));
             }

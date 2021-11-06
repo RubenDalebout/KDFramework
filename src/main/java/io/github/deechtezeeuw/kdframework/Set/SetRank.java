@@ -108,6 +108,7 @@ public class SetRank {
 
             // Check if user is online to send him the message
             if (Bukkit.getPlayer(ChangeRankOf.getName()) != null) {
+                plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(ChangeRankOf.getName()));
                 Bukkit.getPlayer(ChangeRankOf.getName()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aJe rank is verandert in &2&l"+newRank.getName()+"&a."));
             }
@@ -149,6 +150,7 @@ public class SetRank {
 
         // Check if user is online to send him the message
         if (Bukkit.getPlayer(ChangeRankOf.getName()) != null) {
+            plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(ChangeRankOf.getName()));
             Bukkit.getPlayer(ChangeRankOf.getName()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aJe rank is verandert in &2&l"+newRank.getName()+"&a."));
         }
