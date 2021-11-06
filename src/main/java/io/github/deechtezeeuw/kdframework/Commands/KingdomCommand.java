@@ -188,6 +188,42 @@ public class KingdomCommand implements CommandExecutor {
                 }
             }
 
+            // Rank
+            if (args[0].equalsIgnoreCase("rank")) {
+                if (sender.hasPermission("k.rank")) {
+                    // check if user has second argument
+                    if (!(args.length >= 2)) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " " + args[0] + " [create/edit/delete]"));
+                        return true;
+                    }
+
+                    // Check if second argument is create/edit/delete
+                    if (args[1].equalsIgnoreCase("create")) {
+                        sender.sendMessage("create rank");
+                        return true;
+                    }
+
+                    if (args[1].equalsIgnoreCase("edit")) {
+                        sender.sendMessage("edit rank");
+                        return true;
+                    }
+
+                    if (args[1].equalsIgnoreCase("delete")) {
+                        sender.sendMessage("delete rank");
+                        return true;
+                    }
+
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " " + args[0] + " [create/edit/delete]"));
+                    return true;
+                } else {
+                    // No permission to do k.rank
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
             // Reload
             if (args[0].equalsIgnoreCase("reload")) {
                 if (sender.hasPermission("k.reload")) {
@@ -211,7 +247,7 @@ public class KingdomCommand implements CommandExecutor {
 
                         // Check if its set rank
                         if (args[1].equalsIgnoreCase("rank")) {
-                            if (sender.hasPermission("k.set.rank")) {
+                            if (sender.hasPermission("k.set.rank") || sender.hasPermission("k.set.rank.all")) {
                                 new SetRank(plugin, sender, label, args);
                                 return true;
                             } else {
