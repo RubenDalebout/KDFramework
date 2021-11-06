@@ -10,3 +10,26 @@
 default:
   - k.help
   - k.list
+
+permissions:
+  land-lead:
+    ranks:
+      - Koning
+      - Koningin
+    inheritance:
+      - land-mod
+    permissions:
+      - k.lead
+  land-mod:
+    ranks:
+      - Hertog
+      - Hertogin
+    inheritance:
+      - land-member
+    permissions:
+      - k.mod
+  land-member:
+    ranks:
+      - Burger
+    permissions:
+      - k.member

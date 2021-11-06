@@ -29,9 +29,13 @@ public class Configuratie {
     private File landConfigFile;
     private FileConfiguration landConfig;
 
+    private File permissonConfigFile;
+    private FileConfiguration permissionConfig;
+
     public Configuratie (KDFramework plugin) {
         this.plugin = plugin;
         createLandConfig();
+        createPermissionConfig();
         loadVariables();
     }
 
@@ -95,6 +99,25 @@ public class Configuratie {
         }
     }
 
+    public FileConfiguration getPermissionConfig() {
+        return this.permissionConfig;
+    }
+
+    private void createPermissionConfig() {
+        landConfigFile = new File(plugin.getDataFolder(), "permissions.yml");
+        if (!landConfigFile.exists()) {
+            landConfigFile.getParentFile().mkdirs();
+            plugin.saveResource("permissions.yml", false);
+        }
+
+        landConfig= new YamlConfiguration();
+        try {
+            landConfig.load(landConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Reload command
     public void reloadVariables(CommandSender sender) {
         plugin.reloadConfig();
@@ -108,6 +131,17 @@ public class Configuratie {
         InputStream defaultStream = this.plugin.getResource("clansTemplate.yml");
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
+            this.landConfig.setDefaults(defaultConfig);
+        }
+
+        // permission template
+        if(this.permissonConfigFile == null)
+            this.permissonConfigFile = new File(this.plugin.getDataFolder(), "permissions.yml");
+
+        this.landConfig = YamlConfiguration.loadConfiguration(this.permissonConfigFile);
+        InputStream defaultStreamPerms = this.plugin.getResource("permissions.yml");
+        if (defaultStreamPerms != null) {
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStreamPerms));
             this.landConfig.setDefaults(defaultConfig);
         }
 
