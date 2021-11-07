@@ -83,12 +83,12 @@ public class SpelerPermissions {
         String pluginperms = "k.";
         PermissionAttachment attachment = this.playerPermissions.get(player.getUniqueId());
         for(PermissionAttachmentInfo s : player.getEffectivePermissions()){
-            if (s.getPermission().toLowerCase().startsWith(pluginperms.toLowerCase()))
+            player.sendMessage("Test: "+s.getPermission().toLowerCase().startsWith(pluginperms.toLowerCase()));
+            if (s.getPermission().toLowerCase().startsWith(pluginperms.toLowerCase())) {
                 attachment.setPermission(s.getPermission(), false);
+            }
         }
-
         plugin.SpelerPerms.playerPermissions.remove(player.getUniqueId());
-
         plugin.SpelerPerms.SetupPermissions(player);
     }
 }

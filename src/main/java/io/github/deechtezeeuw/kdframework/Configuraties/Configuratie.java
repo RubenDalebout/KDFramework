@@ -147,6 +147,13 @@ public class Configuratie {
             this.permissionConfig.setDefaults(defaultConfig);
         }
 
+        // Reset permissions of all online players
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            plugin.SpelerPerms.reload_permissions(onlinePlayer);
+            onlinePlayer.sendMessage("hai");
+        }
+
+
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                 plugin.Config.getGeneralPrefix() + plugin.Config.getGeneralCReload()));
     }
