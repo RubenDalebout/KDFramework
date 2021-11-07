@@ -3,7 +3,7 @@ version: '${project.version}'
 main: io.github.deechtezeeuw.kdframework.KDFramework
 api-version: 1.12
 authors: [ DeZeeuw, 5lutty ]
-description: Kingdom framework plugin not for old kingdom
+description: KingdomFramework by DeZeeuw and 5lutty
 softdepend: [PlaceholderAPI]
 commands:
   kingdom:
