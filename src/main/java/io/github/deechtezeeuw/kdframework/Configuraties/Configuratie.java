@@ -150,7 +150,6 @@ public class Configuratie {
         // Reset permissions of all online players
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             plugin.SpelerPerms.reload_permissions(onlinePlayer);
-            onlinePlayer.sendMessage("hai");
         }
 
 
