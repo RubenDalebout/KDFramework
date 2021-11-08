@@ -49,9 +49,11 @@ public class PlaceHolders extends PlaceholderExpansion {
         if (params.equalsIgnoreCase("land_prefix")) {
             String prefix = "&7[&cLand-Loos&7]";
             Speler speler = plugin.SQLSelect.player_get_by_name(p.getName());
-            if (speler.getLand() != null) {
-                Land land = plugin.SQLSelect.land_get_by_player(speler);
-                prefix = land.getPrefix();
+            if (speler != null) {
+                if (speler.getLand() != null) {
+                    Land land = plugin.SQLSelect.land_get_by_player(speler);
+                    prefix = land.getPrefix();
+                }
             }
             return prefix;
         }

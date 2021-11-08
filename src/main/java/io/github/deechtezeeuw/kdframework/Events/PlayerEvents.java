@@ -24,9 +24,10 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+
         Player player = event.getPlayer();
 
-        if (player.hasPlayedBefore()) {
+        if (event.getPlayer().hasPlayedBefore()) {
             // Join message
             event.setJoinMessage(PlaceholderAPI.setPlaceholders(player,
                     ChatColor.translateAlternateColorCodes('&',
