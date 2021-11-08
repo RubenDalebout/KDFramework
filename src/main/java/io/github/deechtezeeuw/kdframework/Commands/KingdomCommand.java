@@ -43,37 +43,6 @@ public class KingdomCommand implements CommandExecutor {
 
             // Sub commands
 
-            // test 1
-            if (args[0].equalsIgnoreCase("test1")) {
-                if (sender.hasPermission("k.test1")) {
-                    sender.sendMessage("permissie tot test 1");
-                    return true;
-                } else {
-                    plugin.Config.noPermission(sender);
-                    return true;
-                }
-            }
-
-            // test 2
-            if (args[0].equalsIgnoreCase("test2")) {
-                if (sender.hasPermission("k.test2")) {
-                    sender.sendMessage("permissie tot test 2");
-                    return true;
-                } else {
-                    plugin.Config.noPermission(sender);
-                    return true;
-                }
-            }
-            // test 3
-            if (args[0].equalsIgnoreCase("test3")) {
-                if (sender.hasPermission("k.test3")) {
-                    sender.sendMessage("permissie tot test 3");
-                    return true;
-                } else {
-                    plugin.Config.noPermission(sender);
-                    return true;
-                }
-            }
             // Land
             if (args[0].equalsIgnoreCase("land")) {
                 // Check if user has permission to do k.land
@@ -227,7 +196,7 @@ public class KingdomCommand implements CommandExecutor {
 
             // Rank
             if (args[0].equalsIgnoreCase("rank")) {
-                if (sender.hasPermission("k.rank")) {
+                if (sender.hasPermission("k.rank.create")) {
                     // check if user has second argument
                     if (!(args.length >= 2)) {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',

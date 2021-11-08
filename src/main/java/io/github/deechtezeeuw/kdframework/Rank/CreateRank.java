@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class CreateRank {
     private KDFramework plugin;
     private CommandSender sender;
@@ -87,9 +89,16 @@ public class CreateRank {
 
             if (found) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&cDe rank &4&l"+args[3]+" &cbestaat al in het land &4&l"+land.getName()+"&c!"));
+                        plugin.Config.getGeneralPrefix() + "&cDe rank &4&l"+args[2]+" &cbestaat al in het land &4&l"+land.getName()+"&c!"));
                 return;
             }
+
+            // Create rank in land
+            Rank newRank = new Rank(UUID.randomUUID(), args[2], 1, null, "&7[&"+args[2]+"&7]", false);
+            plugin.SQLInsert.rank_create(land.getUuid(), newRank);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+args[2]+" &ais ingemaakt voor het land &2&l"+land.getName()+"&a!"));
+            return;
         }
     }
 }
