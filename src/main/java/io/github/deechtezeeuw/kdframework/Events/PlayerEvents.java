@@ -93,5 +93,13 @@ public class PlayerEvents implements Listener {
                 p.closeInventory();
             }
         }
+
+        if(view.getTitle().contains("Landen") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
+            e.setCancelled(true);
+            Integer GUISize = e.getClickedInventory().getSize();
+            if (e.getSlot() == GUISize-5 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&4&lSluiten"))) {
+                p.closeInventory();
+            }
+        }
     }
 }

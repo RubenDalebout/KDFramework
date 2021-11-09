@@ -274,11 +274,14 @@ public class SQLiteSelect {
             ResultSet results  = pstmt.executeQuery();
 
             while(results.next()) {
+                Integer Maximum = null;
+                if (results.getString("Maximum") != null)
+                    Maximum = results.getInt("Maximum");
                 Rank rank = new Rank(
                         UUID.fromString(results.getString("UUID")),
                         results.getString("Name"),
                         results.getInt("Level"),
-                        results.getInt("Maximum"),
+                        Maximum,
                         results.getString("Prefix"),
                         results.getBoolean("KDDefault")
                 );

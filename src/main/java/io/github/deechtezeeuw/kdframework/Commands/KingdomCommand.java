@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.Commands;
 
+import io.github.deechtezeeuw.kdframework.GUI.GUILands;
 import io.github.deechtezeeuw.kdframework.GUI.GUIRanks;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.CreateLand;
@@ -169,23 +170,12 @@ public class KingdomCommand implements CommandExecutor {
             }
 
             // List
-            if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("lijst") || args[0].equalsIgnoreCase("kingdoms")) {
-                if (sender.hasPermission("k.list")) {
-                    List<Land> lands = plugin.SQLSelect.land_list();
-                    String list = lands.size() > 0 ? "&aKingdoms: " : "&cGeen kingdoms gevonden.";
-                    for(int i = 0; i < lands.size(); i++) {
-                        if (i == 0) {
-                            list += "&2&l"+lands.get(i).getName();
-                        } else {
-                            list += "&a, &2&l"+lands.get(i).getName();
-                        }
-                    }
-                    // Send list
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.Config.getGeneralPrefix() + list));
+            if (args[0].equalsIgnoreCase("list") || args[0].equalsIgnoreCase("lijst") || args[0].equalsIgnoreCase("kingdoms") || args[0].equalsIgnoreCase("lands")) {
+                if (sender.hasPermission("k.lands")) {
+                    new GUILands(plugin, sender, label, args);
                     return true;
                 } else {
-                    // No permission to do k.list
+                    // No permission to do k.rank
                     plugin.Config.noPermission(sender);
                     return true;
                 }

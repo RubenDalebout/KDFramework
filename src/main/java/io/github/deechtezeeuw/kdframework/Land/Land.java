@@ -71,7 +71,7 @@ public class Land {
         if (highestRank != null) {
             boolean first = true;
             for (Speler speler : getLeden()) {
-                if (speler.getUuid().equals(highestRank.getUuid())) {
+                if (speler.getRank().equals(highestRank.getUuid())) {
                     if (first) {
                         leiding = "&2&l"+speler.getName();
                         first = false;

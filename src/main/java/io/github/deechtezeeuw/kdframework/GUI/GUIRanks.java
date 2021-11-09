@@ -91,9 +91,13 @@ public class GUIRanks {
 
                 ItemMeta MetaShield = Shield.getItemMeta();
                 ArrayList<String> ShieldLore = new ArrayList<String>();
+                String Maximum = "Oneindig";
+                if (rank.getMaximum() != null) {
+                    Maximum = rank.getMaximum().toString();
+                }
                 ShieldLore.add(ChatColor.translateAlternateColorCodes('&', "&aRank: &2&l"+rank.getName()));
                 ShieldLore.add(ChatColor.translateAlternateColorCodes('&', "&aLevel: &2&l"+rank.getLevel()));
-                ShieldLore.add(ChatColor.translateAlternateColorCodes('&', "&aMaximum: &2&l"+rank.getMaximum()));
+                ShieldLore.add(ChatColor.translateAlternateColorCodes('&', "&aMaximum: &2&l"+Maximum));
                 ShieldLore.add(ChatColor.translateAlternateColorCodes('&', "&aDefault: &2&l"+rank.getKdDefault()));
                 MetaShield.setLore(ShieldLore);
                 MetaShield.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
