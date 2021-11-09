@@ -9,6 +9,7 @@ import io.github.deechtezeeuw.kdframework.Land.EditLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
 import io.github.deechtezeeuw.kdframework.Rank.DeleteRank;
+import io.github.deechtezeeuw.kdframework.Rank.EditRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
@@ -204,8 +205,14 @@ public class KingdomCommand implements CommandExecutor {
                     }
 
                     if (args[1].equalsIgnoreCase("edit")) {
-                        sender.sendMessage("edit rank");
-                        return true;
+                        if (sender.hasPermission("k.rank.edit")) {
+                            new EditRank(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            // No permission to do k.rank.edit
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
                     }
 
                     if (args[1].equalsIgnoreCase("delete")) {

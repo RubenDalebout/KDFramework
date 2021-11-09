@@ -1,6 +1,7 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
@@ -45,6 +46,7 @@ public class SQLiteUpdate {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return;
     }
 
     // Player update
@@ -61,6 +63,7 @@ public class SQLiteUpdate {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return;
     }
 
     public void update_player_land(UUID uuid, UUID Land) {
@@ -80,6 +83,7 @@ public class SQLiteUpdate {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return;
     }
 
     // Rank update
@@ -100,5 +104,21 @@ public class SQLiteUpdate {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return;
+    }
+
+    public void update_rank(Rank rank, String Column, String newValue) {
+        if (Column.equalsIgnoreCase("default")) {
+            String sql = "UPDATE ranks SET KDDefault = ? WHERE UUID = ?";
+            try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+                pstmt.setBoolean(1, newValue.equalsIgnoreCase("true") ? true : false);
+                pstmt.setString(2, rank.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return;
     }
 }
