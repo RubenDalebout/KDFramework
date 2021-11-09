@@ -25,7 +25,14 @@ public class EditRank {
 
     private void checkArguments() {
         if (sender.hasPermission("k.rank.edit.others") && args.length == 6) {
-            sender.sendMessage("Jij wilt een rank editten van een ander kd");
+            String ArgKingdom = args[2];
+            String ArgRank = args[3];
+            String ArgWhat = args[4];
+            String ArgValue = args[5];
+            sender.sendMessage("Kingdom: "+ArgKingdom);
+            sender.sendMessage("Rank: "+ArgRank);
+            sender.sendMessage("Column: "+ArgWhat);
+            sender.sendMessage("Value: "+ArgValue);
             return;
         }
 
