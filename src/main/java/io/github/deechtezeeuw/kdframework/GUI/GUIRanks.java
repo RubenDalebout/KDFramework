@@ -32,18 +32,21 @@ public class GUIRanks {
     }
 
     private void checkArguments() {
-        if (sender.hasPermission("k.ranks.others") && !(args.length==2)) {
+        if (sender.hasPermission("k.ranks.others") && args.length > 2) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " " + args[0] + " <kingdom>"));
-            return;
-        } else if(sender.hasPermission("k.ranks") && !(args.length==1)) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " ranks"));
             return;
         }
 
         if (sender.hasPermission("k.ranks.others") && args.length > 1) {
-            sender.sendMessage("jij wilt ranks van alle kingdoms");
+            if (!plugin.SQLSelect.land_exists(args[1])) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        "&cHet land &4&l"+args[1]+" &cbestaat niet!"));
+                return;
+            }
+
+            Land land = plugin.SQLSelect.land_get_by_name(args[1]);
+            this.createGUI((Player) sender, land);
             return;
         }
 

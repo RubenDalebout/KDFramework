@@ -11,15 +11,10 @@ import io.github.deechtezeeuw.kdframework.Rank.DeleteRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
-import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
-import org.bukkit.permissions.PermissionAttachment;
-import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -246,7 +241,7 @@ public class KingdomCommand implements CommandExecutor {
 
             // Ranks
             if (args[0].equalsIgnoreCase("ranks")) {
-                if (sender.hasPermission("k.ranks")) {
+                if (sender.hasPermission("k.ranks") || sender.hasPermission("k.ranks.others")) {
                     new GUIRanks(plugin, sender, label, args);
                     return true;
                 } else {
