@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.Commands;
 
+import io.github.deechtezeeuw.kdframework.GUI.GUIRanks;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
@@ -235,6 +236,18 @@ public class KingdomCommand implements CommandExecutor {
 
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " " + args[0] + " [create/edit/delete]"));
+                    return true;
+                } else {
+                    // No permission to do k.rank
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+            // Ranks
+            if (args[0].equalsIgnoreCase("ranks")) {
+                if (sender.hasPermission("k.ranks")) {
+                    new GUIRanks(plugin, sender, label, args);
                     return true;
                 } else {
                     // No permission to do k.rank
