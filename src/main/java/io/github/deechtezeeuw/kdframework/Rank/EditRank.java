@@ -102,6 +102,12 @@ public class EditRank {
                         plugin.Config.getGeneralPrefix() + "&4&l"+ArgNew+" &cis niet toegestaan, je totale karakters mag niet langer zijn dan &4&l36 &ctekens!"));
                 return;
             }
+
+            // Update prefix
+            plugin.SQLUpdate.update_rank(editRank, ArgWhat, ArgNew);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu de prefix &2&l"+ArgNew+" &a!"));
+            return;
         }
 
         // Check if its level is an number

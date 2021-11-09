@@ -108,6 +108,17 @@ public class SQLiteUpdate {
     }
 
     public void update_rank(Rank rank, String Column, String newValue) {
+        if (Column.equalsIgnoreCase("prefix")) {
+            String sql = "UPDATE ranks SET Prefix = ? WHERE UUID = ?";
+            try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+                pstmt.setString(1, newValue);
+                pstmt.setString(2, rank.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         if (Column.equalsIgnoreCase("level")) {
             String sql = "UPDATE ranks SET Level = ? WHERE UUID = ?";
             try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
