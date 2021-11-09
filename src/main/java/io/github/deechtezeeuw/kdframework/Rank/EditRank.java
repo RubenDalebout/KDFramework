@@ -106,11 +106,32 @@ public class EditRank {
 
         // Check if its level is an number
         if (ArgWhat.equalsIgnoreCase("level")) {
+            // Check if argnew is number
             if (!(StringUtils.isNumeric(ArgNew))) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&4&l"+ArgNew+" &cis niet toegestaan, je nieuwe &4&llevel &cmoet een &4&lgetal &czijn!"));
                 return;
             }
+            Integer newValue = Integer.parseInt(ArgNew);
+            // Check if editrank is higher or equal of yours
+            if (editRank.getLevel() >= plugin.SQLSelect.get_rank(speler.getRank()).getLevel()) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&4&l"+editRank.getName()+" &cheeft een hoger of gelijk level, deze rank kan je niet aanpassen!"));
+                return;
+            }
+
+            // Check if newvalue is higher or equal to your level
+            if (newValue >= plugin.SQLSelect.get_rank(speler.getRank()).getLevel()) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&4&l"+newValue+" &cmoet lager zijn dan jouw level!"));
+                return;
+            }
+
+            // Update level
+            plugin.SQLUpdate.update_rank(editRank, ArgWhat, newValue.toString());
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu een level van &2&l"+newValue+" &a!"));
+            return;
         }
 
         // Check if its maximum is an number
