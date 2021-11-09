@@ -6,13 +6,18 @@ import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerEvents implements Listener {
 
@@ -71,5 +76,22 @@ public class PlayerEvents implements Listener {
         event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
                 ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralChat())));
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        Player p = (Player) e.getWhoClicked();
+
+        InventoryView view = e.getView();
+
+        if (e.getClickedInventory() == null) return;
+
+        if(view.getTitle().contains("ranks") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
+            e.setCancelled(true);
+            Integer GUISize = e.getClickedInventory().getSize();
+            if (e.getSlot() == GUISize-5 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&4&lSluiten"))) {
+                p.closeInventory();
+            }
+        }
     }
 }
