@@ -115,11 +115,39 @@ public class EditRank {
 
         // Check if its maximum is an number
         if (ArgWhat.equalsIgnoreCase("maximum")) {
+            // Check if argnew is number
             if (!(StringUtils.isNumeric(ArgNew))) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&4&l"+ArgNew+" &cis niet toegestaan, je nieuwe &4&lmaximum &cmoet een &4&lgetal &czijn!"));
                 return;
             }
+            Integer newValue = Integer.parseInt(ArgNew);
+            // Check if this rank is the default rank
+            if (editRank.getKdDefault()) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&cDeze rank mag geen maximum hebben, omdat het de default rank is!"));
+                return;
+            }
+
+            // check if Argnew is lower then rank members
+            Integer members = 0;
+            for (Speler spieler : land.getLeden()) {
+                if (spieler.getRank().equals(editRank.getUuid())) {
+                    members = members+1;
+                }
+            }
+
+            if (newValue < members) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&4&l"+ArgNew+" &cis niet toegestaan, je nieuwe maximum moet hoger zijn of gelijk zijn aan &4&l"+members+" &c!"));
+                return;
+            }
+
+            // Update maximum
+            plugin.SQLUpdate.update_rank(editRank, ArgWhat, newValue.toString());
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu het maximum van &2&l"+newValue+" &a!"));
+            return;
         }
 
         // Check if its default and its true or false

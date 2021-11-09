@@ -108,11 +108,27 @@ public class SQLiteUpdate {
     }
 
     public void update_rank(Rank rank, String Column, String newValue) {
+        if (Column.equalsIgnoreCase("maximum")) {
+            String sql = "UPDATE ranks SET Maximum = ? WHERE UUID = ?";
+            try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+                pstmt.setInt(1, Integer.parseInt(newValue));
+                pstmt.setString(2, rank.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
         if (Column.equalsIgnoreCase("default")) {
-            String sql = "UPDATE ranks SET KDDefault = ? WHERE UUID = ?";
+            String sql = "UPDATE ranks SET KDDefault = ?, Maximum = ? WHERE UUID = ?";
             try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
                 pstmt.setBoolean(1, newValue.equalsIgnoreCase("true") ? true : false);
-                pstmt.setString(2, rank.getUuid().toString());
+                if (newValue.equalsIgnoreCase("true")) {
+                    pstmt.setString(2, null);
+                } else {
+                    pstmt.setInt(2, 50);
+                }
+                pstmt.setString(3, rank.getUuid().toString());
 
                 pstmt.executeUpdate();
             } catch (SQLException e) {
