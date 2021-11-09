@@ -6,6 +6,7 @@ import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
 import io.github.deechtezeeuw.kdframework.Land.EditLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
+import io.github.deechtezeeuw.kdframework.Rank.DeleteRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
@@ -196,7 +197,7 @@ public class KingdomCommand implements CommandExecutor {
 
             // Rank
             if (args[0].equalsIgnoreCase("rank")) {
-                if (sender.hasPermission("k.rank.create")) {
+                if (sender.hasPermission("k.rank")) {
                     // check if user has second argument
                     if (!(args.length >= 2)) {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -206,7 +207,7 @@ public class KingdomCommand implements CommandExecutor {
 
                     // Check if second argument is create/edit/delete
                     if (args[1].equalsIgnoreCase("create")) {
-                        if (sender.hasPermission("k.rank.create")) {
+                        if (sender.hasPermission("k.rank.create") || sender.hasPermission("k.rank.create.others")) {
                             new CreateRank(plugin, sender, label, args);
                             return true;
                         } else {
@@ -222,8 +223,14 @@ public class KingdomCommand implements CommandExecutor {
                     }
 
                     if (args[1].equalsIgnoreCase("delete")) {
-                        sender.sendMessage("delete rank");
-                        return true;
+                        if (sender.hasPermission("k.rank.delete") || sender.hasPermission("k.rank.delete.others")) {
+                            new DeleteRank(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            // No permission to do k.rank.create
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
                     }
 
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',

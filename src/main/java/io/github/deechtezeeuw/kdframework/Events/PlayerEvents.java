@@ -70,6 +70,6 @@ public class PlayerEvents implements Listener {
 
         event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
                 ChatColor.translateAlternateColorCodes('&',
-                        "%kdf_land_prefix%%kdf_rank_prefix% &a%s &a&l> &f%s")));
+                        plugin.Config.getGeneralChat())));
     }
 }

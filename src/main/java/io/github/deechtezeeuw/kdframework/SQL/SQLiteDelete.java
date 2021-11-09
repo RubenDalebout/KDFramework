@@ -1,6 +1,7 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -29,4 +30,16 @@ public class SQLiteDelete {
     // Player
 
     // Rank
+    public void rank_delete(Rank rank) {
+        String sql = "DELETE FROM ranks WHERE UUID = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            // set the corresponding param
+            pstmt.setString(1, rank.getUuid().toString());
+            // execute the delete statement
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
