@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.Commands;
 
+import io.github.deechtezeeuw.kdframework.GUI.GUIInvites;
 import io.github.deechtezeeuw.kdframework.GUI.GUILands;
 import io.github.deechtezeeuw.kdframework.GUI.GUIRanks;
 import io.github.deechtezeeuw.kdframework.Invite.CreateInvite;
@@ -77,6 +78,18 @@ public class KingdomCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" invite [add/delete]"));
+                }
+            }
+
+            // Invites
+            if (args[0].equalsIgnoreCase("invites")) {
+                if (sender.hasPermission("k.invites") || sender.hasPermission("k.invites.other")) {
+                    new GUIInvites(plugin, sender, label, args);
+                    return true;
+                } else {
+                    // No permission to do k.rank
+                    plugin.Config.noPermission(sender);
+                    return true;
                 }
             }
 

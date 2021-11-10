@@ -61,7 +61,9 @@ public class SQLiteSelect {
                         results.getInt("Maximum"),
                         results.getString("Spawn"),
                         plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
-                        plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
+                        plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))),
+                        plugin.SQLSelect.invite_get_from_land(UUID.fromString(results.getString("UUID")))
+                );
                 lands.add(land);
             }
         } catch (SQLException e) {
@@ -90,7 +92,9 @@ public class SQLiteSelect {
                         results.getInt("Maximum"),
                         results.getString("Spawn"),
                         plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
-                        plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
+                        plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))),
+                        plugin.SQLSelect.invite_get_from_land(UUID.fromString(results.getString("UUID")))
+                );
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -151,7 +155,9 @@ public class SQLiteSelect {
                             results.getInt("Maximum"),
                             results.getString("Spawn"),
                             plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
-                            plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
+                            plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))),
+                            plugin.SQLSelect.invite_get_from_land(UUID.fromString(results.getString("UUID")))
+                    );
                 }
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
@@ -214,6 +220,39 @@ public class SQLiteSelect {
 
             // set the value
             pstmt.setString(1, Name);
+            ResultSet results  = pstmt.executeQuery();
+
+            while (results.next()) {
+                UUID uuid = UUID.fromString(results.getString("UUID"));
+                String name = results.getString("Name");
+                UUID land = null;
+                if (results.getString("Land") != null) {
+                    land = UUID.fromString(results.getString("Land"));
+                }
+                UUID rank = null;
+                if (results.getString("Rank") != null) {
+                    rank = UUID.fromString(results.getString("Rank"));
+                }
+
+                speler = new Speler(uuid,name,land,rank);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return speler;
+    }
+
+    public Speler player_get_by_uuid(UUID id) {
+        Speler speler = null;
+
+        String sql = "SELECT * "
+                + "FROM players WHERE UUID == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+
+            // set the value
+            pstmt.setString(1, id.toString());
             ResultSet results  = pstmt.executeQuery();
 
             while (results.next()) {
@@ -308,6 +347,30 @@ public class SQLiteSelect {
         try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
             // set the value
             pstmt.setString(1, speler.getUuid().toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            while(results.next()) {
+                Invite invite = new Invite(
+                        UUID.fromString(results.getString("UUID")) ,
+                        UUID.fromString(results.getString("Land")),
+                        UUID.fromString(results.getString("Player"))
+                );
+                invites.add(invite);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return invites;
+    }
+
+    public List<Invite> invite_get_from_land(UUID land) {
+        List<Invite> invites = new ArrayList<>();
+        String sql = "SELECT * "
+                + "FROM invites WHERE Land == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, land.toString());
             ResultSet results  = pstmt.executeQuery();
 
             while(results.next()) {

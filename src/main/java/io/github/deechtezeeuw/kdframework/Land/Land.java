@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.Land;
 
+import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.SQL.SQLiteSelect;
@@ -18,8 +19,9 @@ public class Land {
     private String spawn;
     private List<Speler> leden;
     private List<Rank> ranks;
+    private List<Invite> invites;
 
-    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, String Land_Spawn, List<Speler> Land_Leden, List<Rank> Land_Ranks) {
+    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, String Land_Spawn, List<Speler> Land_Leden, List<Rank> Land_Ranks, List<Invite> Land_Invites) {
         this.uuid = Land_ID;
         this.name = Land_Name;
         this.prefix = Land_Prefix;
@@ -27,6 +29,7 @@ public class Land {
         this.maximum = Land_Maximum;
         this.leden = Land_Leden;
         this.ranks = Land_Ranks;
+        this.invites = Land_Invites;
         this.spawn = Land_Spawn;
     }
 
@@ -60,6 +63,10 @@ public class Land {
 
     public List<Rank> getRanks() {
         return this.ranks;
+    }
+
+    public List<Invite> getInvites() {
+        return this.invites;
     }
 
     public String getLeiding() {
