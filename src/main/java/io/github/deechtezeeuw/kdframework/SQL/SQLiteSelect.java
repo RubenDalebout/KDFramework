@@ -58,6 +58,7 @@ public class SQLiteSelect {
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"),
+                        results.getString("Spawn"),
                         plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
                         plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
                 lands.add(land);
@@ -86,6 +87,7 @@ public class SQLiteSelect {
                         results.getString("Prefix"),
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"),
+                        results.getString("Spawn"),
                         plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
                         plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
             }
@@ -146,6 +148,7 @@ public class SQLiteSelect {
                             results.getString("Prefix"),
                             results.getBoolean("Invite"),
                             results.getInt("Maximum"),
+                            results.getString("Spawn"),
                             plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
                             plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))));
                 }

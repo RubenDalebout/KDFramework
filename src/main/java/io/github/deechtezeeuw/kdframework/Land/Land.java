@@ -15,10 +15,11 @@ public class Land {
     private String prefix;
     private Boolean invite;
     private Integer maximum;
+    private String spawn;
     private List<Speler> leden;
     private List<Rank> ranks;
 
-    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, List<Speler> Land_Leden, List<Rank> Land_Ranks) {
+    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, String Land_Spawn, List<Speler> Land_Leden, List<Rank> Land_Ranks) {
         this.uuid = Land_ID;
         this.name = Land_Name;
         this.prefix = Land_Prefix;
@@ -26,6 +27,7 @@ public class Land {
         this.maximum = Land_Maximum;
         this.leden = Land_Leden;
         this.ranks = Land_Ranks;
+        this.spawn = Land_Spawn;
     }
 
     public UUID getUuid() {
@@ -46,6 +48,10 @@ public class Land {
 
     public Integer getMaximum() {
         return this.maximum;
+    }
+
+    public String getSpawn() {
+        return this.spawn;
     }
 
     public List<Speler> getLeden() {

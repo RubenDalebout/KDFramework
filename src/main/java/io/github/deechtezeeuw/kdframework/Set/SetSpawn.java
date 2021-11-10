@@ -30,7 +30,7 @@ public class SetSpawn {
         }
 
         Player player = (Player) sender;
-        String Location = player.getLocation().getBlockX()+"|"+player.getLocation().getBlockY()+"|"+player.getLocation().getBlockZ();
+        String Location = player.getLocation().getBlockX()+"/"+player.getLocation().getBlockY()+"/"+player.getLocation().getBlockZ();
 
         // Check if user is in database
         if (!plugin.SQLSelect.player_exists(player)) {
@@ -63,7 +63,7 @@ public class SetSpawn {
         // Update spawn from land
         plugin.SQLUpdate.update_spawn_land(land, Location);
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                plugin.Config.getGeneralPrefix() + "&aSuccesvol de spawn gewijzigd naar &2&l"+Location.replace("|", " ")+" &avan het land &2&l"+land.getName()+"&a!"));
+                plugin.Config.getGeneralPrefix() + "&aSuccesvol de spawn gewijzigd naar &2&l"+Location.replace("/", " ")+" &avan het land &2&l"+land.getName()+"&a!"));
         return;
     }
 }

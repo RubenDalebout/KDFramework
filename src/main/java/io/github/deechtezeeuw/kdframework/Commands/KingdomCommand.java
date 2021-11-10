@@ -14,10 +14,13 @@ import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
 import io.github.deechtezeeuw.kdframework.Set.SetSpawn;
+import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -298,6 +301,43 @@ public class KingdomCommand implements CommandExecutor {
             }
 
             // Spawn
+            if (args[0].equalsIgnoreCase("spawn")) {
+                if (sender.hasPermission("k.spawn")) {
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        // Check if user is in database
+                        if (!plugin.SQLSelect.player_exists(player)) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&cIn verband met veiligheids redenen kunnen wij niet toestaan dat u niet bestaat in onze database!"));
+                            return true;
+                        }
+                        Speler speler = plugin.SQLSelect.player_get_by_name(player.getName());
+                        // Check if user is in a land
+                        if (speler == null || speler.getLand() == null) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&cJe moet in een land zitten op &4&l/k spawn &cte kunnen!"));
+                            return true;
+                        }
+                        Land land = plugin.SQLSelect.land_get_by_player(speler);
+
+                        // check if land has an spawn
+                        if (land.getSpawn() == null) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&cJe kingdom heeft nog geen spawn!"));
+                            return true;
+                        }
+                        List<String> Locatie = new ArrayList<>();
+                        for (String a : land.getSpawn().split("/")) {
+                            Locatie.add(a);
+                        }
+                        Location tpLocation = player.getLocation();
+                        tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
+                        player.teleport(tpLocation);
+                    }
+                } else {
+                    plugin.Config.noPermission(sender);
+                }
+            }
         }
 
         return true;
