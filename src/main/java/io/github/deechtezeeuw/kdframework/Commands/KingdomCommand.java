@@ -13,6 +13,7 @@ import io.github.deechtezeeuw.kdframework.Rank.EditRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
+import io.github.deechtezeeuw.kdframework.Set.SetSpawn;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -259,38 +260,44 @@ public class KingdomCommand implements CommandExecutor {
 
             // Set
             if (args[0].equalsIgnoreCase("set")) {
-                // Check if user has permission to do set
-                if (sender.hasPermission("k.set")) {
-                    // Check if it has more then 2 argument
-                    if (args.length >= 2) {
-                        // Check if its set land
-                        if (args[1].equalsIgnoreCase("land")) {
-                            new SetLand(plugin, sender, label, args);
+                // Check if it has more then 2 argument
+                if (args.length >= 2) {
+                    // Check if its set land
+                    if (args[1].equalsIgnoreCase("land")) {
+                       new SetLand(plugin, sender, label, args);
+                       return true;
+                    }
+
+                    // Check if its set rank
+                    if (args[1].equalsIgnoreCase("rank")) {
+                        if (sender.hasPermission("k.set.rank") || sender.hasPermission("k.set.rank.other")) {
+                            new SetRank(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            plugin.Config.noPermission(sender);
                             return true;
                         }
+                    }
 
-                        // Check if its set rank
-                        if (args[1].equalsIgnoreCase("rank")) {
-                            if (sender.hasPermission("k.set.rank") || sender.hasPermission("k.set.rank.all")) {
-                                new SetRank(plugin, sender, label, args);
-                                return true;
-                            } else {
-                                plugin.Config.noPermission(sender);
-                                return true;
-                            }
+                    // Check if its set spawn
+                    if (args[1].equalsIgnoreCase("spawn")) {
+                        if (sender.hasPermission("k.set.spawn") || sender.hasPermission("k.set.spawn.other")) {
+                            new SetSpawn(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            plugin.Config.noPermission(sender);
+                            return true;
                         }
-                    } else {
-                        // Wrong arguments
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" "+args[0]+" [land/rank] <speler> <value>"));
-                        return true;
                     }
                 } else {
-                    // No permissions
-                    plugin.Config.noPermission(sender);
+                    // Wrong arguments
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" "+args[0]+" [land/rank] <speler> <value>"));
                     return true;
                 }
             }
+
+            // Spawn
         }
 
         return true;

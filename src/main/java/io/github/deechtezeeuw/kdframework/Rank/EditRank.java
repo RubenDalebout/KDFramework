@@ -29,10 +29,6 @@ public class EditRank {
             String ArgRank = args[3];
             String ArgWhat = args[4];
             String ArgValue = args[5];
-            sender.sendMessage("Kingdom: "+ArgKingdom);
-            sender.sendMessage("Rank: "+ArgRank);
-            sender.sendMessage("Column: "+ArgWhat);
-            sender.sendMessage("Value: "+ArgValue);
 
             // Check if Kingdom exists
             if (!plugin.SQLSelect.land_exists(ArgKingdom)) {

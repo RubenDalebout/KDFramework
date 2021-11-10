@@ -42,7 +42,8 @@ public class SQLiteInstall {
                 + "	Name varchar(16) NOT NULL,\n"
                 + "	Prefix varchar(36) NOT NULL,\n"
                 + "	Invite tinyint(1) NOT NULL,\n"
-                + "	Maximum integer(100) NOT NULL\n"
+                + "	Maximum integer(100) NOT NULL,\n"
+                + " Spawn varchar(25)\n"
                 + ");";
 
         try (Statement stmt = plugin.SQL.getConnection().createStatement()) {

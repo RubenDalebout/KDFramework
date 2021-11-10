@@ -1,6 +1,7 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import org.bukkit.entity.Player;
 
@@ -158,5 +159,19 @@ public class SQLiteUpdate {
             }
         }
         return;
+    }
+
+
+    // Spawn
+    public void update_spawn_land(Land land, String Locatie) {
+        String sql = "UPDATE lands SET Spawn = ? WHERE UUID = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, Locatie);
+            pstmt.setString(2, land.getUuid().toString());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
