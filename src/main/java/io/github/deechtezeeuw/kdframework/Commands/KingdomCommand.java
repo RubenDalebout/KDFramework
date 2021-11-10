@@ -245,7 +245,7 @@ public class KingdomCommand implements CommandExecutor {
 
                     // Check if second argument is create/edit/delete
                     if (args[1].equalsIgnoreCase("create")) {
-                        if (sender.hasPermission("k.rank.create") || sender.hasPermission("k.rank.create.others")) {
+                        if (sender.hasPermission("k.rank.create") || sender.hasPermission("k.rank.create.other")) {
                             new CreateRank(plugin, sender, label, args);
                             return true;
                         } else {
@@ -267,7 +267,7 @@ public class KingdomCommand implements CommandExecutor {
                     }
 
                     if (args[1].equalsIgnoreCase("delete")) {
-                        if (sender.hasPermission("k.rank.delete") || sender.hasPermission("k.rank.delete.others")) {
+                        if (sender.hasPermission("k.rank.delete") || sender.hasPermission("k.rank.delete.other")) {
                             new DeleteRank(plugin, sender, label, args);
                             return true;
                         } else {

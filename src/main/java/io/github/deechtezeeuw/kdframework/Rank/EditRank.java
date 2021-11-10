@@ -24,7 +24,7 @@ public class EditRank {
     }
 
     private void checkArguments() {
-        if (sender.hasPermission("k.rank.edit.others") && args.length == 6) {
+        if (sender.hasPermission("k.rank.edit.other") && args.length == 6) {
             String ArgKingdom = args[2];
             String ArgRank = args[3];
             String ArgWhat = args[4];

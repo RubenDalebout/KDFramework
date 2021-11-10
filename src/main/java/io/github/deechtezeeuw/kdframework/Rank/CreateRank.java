@@ -30,7 +30,7 @@ public class CreateRank {
 
         // Check if there is an args 2
         if (!(args.length > 2)) {
-            if (sender.hasPermission("k.rank.create.others")) {
+            if (sender.hasPermission("k.rank.create.other")) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " " + args[0] + " "+args[1]+" <rank/kingdom> <rank>"));
                 return;
@@ -42,7 +42,7 @@ public class CreateRank {
         }
 
         // Check if user has permission to add ranks to all or only hes land
-        if (sender.hasPermission("k.rank.create.others") && args.length == 4) {
+        if (sender.hasPermission("k.rank.create.other") && args.length == 4) {
             // Check if arg 2 is an kingdom or an new rank
             if (!plugin.SQLSelect.land_exists(args[2])) {
                 // Not an kingdom
