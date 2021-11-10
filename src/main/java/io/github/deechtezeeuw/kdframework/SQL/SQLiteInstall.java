@@ -16,6 +16,7 @@ public class SQLiteInstall {
         this.table_player();
         this.table_landen();
         this.table_ranks();
+        this.table_invites();
     }
 
     private void table_player() {
@@ -35,7 +36,7 @@ public class SQLiteInstall {
         return;
     }
 
-    public void table_landen() {
+    private void table_landen() {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS lands (\n"
                 + "	UUID char(36) PRIMARY KEY,\n"
@@ -55,7 +56,7 @@ public class SQLiteInstall {
         return;
     }
 
-    public void table_ranks() {
+    private void table_ranks() {
         // SQL statement for creating a new table
         String sql = "CREATE TABLE IF NOT EXISTS ranks (\n"
                 + "	UUID char(36) PRIMARY KEY,\n"
@@ -76,4 +77,19 @@ public class SQLiteInstall {
         return;
     }
 
+    private void table_invites() {
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS invites (\n"
+                + " UUID char(36) PRIMARY KEY,\n"
+                + " Land char(36) NOT NULL,\n"
+                + " Player char(36) NOT NULL\n"
+                + ");";
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
