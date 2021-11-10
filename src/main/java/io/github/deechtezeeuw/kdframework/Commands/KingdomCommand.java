@@ -3,6 +3,7 @@ package io.github.deechtezeeuw.kdframework.Commands;
 import io.github.deechtezeeuw.kdframework.GUI.GUILands;
 import io.github.deechtezeeuw.kdframework.GUI.GUIRanks;
 import io.github.deechtezeeuw.kdframework.Invite.CreateInvite;
+import io.github.deechtezeeuw.kdframework.Invite.DeleteInvite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
@@ -66,7 +67,7 @@ public class KingdomCommand implements CommandExecutor {
                     if (args[1].equalsIgnoreCase("remove")) {
                         // Check if user has permission to do k.invite.remove or k.invite.remove.other
                         if (sender.hasPermission("k.invite.remove") || sender.hasPermission("k.invite.remove.other")) {
-
+                            new DeleteInvite(plugin, sender, label, args);
                             return true;
                         } else {
                             plugin.Config.noPermission(sender);

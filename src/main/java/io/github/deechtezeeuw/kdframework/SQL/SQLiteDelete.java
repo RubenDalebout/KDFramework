@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
+import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 
@@ -36,6 +37,21 @@ public class SQLiteDelete {
         try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
             // set the corresponding param
             pstmt.setString(1, rank.getUuid().toString());
+            // execute the delete statement
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    // Invite
+    public void invite_delete(Invite invite) {
+        String sql = "DELETE FROM invites WHERE UUID = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            // set the corresponding param
+            pstmt.setString(1, invite.getUuid().toString());
             // execute the delete statement
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -72,7 +72,7 @@ public class CreateInvite {
             // Check if user has already an invite for that land
             List<Invite> invites = plugin.SQLSelect.invite_get_from_user(speler);
             for (Invite invite : invites) {
-                if (invite.getLand().equals(speler.getLand())) {
+                if (invite.getLand().equals(land.getUuid())) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.Config.getGeneralPrefix() + "&4&l"+speler.getName()+" &cis al geinvite voor &4&l"+ArgKingdom+"&c!"));
                     return;
