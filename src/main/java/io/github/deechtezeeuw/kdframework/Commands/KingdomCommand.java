@@ -312,18 +312,29 @@ public class KingdomCommand implements CommandExecutor {
                             return true;
                         }
                         Speler speler = plugin.SQLSelect.player_get_by_name(player.getName());
-                        // Check if user is in a land
-                        if (speler == null || speler.getLand() == null) {
-                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                    plugin.Config.getGeneralPrefix() + "&cJe moet in een land zitten op &4&l/k spawn &cte kunnen!"));
-                            return true;
+                        Land land = null;
+                        if (sender.hasPermission("k.spawn.other") && args.length > 1) {
+                            String OtherKD = args[1];
+                            if (!plugin.SQLSelect.land_exists(OtherKD)) {
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[2]+" &cbestaat niet!"));
+                                return true;
+                            }
+                            land = plugin.SQLSelect.land_get_by_name(OtherKD);
+                        } else {
+                            // Check if user is in a land
+                            if (speler == null || speler.getLand() == null) {
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                        plugin.Config.getGeneralPrefix() + "&cJe moet in een land zitten op &4&l/k spawn &cte kunnen!"));
+                                return true;
+                            }
+                            land = plugin.SQLSelect.land_get_by_player(speler);
                         }
-                        Land land = plugin.SQLSelect.land_get_by_player(speler);
 
                         // check if land has an spawn
                         if (land.getSpawn() == null) {
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                    plugin.Config.getGeneralPrefix() + "&cJe kingdom heeft nog geen spawn!"));
+                                    plugin.Config.getGeneralPrefix() + "&cHet kingdom &4&l"+land.getName()+" &cheeft nog geen spawn!"));
                             return true;
                         }
                         List<String> Locatie = new ArrayList<>();
