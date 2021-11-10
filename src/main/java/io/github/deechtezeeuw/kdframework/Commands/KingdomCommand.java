@@ -2,6 +2,7 @@ package io.github.deechtezeeuw.kdframework.Commands;
 
 import io.github.deechtezeeuw.kdframework.GUI.GUILands;
 import io.github.deechtezeeuw.kdframework.GUI.GUIRanks;
+import io.github.deechtezeeuw.kdframework.Invite.CreateInvite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.DeleteLand;
@@ -45,6 +46,38 @@ public class KingdomCommand implements CommandExecutor {
             }
 
             // Sub commands
+
+            // Invite
+            if (args[0].equalsIgnoreCase("invite")) {
+                // Check if there ar at least 2 arguments
+                if (args.length >= 2) {
+                    // Check if arg[1] is add
+                    if (args[1].equalsIgnoreCase("add")) {
+                        // Check if user has permission to do k.invite.add or k.invite.add.other
+                        if (sender.hasPermission("k.invite.add") || sender.hasPermission("k.invite.add.other")) {
+                            new CreateInvite(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
+                    }
+                    // check if args[1] is remove
+                    if (args[1].equalsIgnoreCase("remove")) {
+                        // Check if user has permission to do k.invite.remove or k.invite.remove.other
+                        if (sender.hasPermission("k.invite.remove") || sender.hasPermission("k.invite.remove.other")) {
+
+                            return true;
+                        } else {
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
+                    }
+                } else {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" invite [add/delete]"));
+                }
+            }
 
             // Land
             if (args[0].equalsIgnoreCase("land")) {

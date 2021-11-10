@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
+import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
@@ -295,5 +296,31 @@ public class SQLiteSelect {
         }
 
         return ranks;
+    }
+
+
+    // Invites
+    public List<Invite> invite_get_from_user(Speler speler) {
+        List<Invite> invites = new ArrayList<>();
+        String sql = "SELECT * "
+                + "FROM invites WHERE Player == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, speler.getUuid().toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            while(results.next()) {
+                Invite invite = new Invite(
+                        UUID.fromString(results.getString("UUID")) ,
+                        UUID.fromString(results.getString("Land")),
+                        UUID.fromString(results.getString("Player"))
+                );
+                invites.add(invite);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return invites;
     }
 }

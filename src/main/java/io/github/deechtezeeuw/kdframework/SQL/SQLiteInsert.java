@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
+import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.CreateLand;
 import io.github.deechtezeeuw.kdframework.Land.Land;
@@ -70,6 +71,24 @@ public class SQLiteInsert {
                 pstmt.setString(6, null);
             }
             pstmt.setBoolean(7, rank.getKdDefault());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    // Invite insert
+    public void invite_create(Invite invite) {
+        String sql = "INSERT INTO "
+                + "invites(UUID, Land, Player) "
+                + "VALUES(?,?,?)";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, invite.getUuid().toString());
+            pstmt.setString(2, invite.getLand().toString());
+            pstmt.setString(3, invite.getPlayer().toString());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
