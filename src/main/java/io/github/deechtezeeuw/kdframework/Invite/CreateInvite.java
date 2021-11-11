@@ -80,10 +80,12 @@ public class CreateInvite {
             }
 
             // Check if user is already in that land
-            if (speler.getLand().equals(land.getUuid())) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&4&l"+speler.getName()+" &czit al in &4&l"+ArgKingdom+"&c!"));
-                return;
+            if (speler.getLand()!= null) {
+                if (speler.getLand().equals(land.getUuid())) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&4&l" + speler.getName() + " &czit al in &4&l" + ArgKingdom + "&c!"));
+                    return;
+                }
             }
 
             Invite invite = new Invite(this.uuid, land.getUuid(), speler.getUuid());

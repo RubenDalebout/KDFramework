@@ -158,7 +158,7 @@ public class GUIJoin {
                         MetaLandJoinKnop.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 
                         LandJoinKnop.setItemMeta(MetaLandJoinKnop);
-                        MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&1&lJoinen"));
+                        MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lJoinen"));
 
                         LandJoinKnop.setItemMeta(MetaLandJoinKnop);
                         gui.setItem(31, LandJoinKnop);
