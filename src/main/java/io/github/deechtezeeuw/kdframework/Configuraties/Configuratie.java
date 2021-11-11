@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class Configuratie {
 
@@ -28,6 +29,10 @@ public class Configuratie {
     private String generalOnQuit;
     private String generalCReload;
     private String generalNoPerms;
+
+    // Scoreboard
+    private String sidebarTitle;
+    private List<String> sidebarList;
 
     private File landConfigFile;
     private FileConfiguration landConfig;
@@ -75,6 +80,14 @@ public class Configuratie {
         return this.generalNoPerms;
     }
 
+    public String getSidebarTitle() {
+        return this.sidebarTitle;
+    }
+
+    public List<String> getSidebarList() {
+        return this.sidebarList;
+    }
+
     private void loadVariables() {
 
         // Configuration file general
@@ -86,6 +99,10 @@ public class Configuratie {
         this.generalOnQuit = plugin.getConfig().getString("general.messages.on-quit");
         this.generalCReload = plugin.getConfig().getString("general.messages.config-reload");
         this.generalNoPerms = plugin.getConfig().getString("general.messages.no-permission");
+
+        // Scoreboard
+        this.sidebarTitle = plugin.getConfig().getString("general.scoreboard.title");
+        this.sidebarList = plugin.getConfig().getStringList("general.scoreboard.lines");
     }
 
     public FileConfiguration getLandConfig() {

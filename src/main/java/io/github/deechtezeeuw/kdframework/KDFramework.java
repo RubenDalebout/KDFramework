@@ -6,6 +6,7 @@ import io.github.deechtezeeuw.kdframework.Events.PlayerEvents;
 import io.github.deechtezeeuw.kdframework.Events.PlayerTabComplete;
 import io.github.deechtezeeuw.kdframework.GUI.GUIJoin;
 import io.github.deechtezeeuw.kdframework.SQL.*;
+import io.github.deechtezeeuw.kdframework.Scoreboard.Sidebar;
 import io.github.deechtezeeuw.kdframework.Speler.SpelerPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -30,6 +31,8 @@ public final class KDFramework extends JavaPlugin {
 
     // Placeholders
     public PlaceHolders KDPlaceholders;
+    // Scoreboard
+    public Sidebar KDSidebar;
     // Permissions
     public SpelerPermissions SpelerPerms;
     // GUIs
@@ -89,6 +92,7 @@ public final class KDFramework extends JavaPlugin {
         }
 
         this.SpelerPerms = new SpelerPermissions(this);
+        this.KDSidebar = new Sidebar(this);
         this.guiJoin = new GUIJoin(this);
 
     }

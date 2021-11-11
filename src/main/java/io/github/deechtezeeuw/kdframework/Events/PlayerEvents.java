@@ -59,6 +59,7 @@ public class PlayerEvents implements Listener {
         }
 
         plugin.SpelerPerms.SetupPermissions(player);
+        plugin.KDSidebar.ReceiveBoard(player);
     }
 
     @EventHandler

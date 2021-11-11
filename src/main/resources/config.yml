@@ -18,3 +18,9 @@ general:
     on-quit: '&7&l(&4&l-&7&l) %kdf_land_prefix% &2&l%player_displayname%'
     config-reload: '&aSuccesvol de &2&lConfiguratie &aherladen!'
     no-permission: '&cJe hebt hiervoor geen permissie'
+  scoreboard:
+    title: '&a&lKingdom &2&lServer'
+    lines:
+      - ''
+      - 'Kingdom'
+      - '%kdf_land_prefix%'
