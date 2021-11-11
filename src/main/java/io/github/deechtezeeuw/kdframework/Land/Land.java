@@ -6,7 +6,11 @@ import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.SQL.SQLiteSelect;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -109,5 +113,15 @@ public class Land {
         }
 
         return rank;
+    }
+
+    public void goto_spawn(Player player) {
+        List<String> Locatie = new ArrayList<>();
+        for (String a : this.getSpawn().split("/")) {
+            Locatie.add(a);
+        }
+        Location tpLocation = player.getLocation();
+        tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
+        player.teleport(tpLocation);
     }
 }

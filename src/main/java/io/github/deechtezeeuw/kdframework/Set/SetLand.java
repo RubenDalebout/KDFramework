@@ -5,6 +5,7 @@ import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 
 import java.util.UUID;
@@ -84,6 +85,16 @@ public class SetLand {
                 plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(speler.getUuid()));
                 Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aJe bent in het land &2&l"+land.getName()+" &agezet!"));
+                // check if land has an spawn
+                if (land.getSpawn() == null) {
+                    Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cHet kingdom &4&l"+land.getName()+" &cheeft nog geen spawn!"));
+                    return;
+                }
+                land.goto_spawn(Bukkit.getPlayer(speler.getUuid()));
+                Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd naar je kingdom..."));
+                return;
             }
         }
 
@@ -109,6 +120,7 @@ public class SetLand {
                 plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(speler.getUuid()));
                 Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aJe bent uit je land gezet!"));
+                Bukkit.getPlayer(speler.getUuid()).teleport(plugin.getServer().getWorld(plugin.Config.getGeneralWorld()).getSpawnLocation());
             }
         }
 

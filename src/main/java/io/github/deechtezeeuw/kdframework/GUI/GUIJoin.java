@@ -66,7 +66,7 @@ public class GUIJoin {
             double Chestvalue = 54;
             this.guiSize = (int) Chestvalue;
 
-            gui = Bukkit.getServer().createInventory(player, guiSize, "Kingdom "+land.getName());
+            gui = Bukkit.getServer().createInventory(player, guiSize, ChatColor.translateAlternateColorCodes('&',"Kingdom "+land.getName()));
 
             // Create glass panes
             this.createGlasspanes();
@@ -140,16 +140,47 @@ public class GUIJoin {
                 LandJoinKnop.setItemMeta(MetaLandJoinKnop);
                 gui.setItem(31, LandJoinKnop);
             } else {
-                if (lands.get(pagination).getInvite()) {
-                    // Get invites from user
-                    List<Invite> invites = plugin.SQLSelect.invite_get_from_user(speler);
-                    boolean found = false;
-                    for (Invite invite : invites) {
-                        if (invite.getLand().equals(lands.get(pagination).getUuid()))
-                            found = true;
-                    }
+                // Check if land is full
+                if (lands.get(pagination).getLeden().size() < lands.get(pagination).getMaximum()) {
+                    if (lands.get(pagination).getInvite()) {
+                        // Get invites from user
+                        List<Invite> invites = plugin.SQLSelect.invite_get_from_user(speler);
+                        boolean found = false;
+                        for (Invite invite : invites) {
+                            if (invite.getLand().equals(lands.get(pagination).getUuid()))
+                                found = true;
+                        }
 
-                    if (found) {
+                        if (found) {
+                            // Create Green Glass Pane
+                            ItemStack LandJoinKnop = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
+
+                            ItemMeta MetaLandJoinKnop = LandJoinKnop.getItemMeta();
+                            ArrayList<String> LandJoinKnopLore = new ArrayList<>();
+                            MetaLandJoinKnop.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+
+                            LandJoinKnop.setItemMeta(MetaLandJoinKnop);
+                            MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lJoinen"));
+
+                            LandJoinKnop.setItemMeta(MetaLandJoinKnop);
+                            gui.setItem(31, LandJoinKnop);
+                        } else {
+                            // Create Green Glass Pane
+                            ItemStack LandJoinKnop = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 1);
+
+                            ItemMeta MetaLandJoinKnop = LandJoinKnop.getItemMeta();
+                            ArrayList<String> LandJoinKnopLore = new ArrayList<>();
+                            LandJoinKnopLore.add(ChatColor.translateAlternateColorCodes('&', "&6Het land is op invite"));
+                            MetaLandJoinKnop.setLore(LandJoinKnopLore);
+                            MetaLandJoinKnop.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+
+                            LandJoinKnop.setItemMeta(MetaLandJoinKnop);
+                            MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lGeen invite"));
+
+                            LandJoinKnop.setItemMeta(MetaLandJoinKnop);
+                            gui.setItem(31, LandJoinKnop);
+                        }
+                    } else {
                         // Create Green Glass Pane
                         ItemStack LandJoinKnop = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
 
@@ -162,32 +193,19 @@ public class GUIJoin {
 
                         LandJoinKnop.setItemMeta(MetaLandJoinKnop);
                         gui.setItem(31, LandJoinKnop);
-                    } else {
-                        // Create Green Glass Pane
-                        ItemStack LandJoinKnop = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 1);
-
-                        ItemMeta MetaLandJoinKnop = LandJoinKnop.getItemMeta();
-                        ArrayList<String> LandJoinKnopLore = new ArrayList<>();
-                        LandJoinKnopLore.add(ChatColor.translateAlternateColorCodes('&', "&6Het land is op invite"));
-                        MetaLandJoinKnop.setLore(LandJoinKnopLore);
-                        MetaLandJoinKnop.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-
-                        LandJoinKnop.setItemMeta(MetaLandJoinKnop);
-                        MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lGeen invite"));
-
-                        LandJoinKnop.setItemMeta(MetaLandJoinKnop);
-                        gui.setItem(31, LandJoinKnop);
                     }
                 } else {
                     // Create Green Glass Pane
-                    ItemStack LandJoinKnop = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
+                    ItemStack LandJoinKnop = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 14);
 
                     ItemMeta MetaLandJoinKnop = LandJoinKnop.getItemMeta();
                     ArrayList<String> LandJoinKnopLore = new ArrayList<>();
+                    LandJoinKnopLore.add(ChatColor.translateAlternateColorCodes('&', "&cHet land zit vol!"));
+                    MetaLandJoinKnop.setLore(LandJoinKnopLore);
                     MetaLandJoinKnop.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 
                     LandJoinKnop.setItemMeta(MetaLandJoinKnop);
-                    MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&2&lJoinen"));
+                    MetaLandJoinKnop.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&4&lNiet join baar"));
 
                     LandJoinKnop.setItemMeta(MetaLandJoinKnop);
                     gui.setItem(31, LandJoinKnop);

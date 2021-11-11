@@ -1,11 +1,13 @@
 package io.github.deechtezeeuw.kdframework.Events;
 
+import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +20,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerEvents implements Listener {
 
@@ -127,6 +132,70 @@ public class PlayerEvents implements Listener {
                 plugin.guiJoin.pagination = plugin.guiJoin.pagination - 1;
                 p.closeInventory();
                 plugin.guiJoin.openGUI(p);
+            }
+            // Join
+            if (e.getSlot() == GUISize-23 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&2&lJoinen"))) {
+                // Check if player is in database
+                if (plugin.SQLSelect.player_exists(p)) {
+                    Speler speler = plugin.SQLSelect.player_get_by_uuid(p.getUniqueId());
+                    // Check if player is in a land
+                    if (speler.getLand() == null) {
+                        // Check if the land exists that he or she wants to join
+                        String landName = view.getTitle().replace("Kingdom ", "");
+                        if (plugin.SQLSelect.land_exists(landName)) {
+                            Land land = plugin.SQLSelect.land_get_by_name(landName);
+                            // Check if land is at its max
+                            if (land.getLeden().size() < land.getMaximum()) {
+                                // Check if land is on invite or not
+                                if (land.getInvite()) {
+                                    // Land is on invite
+                                    boolean found = false;
+                                    List<Invite> invites = plugin.SQLSelect.invite_get_from_land(land.getUuid());
+                                    for (Invite invite : invites) {
+                                        if (invite.getPlayer().equals(p.getUniqueId()))
+                                            found = true;
+                                    }
+                                    if (found) {
+                                        p.closeInventory();
+                                        plugin.guiJoin.pagination = 0;
+                                        plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
+                                        plugin.SQLUpdate.update_player_rank(speler.getUuid(), land.get_defaultRank().getUuid());
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                plugin.Config.getGeneralPrefix() + "&aJe bent het land &2&l"+land.getName()+ " &agejoind!"));
+                                        // check if land has an spawn
+                                        if (land.getSpawn() == null) {
+                                            p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                    plugin.Config.getGeneralPrefix() + "&cHet kingdom &4&l"+land.getName()+" &cheeft nog geen spawn!"));
+                                            return;
+                                        }
+                                        land.goto_spawn(p);
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd naar je kingdom..."));
+                                        return;
+                                    }
+                                } else {
+                                    // Land is not on invite
+                                    p.closeInventory();
+                                    plugin.guiJoin.pagination = 0;
+                                    plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
+                                    plugin.SQLUpdate.update_player_rank(speler.getUuid(), land.get_defaultRank().getUuid());
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                            plugin.Config.getGeneralPrefix() + "&aJe bent het land &2&l"+land.getName()+ " &agejoind!"));
+                                    // check if land has an spawn
+                                    if (land.getSpawn() == null) {
+                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                plugin.Config.getGeneralPrefix() + "&cHet kingdom &4&l"+land.getName()+" &cheeft nog geen spawn!"));
+                                        return;
+                                    }
+                                    land.goto_spawn(p);
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                            plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd naar je kingdom..."));
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }

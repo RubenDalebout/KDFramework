@@ -22,6 +22,7 @@ public class Configuratie {
     // Configuration file general
     private String generalPrefix;
     private String generalChat;
+    private String generalWorld;
     private String generalOnFirst;
     private String generalOnJoin;
     private String generalOnQuit;
@@ -50,6 +51,10 @@ public class Configuratie {
         return this.generalChat;
     }
 
+    public String getGeneralWorld() {
+        return this.generalWorld;
+    }
+
     public String getGeneralOnFirst() {
         return this.generalOnFirst;
     }
@@ -75,6 +80,7 @@ public class Configuratie {
         // Configuration file general
         this.generalPrefix = plugin.getConfig().getString("general.settings.prefix");
         this.generalChat = plugin.getConfig().getString("general.settings.chat");
+        this.generalWorld = plugin.getConfig().getString("general.settings.world");
         this.generalOnFirst = plugin.getConfig().getString("general.messages.on-first");
         this.generalOnJoin = plugin.getConfig().getString("general.messages.on-join");
         this.generalOnQuit = plugin.getConfig().getString("general.messages.on-quit");
