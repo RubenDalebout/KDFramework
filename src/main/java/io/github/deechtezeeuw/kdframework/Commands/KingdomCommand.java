@@ -1,6 +1,7 @@
 package io.github.deechtezeeuw.kdframework.Commands;
 
 import io.github.deechtezeeuw.kdframework.GUI.GUIInvites;
+import io.github.deechtezeeuw.kdframework.GUI.GUIJoin;
 import io.github.deechtezeeuw.kdframework.GUI.GUILands;
 import io.github.deechtezeeuw.kdframework.GUI.GUIRanks;
 import io.github.deechtezeeuw.kdframework.Invite.CreateInvite;
@@ -88,6 +89,19 @@ public class KingdomCommand implements CommandExecutor {
                     return true;
                 } else {
                     // No permission to do k.rank
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+
+            // Join
+            if (args[0].equalsIgnoreCase("join")) {
+                if (sender.hasPermission("k.join")) {
+                    plugin.guiJoin.GUIInstall(sender, label, args);
+                    return true;
+                } else {
+                    // No permission to do k.join
                     plugin.Config.noPermission(sender);
                     return true;
                 }

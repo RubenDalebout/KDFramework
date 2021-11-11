@@ -109,5 +109,25 @@ public class PlayerEvents implements Listener {
                 p.closeInventory();
             }
         }
+
+        if(view.getTitle().contains("Kingdom") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
+            e.setCancelled(true);
+            Integer GUISize = e.getClickedInventory().getSize();
+            if (e.getSlot() == GUISize-5 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&4&lSluiten"))) {
+                p.closeInventory();
+            }
+            // Next
+            if (e.getSlot() == GUISize-12 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&2&lVolgende"))) {
+                plugin.guiJoin.pagination = plugin.guiJoin.pagination + 1;
+                p.closeInventory();
+                plugin.guiJoin.openGUI(p);
+            }
+            // Previous
+            if (e.getSlot() == GUISize-16 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&2&lVorige"))) {
+                plugin.guiJoin.pagination = plugin.guiJoin.pagination - 1;
+                p.closeInventory();
+                plugin.guiJoin.openGUI(p);
+            }
+        }
     }
 }

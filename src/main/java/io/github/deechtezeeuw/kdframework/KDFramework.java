@@ -4,6 +4,7 @@ import io.github.deechtezeeuw.kdframework.Commands.KingdomCommand;
 import io.github.deechtezeeuw.kdframework.Configuraties.Configuratie;
 import io.github.deechtezeeuw.kdframework.Events.PlayerEvents;
 import io.github.deechtezeeuw.kdframework.Events.PlayerTabComplete;
+import io.github.deechtezeeuw.kdframework.GUI.GUIJoin;
 import io.github.deechtezeeuw.kdframework.SQL.*;
 import io.github.deechtezeeuw.kdframework.Speler.SpelerPermissions;
 import org.bukkit.Bukkit;
@@ -31,6 +32,8 @@ public final class KDFramework extends JavaPlugin {
     public PlaceHolders KDPlaceholders;
     // Permissions
     public SpelerPermissions SpelerPerms;
+    // GUIs
+    public GUIJoin guiJoin;
 
 
     @Override
@@ -83,10 +86,11 @@ public final class KDFramework extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             this.KDPlaceholders = new PlaceHolders(this);
             KDPlaceholders.register();
-            System.out.println("Placeholders geladen TEST TEST TEST");
         }
 
         this.SpelerPerms = new SpelerPermissions(this);
+        this.guiJoin = new GUIJoin(this);
+
     }
 
     @Override
