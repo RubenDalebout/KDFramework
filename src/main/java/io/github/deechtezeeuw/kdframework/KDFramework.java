@@ -31,10 +31,11 @@ public final class KDFramework extends JavaPlugin {
 
     // Placeholders
     public PlaceHolders KDPlaceholders;
-    // Scoreboard
-    public Sidebar KDSidebar;
     // Permissions
     public SpelerPermissions SpelerPerms;
+    // Sidebar
+    private static KDFramework instance;
+    public Sidebar sidebar = new Sidebar();
     // GUIs
     public GUIJoin guiJoin;
 
@@ -92,13 +93,17 @@ public final class KDFramework extends JavaPlugin {
         }
 
         this.SpelerPerms = new SpelerPermissions(this);
-        this.KDSidebar = new Sidebar(this);
         this.guiJoin = new GUIJoin(this);
 
+        instance = this;
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static KDFramework getInstance() {
+        return instance;
     }
 }

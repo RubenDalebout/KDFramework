@@ -6,46 +6,168 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.*;
-
-import java.util.List;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public class Sidebar {
-    private KDFramework plugin;
 
-    public Sidebar (KDFramework plugin) {
-        this.plugin = plugin;
-    }
+    private String MainColor;
+    private String SecondColor;
 
-    public void ReceiveBoard(Player p) {
-        // scoreboard
-        String title = "scoreboard title";
-        Scoreboard board =  Bukkit.getScoreboardManager().getNewScoreboard();
 
-        Objective obj = board.registerNewObjective("dummy", "title");
+    public void setSidebar(Player p) {
+        Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+        Objective obj = board.registerNewObjective("sidebar", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-        obj.setDisplayName(title);
+        obj.setDisplayName(ChatColor.translateAlternateColorCodes('&', KDFramework.getInstance().Config.getSidebarTitle()));
 
-        List<String> lines = plugin.Config.getSidebarList();
-        int size = lines.size()+1;
+        MainColor = KDFramework.getInstance().Config.getSidebarColor();
+        SecondColor = this.getSecondColor(KDFramework.getInstance().Config.getSidebarColor());
 
-        for (String linestring : lines) {
-            size--;
-            Team line = board.registerNewTeam("line"+size);
-            line.setPrefix(PlaceholderAPI.setPlaceholders(p,ChatColor.translateAlternateColorCodes('&', linestring)));
-            obj.getScore(PlaceholderAPI.setPlaceholders(p,ChatColor.translateAlternateColorCodes('&', linestring))).setScore(size);
+        Team coins = board.registerNewTeam("coins");
+        Team friends = board.registerNewTeam("friends");
+
+        obj.getScore("  ").setScore(9);
+        obj.getScore(ChatColor.translateAlternateColorCodes('&', MainColor+"&lKingdom:")).setScore(8);
+        obj.getScore("§c").setScore(7);
+        obj.getScore(ChatColor.translateAlternateColorCodes('&', MainColor+"&lRank:")).setScore(6);
+        obj.getScore("§b").setScore(5);
+        obj.getScore(" ").setScore(4);
+        obj.getScore(ChatColor.translateAlternateColorCodes('&', MainColor+"&lRegio:")).setScore(3);
+        obj.getScore("§a").setScore(2);
+        obj.getScore("").setScore(1);
+        obj.getScore(ChatColor.translateAlternateColorCodes('&', MainColor+KDFramework.getInstance().Config.getSidebarIP())).setScore(0);
+
+        coins.addEntry("§c");
+        String line = PlaceholderAPI.setPlaceholders(p, "%kdf_land%");
+        if (line.length() > 14) {
+            coins.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(0, 13)));
+            coins.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(14)));
+        } else {
+            coins.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line));
+            coins.setSuffix("");
         }
 
+        friends.addEntry("§b");
+        line = PlaceholderAPI.setPlaceholders(p, "%kdf_rank%");
+        if (line.length() > 14) {
+            friends.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(0, 13)));
+            friends.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(14)));
+        } else {
+            friends.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line));
+            friends.setSuffix("");
+        }
+        p.setScoreboard(board);
+    }
+
+    private String getSecondColor(String sidebarColor) {
+        String color = "";
+
+        switch (sidebarColor) {
+            case "&0":
+                color = "&f";
+                break;
+            case "&1":
+                color = "&9";
+                break;
+            case "&2":
+                color = "&a";
+                break;
+            case "&3":
+                color = "&b";
+                break;
+            case "&4":
+                color = "&c";
+                break;
+            case "&5":
+                color = "&d";
+                break;
+            case "&6":
+                color = "&e";
+                break;
+            case "&7":
+                color = "&8";
+                break;
+            case "&8":
+                color = "&7";
+                break;
+            case "&9":
+                color = "&1";
+                break;
+            case "&a":
+                color = "&2";
+                break;
+            case "&b":
+                color = "&3";
+                break;
+            case "&c":
+                color = "&4";
+                break;
+            case "&d":
+                color = "&5";
+                break;
+            case "&e":
+                color = "&6";
+                break;
+            case "&f":
+                color = "&0";
+                break;
+            default:
+                color = "&0";
+                break;
+        }
+
+        return color;
+    }
+
+    public void runnable(Player p) {
         new BukkitRunnable() {
             @Override
             public void run() {
-                //methods
-                for (Team team : board.getTeams()) {
-
+                if (p.getScoreboard().getObjective(DisplaySlot.SIDEBAR) == null) {
+                    cancel();
                 }
+                KDFramework.getInstance().sidebar.updateSidebar(p);
             }
-        }.runTaskTimer(plugin, 1, 20);
+        }.runTaskTimer(KDFramework.getInstance(), 0, 20);
+    }
 
-        p.setScoreboard(board);
+    public void updateSidebar(Player p) {
+        Scoreboard board = p.getScoreboard();
+
+        // Update static items
+        // Colors
+        if (!MainColor.equalsIgnoreCase(KDFramework.getInstance().Config.getSidebarColor()))
+            MainColor = KDFramework.getInstance().Config.getSidebarColor();
+        if (!SecondColor.equalsIgnoreCase(this.getSecondColor(KDFramework.getInstance().Config.getSidebarColor())))
+            SecondColor = this.getSecondColor(KDFramework.getInstance().Config.getSidebarColor());
+        // Displayname
+        if (board.getObjective(DisplaySlot.SIDEBAR).getDisplayName().equalsIgnoreCase(KDFramework.getInstance().Config.getSidebarTitle()))
+            board.getObjective(DisplaySlot.SIDEBAR).setDisplayName(ChatColor.translateAlternateColorCodes('&', KDFramework.getInstance().Config.getSidebarTitle()));
+
+        Team coins = board.getTeam("coins");
+        Team friends = board.getTeam("friends");
+
+        if (coins == null || friends == null) return;
+
+        String line = PlaceholderAPI.setPlaceholders(p, "%kdf_land%");
+        if (line.length() > 14) {
+            coins.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor + line.substring(0, 13)));
+            coins.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor + line.substring(14)));
+        } else {
+            coins.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor + line));
+            coins.setSuffix("");
+        }
+
+        line = PlaceholderAPI.setPlaceholders(p, "%kdf_rank%");
+        if (line.length() > 14) {
+            friends.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor + line.substring(0, 13)));
+            friends.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor + line.substring(14)));
+        } else {
+            friends.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor + line));
+            friends.setSuffix("");
+        }
     }
 }

@@ -25,6 +25,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -319,6 +320,30 @@ public class KingdomCommand implements CommandExecutor {
                     plugin.Config.reloadVariables(sender);
                 } else {
                     plugin.Config.noPermission(sender);
+                }
+            }
+
+            // SB (toggle scoreboard)
+            if (args[0].equalsIgnoreCase("sb")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cJe kan alleen in-game je scoreboard aan-/uitzetten!"));
+                    return true;
+                }
+                Player player = (Player) sender;
+                if (player.getScoreboard().getObjective(DisplaySlot.SIDEBAR) == null) {
+                    KDFramework.getInstance().sidebar.setSidebar(player);
+                    KDFramework.getInstance().sidebar.updateSidebar(player);
+
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&aJe &2&lscoreboard &ais aangezet!"));
+                    return true;
+                } else {
+                    player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cJe &4&lscoreboard &cis uitgezet!"));
+                    return true;
                 }
             }
 

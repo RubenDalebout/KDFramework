@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,10 @@ public class PlayerEvents implements Listener {
         }
 
         plugin.SpelerPerms.SetupPermissions(player);
-        plugin.KDSidebar.ReceiveBoard(player);
+
+        // Sidebar
+        KDFramework.getInstance().sidebar.setSidebar(player);
+        KDFramework.getInstance().sidebar.updateSidebar(player);
     }
 
     @EventHandler

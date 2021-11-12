@@ -8,6 +8,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +33,8 @@ public class Configuratie {
 
     // Scoreboard
     private String sidebarTitle;
-    private List<String> sidebarList;
+    private String sidebarIP;
+    private String sidebarColor;
 
     private File landConfigFile;
     private FileConfiguration landConfig;
@@ -84,8 +86,12 @@ public class Configuratie {
         return this.sidebarTitle;
     }
 
-    public List<String> getSidebarList() {
-        return this.sidebarList;
+    public String getSidebarIP() {
+        return this.sidebarIP;
+    }
+
+    public String getSidebarColor() {
+        return this.sidebarColor;
     }
 
     private void loadVariables() {
@@ -102,7 +108,8 @@ public class Configuratie {
 
         // Scoreboard
         this.sidebarTitle = plugin.getConfig().getString("general.scoreboard.title");
-        this.sidebarList = plugin.getConfig().getStringList("general.scoreboard.lines");
+        this.sidebarIP = plugin.getConfig().getString("general.scoreboard.ip");
+        this.sidebarColor = plugin.getConfig().getString("general.scoreboard.color");
     }
 
     public FileConfiguration getLandConfig() {
@@ -173,8 +180,11 @@ public class Configuratie {
         // Reset permissions of all online players
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             plugin.SpelerPerms.reload_permissions(onlinePlayer);
+            onlinePlayer.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+            // Sidebar
+            KDFramework.getInstance().sidebar.setSidebar(onlinePlayer);
+            KDFramework.getInstance().sidebar.updateSidebar(onlinePlayer);
         }
-
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                 plugin.Config.getGeneralPrefix() + plugin.Config.getGeneralCReload()));

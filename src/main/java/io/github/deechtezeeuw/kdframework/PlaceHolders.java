@@ -47,7 +47,7 @@ public class PlaceHolders extends PlaceholderExpansion {
         // kingdom prefix
 
         if (params.equalsIgnoreCase("land_prefix")) {
-            String prefix = "&7[&cLand-Loos&7]";
+            String prefix = "";
             Speler speler = plugin.SQLSelect.player_get_by_name(p.getName());
             if (speler != null) {
                 if (speler.getLand() != null) {
@@ -56,6 +56,18 @@ public class PlaceHolders extends PlaceholderExpansion {
                 }
             }
             return prefix;
+        }
+
+        if (params.equalsIgnoreCase("land")) {
+            String name = "";
+            Speler speler = plugin.SQLSelect.player_get_by_name(p.getName());
+            if (speler != null) {
+                if (speler.getLand() != null) {
+                    Land land = plugin.SQLSelect.land_get_by_player(speler);
+                    name = land.getName();
+                }
+            }
+            return name;
         }
 
         // rank prefix
@@ -67,6 +79,16 @@ public class PlaceHolders extends PlaceholderExpansion {
                 prefix = rank.getPrefix();
             }
             return prefix;
+        }
+
+        if (params.equalsIgnoreCase("rank")) {
+            String name = "";
+            Speler speler = plugin.SQLSelect.player_get_by_name(p.getName());
+            if (speler.getRank() != null) {
+                Rank rank = plugin.SQLSelect.get_rank(speler.getRank());
+                name = rank.getName();
+            }
+            return name;
         }
 
         return null;
