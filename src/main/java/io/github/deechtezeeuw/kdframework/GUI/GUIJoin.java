@@ -52,11 +52,15 @@ public class GUIJoin {
         Player player = (Player) sender;
         speler = plugin.SQLSelect.player_get_by_name(player.getName());
         lands = plugin.SQLSelect.land_list();
+        if (pagination >= lands.size())
+            pagination = 0;
         this.createGUI(player, lands.get(pagination));
     }
 
     public void openGUI(Player player) {
         lands = plugin.SQLSelect.land_list();
+        if (pagination >= lands.size())
+            pagination = 0;
         this.createGUI(player, lands.get(pagination));
     }
 

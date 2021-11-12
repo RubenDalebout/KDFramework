@@ -25,11 +25,6 @@ public class SetRank {
     }
 
     private void check_args() {
-        // Check if arguments has an player
-        // args 0 = set
-        // args 1 = rank
-        // args 2 = player
-        // args 3 = new rank
         if (args.length == 2) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" "+args[0]+" "+args[1]+" <speler> <value>"));
@@ -87,7 +82,7 @@ public class SetRank {
         }
 
         // Check if user has permission to edit people from all kd
-        if (sender.hasPermission("k.set.rank.all")) {
+        if (sender.hasPermission("k.set.rank.other")) {
             // Check if rank is not at its maximum
             Integer peopleWithRank = 0;
             for (Speler speler : land.getLeden()) {

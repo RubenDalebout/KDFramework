@@ -25,9 +25,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class KingdomCommand implements CommandExecutor {
@@ -79,7 +81,7 @@ public class KingdomCommand implements CommandExecutor {
                     }
                 } else {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" invite [add/delete]"));
+                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" invite [add/remove]"));
                 }
             }
 
@@ -271,7 +273,7 @@ public class KingdomCommand implements CommandExecutor {
                     }
 
                     if (args[1].equalsIgnoreCase("edit")) {
-                        if (sender.hasPermission("k.rank.edit")) {
+                        if (sender.hasPermission("k.rank.edit") || sender.hasPermission("k.rank.edit.other")) {
                             new EditRank(plugin, sender, label, args);
                             return true;
                         } else {
@@ -304,7 +306,7 @@ public class KingdomCommand implements CommandExecutor {
 
             // Ranks
             if (args[0].equalsIgnoreCase("ranks")) {
-                if (sender.hasPermission("k.ranks") || sender.hasPermission("k.ranks.others")) {
+                if (sender.hasPermission("k.ranks") || sender.hasPermission("k.ranks.other")) {
                     new GUIRanks(plugin, sender, label, args);
                     return true;
                 } else {
@@ -333,7 +335,7 @@ public class KingdomCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 if (player.getScoreboard().getObjective(DisplaySlot.SIDEBAR) == null) {
                     KDFramework.getInstance().sidebar.setSidebar(player);
-                    KDFramework.getInstance().sidebar.updateSidebar(player);
+                    KDFramework.getInstance().sidebar.runnable(player);
 
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.Config.getGeneralPrefix() + "&aJe &2&lscoreboard &ais aangezet!"));

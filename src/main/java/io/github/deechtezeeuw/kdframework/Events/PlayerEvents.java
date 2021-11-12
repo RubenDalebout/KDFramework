@@ -63,7 +63,7 @@ public class PlayerEvents implements Listener {
 
         // Sidebar
         KDFramework.getInstance().sidebar.setSidebar(player);
-        KDFramework.getInstance().sidebar.updateSidebar(player);
+        KDFramework.getInstance().sidebar.runnable(player);
     }
 
     @EventHandler
@@ -85,7 +85,7 @@ public class PlayerEvents implements Listener {
 
         event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
                 ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralChat())));
+                        plugin.Config.getGeneralChat() + event.getMessage())));
     }
 
     @EventHandler

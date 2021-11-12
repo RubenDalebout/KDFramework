@@ -9,7 +9,7 @@
 
 default:
   - k.help
-  - k.list
+  - k.lands
 
 permissions:
   land-lead:

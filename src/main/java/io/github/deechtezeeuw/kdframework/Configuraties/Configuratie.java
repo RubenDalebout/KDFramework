@@ -183,7 +183,7 @@ public class Configuratie {
             onlinePlayer.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
             // Sidebar
             KDFramework.getInstance().sidebar.setSidebar(onlinePlayer);
-            KDFramework.getInstance().sidebar.updateSidebar(onlinePlayer);
+            KDFramework.getInstance().sidebar.runnable(onlinePlayer);
         }
 
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
