@@ -12,6 +12,9 @@ import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
 import io.github.deechtezeeuw.kdframework.Rank.DeleteRank;
 import io.github.deechtezeeuw.kdframework.Rank.EditRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
+import io.github.deechtezeeuw.kdframework.Relaties.RelateAlly;
+import io.github.deechtezeeuw.kdframework.Relaties.RelateEnemy;
+import io.github.deechtezeeuw.kdframework.Relaties.RelateNeutral;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
 import io.github.deechtezeeuw.kdframework.Set.SetSpawn;
@@ -53,6 +56,18 @@ public class KingdomCommand implements CommandExecutor {
             }
 
             // Sub commands
+
+            // Ally
+            if (args[0].equalsIgnoreCase("ally")) {
+                if (sender.hasPermission("k.ally")) {
+                    new RelateAlly(sender, label, args);
+                    return true;
+                } else {
+                    // No permission to do k.ally
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
 
             // Invite
             if (args[0].equalsIgnoreCase("invite")) {
@@ -251,6 +266,18 @@ public class KingdomCommand implements CommandExecutor {
                     return true;
                 } else {
                     // No permission to do k.rank
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+            // Neutraal
+            if (args[0].equalsIgnoreCase("neutraal")) {
+                if (sender.hasPermission("k.neutraal")) {
+                    new RelateNeutral(sender, label, args);
+                    return true;
+                } else {
+                    // No permission to do k.ally
                     plugin.Config.noPermission(sender);
                     return true;
                 }
@@ -491,6 +518,18 @@ public class KingdomCommand implements CommandExecutor {
                     }
                 } else {
                     plugin.Config.noPermission(sender);
+                }
+            }
+
+            // Vijandig
+            if (args[0].equalsIgnoreCase("vijand")) {
+                if (sender.hasPermission("k.enemy")) {
+                    new RelateEnemy(sender, label, args);
+                    return true;
+                } else {
+                    // No permission to do k.ally
+                    plugin.Config.noPermission(sender);
+                    return true;
                 }
             }
         }

@@ -4,6 +4,7 @@ import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -80,6 +81,14 @@ public class KingdomJoin {
                 return;
             }
 
+            for (Speler spelers : land.getLeden()) {
+                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
+                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(
+                            ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&4&l"+speler.getName()+" &ais het land gejoind!")
+                    );
+                }
+            }
             // you can join
             plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
             plugin.SQLDelete.invite_delete_player(speler);
@@ -97,6 +106,14 @@ public class KingdomJoin {
                     plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd naar je kingdom..."));
             return;
         } else {
+            for (Speler spelers : land.getLeden()) {
+                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
+                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(
+                            ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&4&l"+speler.getName()+" &ais het land gejoind!")
+                    );
+                }
+            }
             // you can join
             plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
             plugin.SQLDelete.invite_delete_player(speler);

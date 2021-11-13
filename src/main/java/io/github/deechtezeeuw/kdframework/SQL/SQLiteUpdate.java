@@ -174,4 +174,17 @@ public class SQLiteUpdate {
             System.out.println(e.getMessage());
         }
     }
+
+    // Relationship
+    public void update_relationship(Land land, Land other, Integer relation) {
+        String sql = "UPDATE relationships SET "+other.getName()+" = ? WHERE Land = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            pstmt.setInt(1, relation);
+            pstmt.setString(2, land.getUuid().toString());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

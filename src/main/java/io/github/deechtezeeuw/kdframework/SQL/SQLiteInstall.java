@@ -155,7 +155,7 @@ public class SQLiteInstall {
 
         try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
             // set the value
-            pstmt.setString(1, land.toString());
+            pstmt.setString(1, land.getUuid().toString());
             ResultSet results  = pstmt.executeQuery();
 
             if (!results.next()) {

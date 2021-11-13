@@ -400,7 +400,6 @@ public class SQLiteSelect {
             ResultSet results  = pstmt.executeQuery();
 
             if (results.next()) {
-                System.out.println("Relatie tussen "+land.getName()+" en "+other.getName());
                 relation = results.getInt(other.getName());
             } else {
                 plugin.SQLInsert.relationship_create(land);

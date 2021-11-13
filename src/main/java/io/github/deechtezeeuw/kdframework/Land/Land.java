@@ -126,7 +126,7 @@ public class Land {
         player.teleport(tpLocation);
     }
 
-    public String get_relation(Land land) {
+    public String get_relation_string(Land land) {
         String relation = "";
 
         Integer relationNumber = KDFramework.getInstance().SQLSelect.relationship_land(this, land);
@@ -135,5 +135,9 @@ public class Land {
         if (relationNumber == 2) relation = "&4Vijand";
 
         return relation;
+    }
+
+    public Integer get_relation_number(Land land) {
+        return KDFramework.getInstance().SQLSelect.relationship_land(this, land);
     }
 }

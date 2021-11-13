@@ -74,6 +74,15 @@ public class SetLand {
                 }
             }
 
+            for (Speler spelers : land.getLeden()) {
+                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
+                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(
+                            ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&4&l"+speler.getName()+" &ais het land gejoind!")
+                    );
+                }
+            }
+
             // Update user kingdom
             plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
             plugin.SQLUpdate.update_player_rank(speler.getUuid(), land.get_defaultRank().getUuid());

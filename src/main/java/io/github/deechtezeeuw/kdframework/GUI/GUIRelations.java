@@ -69,7 +69,7 @@ public class GUIRelations {
 
             ItemMeta MetaFlag = Flag.getItemMeta();
             ArrayList<String> FlagLore = new ArrayList<String>();
-            FlagLore.add(ChatColor.translateAlternateColorCodes('&', "&aRelatie: &2&l"+land.get_relation(playerLand)));
+            FlagLore.add(ChatColor.translateAlternateColorCodes('&', "&aRelatie: &2&l"+land.get_relation_string(playerLand)));
             MetaFlag.setLore(FlagLore);
             MetaFlag.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
 
