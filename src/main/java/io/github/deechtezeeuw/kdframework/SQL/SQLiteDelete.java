@@ -2,11 +2,11 @@ package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SQLiteDelete {
     private KDFramework plugin;
@@ -68,6 +68,29 @@ public class SQLiteDelete {
             pstmt.setString(1, speler.getUuid().toString());
             // execute the delete statement
             pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Relationship
+    public void table_relations_delete_column(Land land) {
+        try {
+            DatabaseMetaData md = plugin.SQL.getConnection().getMetaData();
+            ResultSet rs = md.getColumns(null, null, "relationships", land.getName());
+
+            if (!rs.next()) {
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String sql = "ALTER TABLE relationships drop COLUMN "+land.getName().toLowerCase();
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

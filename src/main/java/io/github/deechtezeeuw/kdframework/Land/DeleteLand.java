@@ -37,6 +37,8 @@ public class DeleteLand {
                 plugin.SQLDelete.invite_delete(invite);
             }
 
+            plugin.SQLDelete.table_relations_delete_column(land);
+
             plugin.SQLDelete.land_delete(land.getName());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aHet land &2&l"+KDName+" &ais verwijderd!"));

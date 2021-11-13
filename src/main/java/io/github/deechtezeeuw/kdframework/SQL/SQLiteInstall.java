@@ -1,9 +1,10 @@
 package io.github.deechtezeeuw.kdframework.SQL;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Land.Land;
 
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.UUID;
 
 public class SQLiteInstall {
     private KDFramework plugin;
@@ -17,6 +18,8 @@ public class SQLiteInstall {
         this.table_landen();
         this.table_ranks();
         this.table_invites();
+        this.table_relations();
+        this.table_relations_add_columns();
     }
 
     private void table_player() {
@@ -88,6 +91,76 @@ public class SQLiteInstall {
         try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
             // create a new table
             stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void table_relations() {
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS relationships (\n"
+                + " UUID char(36) PRIMARY KEY,\n"
+                + " Land char(36) NOT NULL\n"
+                + ");";
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void table_relations_add_columns() {
+        for (Land land : plugin.SQLSelect.land_list()) {
+            table_relations_add_row(land);
+            try {
+                DatabaseMetaData md = plugin.SQL.getConnection().getMetaData();
+                ResultSet rs = md.getColumns(null, null, "relationships", land.getName());
+
+                if (!rs.next()) {
+                    this.table_relations_add_column(land);
+                }
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void table_relations_add_column(Land land) {
+        try {
+            DatabaseMetaData md = plugin.SQL.getConnection().getMetaData();
+            ResultSet rs = md.getColumns(null, null, "relationships", land.getName());
+
+            if (rs.next()) {
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String sql = "ALTER TABLE relationships ADD COLUMN "+land.getName().toLowerCase()+" integer(1) default(0)";
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void table_relations_add_row(Land land) {
+        String sql = "SELECT * "
+                + "FROM relationships WHERE Land == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, land.toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            if (!results.next()) {
+                plugin.SQLInsert.relationship_create(land);
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

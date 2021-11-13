@@ -24,6 +24,7 @@ public class CreateLand {
         if (!plugin.SQLSelect.land_exists(land.getName())) {
             // Land does not exists
             plugin.SQLInsert.land_create(land); // create land
+            plugin.SQLInstall.table_relations_add_column(land);
 
             Land newLand = plugin.SQLSelect.land_get_by_name(KDName);
             // Default rank landConfig

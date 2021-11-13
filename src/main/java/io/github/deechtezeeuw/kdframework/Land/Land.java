@@ -5,6 +5,7 @@ import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.SQL.SQLiteSelect;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -123,5 +124,16 @@ public class Land {
         Location tpLocation = player.getLocation();
         tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
         player.teleport(tpLocation);
+    }
+
+    public String get_relation(Land land) {
+        String relation = "";
+
+        Integer relationNumber = KDFramework.getInstance().SQLSelect.relationship_land(this, land);
+        if (relationNumber != 1 && relationNumber != 2) relation = "&fNeutraal";
+        if (relationNumber == 1) relation = "&9Alliantie";
+        if (relationNumber == 2) relation = "&4Vijand";
+
+        return relation;
     }
 }

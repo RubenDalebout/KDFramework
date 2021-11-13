@@ -386,4 +386,29 @@ public class SQLiteSelect {
         }
         return invites;
     }
+
+
+    // Relations
+    public Integer relationship_land(Land land, Land other) {
+        Integer relation = 0;
+        String sql = "SELECT * "
+                + "FROM relationships WHERE Land == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+            // set the value
+            pstmt.setString(1, land.getUuid().toString());
+            ResultSet results  = pstmt.executeQuery();
+
+            if (results.next()) {
+                System.out.println("Relatie tussen "+land.getName()+" en "+other.getName());
+                relation = results.getInt(other.getName());
+            } else {
+                plugin.SQLInsert.relationship_create(land);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return relation;
+    }
 }

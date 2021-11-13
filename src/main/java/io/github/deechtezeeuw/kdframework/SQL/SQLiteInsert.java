@@ -95,4 +95,21 @@ public class SQLiteInsert {
             System.out.println(e.getMessage());
         }
     }
+
+
+    // Relationship
+    public void relationship_create(Land land) {
+        String sql = "INSERT INTO "
+                + "relationships(UUID, Land) "
+                + "VALUES(?,?)";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, UUID.randomUUID().toString());
+            pstmt.setString(2, land.getUuid().toString());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
