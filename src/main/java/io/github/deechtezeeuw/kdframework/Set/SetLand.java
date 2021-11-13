@@ -120,7 +120,7 @@ public class SetLand {
                 plugin.SpelerPerms.reload_permissions(Bukkit.getPlayer(speler.getUuid()));
                 Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aJe bent uit je land gezet!"));
-                Bukkit.getPlayer(speler.getUuid()).teleport(plugin.getServer().getWorld(plugin.Config.getGeneralWorld()).getSpawnLocation());
+                Bukkit.getPlayer(speler.getUuid()).teleport(plugin.Config.getGeneralWorldSpawn());
             }
         }
 

@@ -18,7 +18,9 @@ import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Set.SetLand;
 import io.github.deechtezeeuw.kdframework.Set.SetRank;
 import io.github.deechtezeeuw.kdframework.Set.SetSpawn;
+import io.github.deechtezeeuw.kdframework.Set.SetWorldSpawn;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -26,6 +28,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 
 import java.util.ArrayList;
@@ -36,6 +39,7 @@ public class KingdomCommand implements CommandExecutor {
 
     // Global plugin variable
     private KDFramework plugin;
+    private Integer Timer = 0;
 
     public KingdomCommand (KDFramework plugin) {
         this.plugin = plugin;
@@ -101,8 +105,13 @@ public class KingdomCommand implements CommandExecutor {
             // Join
             if (args[0].equalsIgnoreCase("join")) {
                 if (sender.hasPermission("k.join")) {
-                    plugin.guiJoin.GUIInstall(sender, label, args);
-                    return true;
+                    if (args.length == 2) {
+                        new KingdomJoin(plugin, sender, label, args);
+                        return true;
+                    } else {
+                        plugin.guiJoin.GUIInstall(sender, label, args);
+                        return true;
+                    }
                 } else {
                     // No permission to do k.join
                     plugin.Config.noPermission(sender);
@@ -380,6 +389,17 @@ public class KingdomCommand implements CommandExecutor {
                             return true;
                         }
                     }
+
+                    // Check if its set worldspawn
+                    if (args[1].equalsIgnoreCase("worldspawn")) {
+                        if (sender.hasPermission("k.set.worldspawn")) {
+                            new SetWorldSpawn(plugin, sender, label, args);
+                            return true;
+                        } else {
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
+                    }
                 } else {
                     // Wrong arguments
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -429,9 +449,36 @@ public class KingdomCommand implements CommandExecutor {
                         for (String a : land.getSpawn().split("/")) {
                             Locatie.add(a);
                         }
+                        Location LocationOld = player.getLocation();
                         Location tpLocation = player.getLocation();
                         tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
-                        player.teleport(tpLocation);
+
+                        // Cooldown
+                        Timer = 0;
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&aJe word over &2&l"+plugin.Config.getGeneralSpawnCooldown()+" &aseconden geteleporteerd! Niet bewegen!"));
+                        Integer cooldown = plugin.Config.getGeneralSpawnCooldown();
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                //methods
+                                if (LocationOld.getBlockZ() != player.getLocation().getBlockZ() || LocationOld.getBlockX() != player.getLocation().getBlockX()) {
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                            plugin.Config.getGeneralPrefix() + "&cTeleportatie afgebroken! Je bewoog."));
+                                    cancel();
+                                }
+                                if (Timer != cooldown) {
+                                    Timer++;
+                                }
+
+                                if (Timer == cooldown) {
+                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                            plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd!"));
+                                    player.teleport(tpLocation);
+                                    cancel();
+                                }
+                            }
+                        }.runTaskTimer(plugin, 0, 20);
                     }
                 } else {
                     plugin.Config.noPermission(sender);

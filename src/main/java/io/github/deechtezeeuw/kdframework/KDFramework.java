@@ -13,6 +13,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 public final class KDFramework extends JavaPlugin {
@@ -38,6 +40,8 @@ public final class KDFramework extends JavaPlugin {
     public Sidebar sidebar = new Sidebar();
     // GUIs
     public GUIJoin guiJoin;
+    // Cooldown
+    public HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
 
 
     @Override

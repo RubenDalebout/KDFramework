@@ -164,6 +164,7 @@ public class PlayerEvents implements Listener {
                                         p.closeInventory();
                                         plugin.guiJoin.pagination = 0;
                                         plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
+                                        plugin.SQLDelete.invite_delete_player(speler);
                                         plugin.SQLUpdate.update_player_rank(speler.getUuid(), land.get_defaultRank().getUuid());
                                         p.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 plugin.Config.getGeneralPrefix() + "&aJe bent het land &2&l"+land.getName()+ " &agejoind!"));
@@ -183,6 +184,7 @@ public class PlayerEvents implements Listener {
                                     p.closeInventory();
                                     plugin.guiJoin.pagination = 0;
                                     plugin.SQLUpdate.update_player_land(speler.getUuid(), land.getUuid());
+                                    plugin.SQLDelete.invite_delete_player(speler);
                                     plugin.SQLUpdate.update_player_rank(speler.getUuid(), land.get_defaultRank().getUuid());
                                     p.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                             plugin.Config.getGeneralPrefix() + "&aJe bent het land &2&l"+land.getName()+ " &agejoind!"));

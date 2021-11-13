@@ -183,6 +183,21 @@ public class PlayerTabComplete implements TabCompleter {
             return result;
         }
 
+        // /k join
+        if (args.length == 2 && args[0].equalsIgnoreCase("join")) {
+            List<Land> landList = plugin.SQLSelect.land_list();
+            List<String> landNamen = new ArrayList<>();
+            for (Land land : landList) {
+                landNamen.add(land.getName());
+            }
+
+            for (String a : landNamen) {
+                if (a.toLowerCase().startsWith(args[1].toLowerCase()))
+                    result.add(a);
+            }
+            return result;
+        }
+
         return null;
     }
 }

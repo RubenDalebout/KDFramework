@@ -309,7 +309,7 @@ public class SQLiteSelect {
         List<Rank> ranks = new ArrayList<>();
 
         String sql = "SELECT * "
-                + "FROM ranks WHERE Land == ?";
+                + "FROM ranks WHERE Land == ? ORDER BY Level DESC";
 
         try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
             // set the value

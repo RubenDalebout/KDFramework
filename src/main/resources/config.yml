@@ -11,7 +11,15 @@ general:
   settings:
     prefix: '&7&l(&2&lKD&7&l)'
     chat: '%kdf_land_prefix%%kdf_rank_prefix%&f%player_name% &7➣'
-    world: 'world'
+    world:
+      name: "world"
+      spawn-delay: 5
+      spawn:
+        x: 0
+        y: 0
+        z: 0
+        yaw: 0.0
+        pitch: 0.0
   messages:
     on-first: '&7&l(&2&l+&7&l) &2&l%player_displayname% &ais voor het eerst op de server!'
     on-join: '&7&l(&2&l+&7&l) %kdf_land_prefix% &2&l%player_displayname%'

@@ -1,6 +1,8 @@
 package io.github.deechtezeeuw.kdframework.Land;
 
+import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -26,6 +28,15 @@ public class DeleteLand {
                 plugin.SQLUpdate.update_player_land(speler.getUuid(), null);
                 plugin.SQLUpdate.update_player_rank(speler.getUuid(), null);
             }
+
+            for (Rank rank : land.getRanks()) {
+                plugin.SQLDelete.rank_delete(rank);
+            }
+
+            for (Invite invite : land.getInvites()) {
+                plugin.SQLDelete.invite_delete(invite);
+            }
+
             plugin.SQLDelete.land_delete(land.getName());
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aHet land &2&l"+KDName+" &ais verwijderd!"));

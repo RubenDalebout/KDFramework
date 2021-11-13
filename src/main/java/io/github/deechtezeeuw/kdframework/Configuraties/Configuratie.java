@@ -3,6 +3,7 @@ package io.github.deechtezeeuw.kdframework.Configuraties;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -25,6 +26,8 @@ public class Configuratie {
     private String generalPrefix;
     private String generalChat;
     private String generalWorld;
+    private Location generalWorldSpawn;
+    private Integer generalSpawnCooldown;
     private String generalOnFirst;
     private String generalOnJoin;
     private String generalOnQuit;
@@ -60,6 +63,14 @@ public class Configuratie {
 
     public String getGeneralWorld() {
         return this.generalWorld;
+    }
+
+    public Location getGeneralWorldSpawn() {
+        return this.generalWorldSpawn;
+    }
+
+    public Integer getGeneralSpawnCooldown() {
+        return this.generalSpawnCooldown;
     }
 
     public String getGeneralOnFirst() {
@@ -99,7 +110,16 @@ public class Configuratie {
         // Configuration file general
         this.generalPrefix = plugin.getConfig().getString("general.settings.prefix");
         this.generalChat = plugin.getConfig().getString("general.settings.chat");
-        this.generalWorld = plugin.getConfig().getString("general.settings.world");
+        this.generalWorld = plugin.getConfig().getString("general.settings.world.name");
+        // Spawn
+        int posX = plugin.getConfig().getInt("general.settings.world.spawn.x");
+        int posY = plugin.getConfig().getInt("general.settings.world.spawn.y");
+        int posZ = plugin.getConfig().getInt("general.settings.world.spawn.z");
+        float yaw = plugin.getConfig().getInt("general.settings.world.spawn.yaw");
+        float pitch = plugin.getConfig().getInt("general.settings.world.spawn.pitch");
+        this.generalWorldSpawn = new Location(Bukkit.getWorld(plugin.getConfig().getString("general.settings.world.name")), posX, posY, posZ, yaw, pitch);
+        this.generalSpawnCooldown = plugin.getConfig().getInt("general.settings.world.spawn-delay");
+
         this.generalOnFirst = plugin.getConfig().getString("general.messages.on-first");
         this.generalOnJoin = plugin.getConfig().getString("general.messages.on-join");
         this.generalOnQuit = plugin.getConfig().getString("general.messages.on-quit");
