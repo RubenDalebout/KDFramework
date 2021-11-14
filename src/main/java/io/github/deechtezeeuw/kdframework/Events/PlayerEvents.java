@@ -10,6 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -85,10 +86,60 @@ public class PlayerEvents implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player eventPlayer = event.getPlayer();
         Speler speler = plugin.SQLSelect.player_get_by_name(eventPlayer.getName());
+        Boolean chatFormatSet = false;
 
-        event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
-                ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralChat() + event.getMessage())));
+        for (String section : plugin.Config.getGeneralChats().getKeys(false)) {
+            if (speler.getLand() != null) {
+                Land land = plugin.SQLSelect.land_get_by_player(speler);
+                if (event.getMessage().substring(0, 1).equalsIgnoreCase(plugin.Config.getGeneralChats().getString(section+".prefix"))) {
+                    event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
+                            ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralChats().getString(section+".format") + event.getMessage().substring(1))));
+                    chatFormatSet = true;
+
+                    if (section.equalsIgnoreCase("kingdom")) {
+                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                            Speler otherSpeler = plugin.SQLSelect.player_get_by_uuid(player.getUniqueId());
+                            if (otherSpeler.getLand() == null) {
+                                event.getRecipients().remove(player);
+                            }
+                            if (!speler.getLand().equals(otherSpeler.getLand())) {
+                                event.getRecipients().remove(player);
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (!chatFormatSet && speler.getLand() != null) {
+            for (String section : plugin.Config.getGeneralChats().getKeys(false)) {
+                if (plugin.Config.getGeneralChats().getBoolean(section+".default")) {
+                    if (section.equalsIgnoreCase("kingdom")) {
+                        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                            Speler otherSpeler = plugin.SQLSelect.player_get_by_uuid(player.getUniqueId());
+                            if (otherSpeler.getLand() == null) {
+                                event.getRecipients().remove(player);
+                            }
+                            if (!speler.getLand().equals(otherSpeler.getLand())) {
+                                event.getRecipients().remove(player);
+                            }
+                        }
+                    }
+                    event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
+                            ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralChats().getString(section+".format") + event.getMessage())));
+                    break;
+                }
+            }
+        }
+
+        if (speler.getLand() == null) {
+            event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
+                    ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralChats().getString("public.format") + event.getMessage())));
+        }
     }
 
     // PVP

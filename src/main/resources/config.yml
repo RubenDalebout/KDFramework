@@ -10,7 +10,17 @@
 general:
   settings:
     prefix: '&7&l(&2&lKD&7&l)'
-    chat: '%kdf_land_prefix%%kdf_rank_prefix%&f%player_name% &7➣'
+    chats:
+      public:
+        prefix: '!'
+        format: '&7[&aP&7]%kdf_land_prefix%%kdf_rank_prefix%%s &7➣ '
+      roleplay:
+        prefix: '#'
+        format: '&7[&fRP&7]%kdf_land_prefix%%kdf_rank_prefix%%s &7➣ '
+      kingdom:
+        prefix: '@'
+        format: '&7[&9KD&7]%kdf_rank_prefix%%s &7➣ '
+        default: True
     world:
       name: "world"
       spawn-delay: 5

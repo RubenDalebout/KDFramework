@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -24,6 +25,7 @@ public class Configuratie {
 
     // Configuration file general
     private String generalPrefix;
+    private ConfigurationSection generalChats;
     private String generalChat;
     private String generalWorld;
     private Location generalWorldSpawn;
@@ -55,6 +57,10 @@ public class Configuratie {
     // get Configuration file General
     public String getGeneralPrefix() {
         return this.generalPrefix + " &f";
+    }
+
+    public ConfigurationSection getGeneralChats() {
+        return this.generalChats;
     }
 
     public String getGeneralChat() {
@@ -109,6 +115,9 @@ public class Configuratie {
 
         // Configuration file general
         this.generalPrefix = plugin.getConfig().getString("general.settings.prefix");
+        // Chat
+        this.generalChats = plugin.getConfig().getConfigurationSection("general.settings.chats");
+
         this.generalChat = plugin.getConfig().getString("general.settings.chat");
         this.generalWorld = plugin.getConfig().getString("general.settings.world.name");
         // Spawn
