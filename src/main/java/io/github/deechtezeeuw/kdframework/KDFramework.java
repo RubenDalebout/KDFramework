@@ -9,8 +9,11 @@ import io.github.deechtezeeuw.kdframework.SQL.*;
 import io.github.deechtezeeuw.kdframework.Scoreboard.Sidebar;
 import io.github.deechtezeeuw.kdframework.Speler.SpelerPermissions;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import java.io.File;
 import java.util.HashMap;
@@ -100,6 +103,14 @@ public final class KDFramework extends JavaPlugin {
         this.guiJoin = new GUIJoin(this);
 
         instance = this;
+
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            if (player.getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null) {
+                player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
+                KDFramework.getInstance().sidebar.setSidebar(player);
+                KDFramework.getInstance().sidebar.runnable(player);
+            }
+        }
     }
 
     @Override
