@@ -9,15 +9,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -64,6 +65,8 @@ public class PlayerEvents implements Listener {
         // Sidebar
         KDFramework.getInstance().sidebar.setSidebar(player);
         KDFramework.getInstance().sidebar.runnable(player);
+
+        player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(16);
     }
 
     @EventHandler
@@ -88,6 +91,40 @@ public class PlayerEvents implements Listener {
                         plugin.Config.getGeneralChat() + event.getMessage())));
     }
 
+    // PVP
+    @EventHandler
+    public void onHit(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            Speler whoWasHit = plugin.SQLSelect.player_get_by_uuid(((Player) e.getEntity()).getPlayer().getUniqueId());
+            Speler whoHit = plugin.SQLSelect.player_get_by_uuid(((Player) e.getDamager()).getPlayer().getUniqueId());
+
+            if (whoHit.getLand() == null || whoWasHit.getLand() == null) return;
+
+            // Check on land mates
+            if (whoHit.getLand().equals(whoWasHit.getLand())) {
+                Player sendto = ((Player) e.getDamager()).getPlayer();
+                sendto.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&cJe geen landgenoten slaan!"));
+                e.setCancelled(true);
+                return;
+            }
+
+            // Check on ally
+            Land land = plugin.SQLSelect.land_get_by_player(whoHit);
+            Land other = plugin.SQLSelect.land_get_by_player(whoWasHit);
+
+            Player sendto = ((Player) e.getDamager()).getPlayer();
+
+            if (land.get_relation_number(other) == 1) {
+                sendto.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&cJe mag geen alliantie slaan!"));
+                e.setCancelled(true);
+                return;
+            }
+        }
+    }
+
+    // GUI clicks
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
@@ -104,7 +141,7 @@ public class PlayerEvents implements Listener {
             }
         }
 
-        if(view.getTitle().contains("invites") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
+        if(view.getTitle().contains("invites") && e.getClickedInventory().getType() != InventoryType.PLAYER || view.getTitle().contains("Relaties") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
             e.setCancelled(true);
             Integer GUISize = e.getClickedInventory().getSize();
             if (e.getSlot() == GUISize-5 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&4&lSluiten"))) {

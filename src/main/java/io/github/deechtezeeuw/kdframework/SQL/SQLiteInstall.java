@@ -20,6 +20,7 @@ public class SQLiteInstall {
         this.table_invites();
         this.table_relations();
         this.table_relations_add_columns();
+        this.table_relations_request();
     }
 
     private void table_player() {
@@ -161,6 +162,23 @@ public class SQLiteInstall {
             if (!results.next()) {
                 plugin.SQLInsert.relationship_create(land);
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void table_relations_request() {
+        // SQL statement for creating a new table
+        String sql = "CREATE TABLE IF NOT EXISTS relationships_request (\n"
+                + " UUID char(36) PRIMARY KEY,\n"
+                + " Land char(36) NOT NULL,\n"
+                + " Other char(36) NOT NULL,\n"
+                + " What varchar(16) NOT NULL\n"
+                + ");";
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

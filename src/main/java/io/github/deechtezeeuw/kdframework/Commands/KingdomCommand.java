@@ -58,7 +58,7 @@ public class KingdomCommand implements CommandExecutor {
             // Sub commands
 
             // Ally
-            if (args[0].equalsIgnoreCase("ally")) {
+            if (args[0].equalsIgnoreCase("ally") || args[0].equalsIgnoreCase("alliantie")) {
                 if (sender.hasPermission("k.ally")) {
                     new RelateAlly(sender, label, args);
                     return true;
@@ -272,7 +272,7 @@ public class KingdomCommand implements CommandExecutor {
             }
 
             // Neutraal
-            if (args[0].equalsIgnoreCase("neutraal")) {
+            if (args[0].equalsIgnoreCase("neutraal") || args[0].equalsIgnoreCase("neutral")) {
                 if (sender.hasPermission("k.neutraal")) {
                     new RelateNeutral(sender, label, args);
                     return true;
@@ -522,7 +522,7 @@ public class KingdomCommand implements CommandExecutor {
             }
 
             // Vijandig
-            if (args[0].equalsIgnoreCase("vijand")) {
+            if (args[0].equalsIgnoreCase("vijand") || args[0].equalsIgnoreCase("enemy")) {
                 if (sender.hasPermission("k.enemy")) {
                     new RelateEnemy(sender, label, args);
                     return true;

@@ -410,4 +410,28 @@ public class SQLiteSelect {
 
         return relation;
     }
+
+    // Relations request
+    public boolean relationships_request_exists(Land land, Land other, String What) {
+        boolean exists = false;
+        String sql = "SELECT * "
+                + "FROM relationships_request WHERE Land == ? AND Other == ? AND What == ?";
+
+        try (PreparedStatement pstmt  = plugin.SQL.getConnection().prepareStatement(sql)){
+
+            // set the value
+            pstmt.setString(1, land.getUuid().toString());
+            pstmt.setString(2, other.getUuid().toString());
+            pstmt.setString(3, What);
+            ResultSet results  = pstmt.executeQuery();
+
+            if (results.next()) {
+                // found
+                exists = true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return exists;
+    }
 }

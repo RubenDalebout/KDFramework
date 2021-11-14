@@ -22,6 +22,58 @@ public class RelateEnemy {
 
     private void checkArgs() {
         KDFramework plugin = KDFramework.getInstance();
+
+        // Check if admin is doing it
+        if (args.length == 3 && sender.hasPermission("k.enemy.other")) {
+            // Check if args 1 is an existing land
+            if (!plugin.SQLSelect.land_exists(args[1])) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[1]+" &cbestaat niet!"));
+                return;
+            }
+            // Check if args 2 is an existing land
+            if (!plugin.SQLSelect.land_exists(args[2])) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[2]+" &cbestaat niet!"));
+                return;
+            }
+            Land land = plugin.SQLSelect.land_get_by_name(args[1]);
+            Land other = plugin.SQLSelect.land_get_by_name(args[2]);
+
+            // Check of ze al enemy zijn
+            if (land.get_relation_number(other) == 2) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[1]+" &cen &4&l"+args[2]+" &czijn al vijanden!"));
+                return;
+            }
+
+            plugin.SQLUpdate.update_relationship(land, other, 2);
+            plugin.SQLUpdate.update_relationship(other, land, 2);
+
+            // Delete relationship request
+            plugin.SQLDelete.table_relationship_request_delete(land, other);
+            plugin.SQLDelete.table_relationship_request_delete(other, land);
+
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aHet land &2&l"+args[1]+" &aen &2&l"+args[2]+" &azijn nu vijanden!"));
+
+            for (Speler kdSpeler : land.getLeden()) {
+                if (Bukkit.getServer().getPlayer(kdSpeler.getUuid()) != null) {
+                    Player kdPlayer = Bukkit.getServer().getPlayer(kdSpeler.getUuid());
+                    kdPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&aJouw land en het land &2&l"+other.getName()+" &ahebben nu een vijandige relatie!"));
+                }
+            }
+
+            for (Speler kdSpeler : other.getLeden()) {
+                if (Bukkit.getServer().getPlayer(kdSpeler.getUuid()) != null) {
+                    Player kdPlayer = Bukkit.getServer().getPlayer(kdSpeler.getUuid());
+                    kdPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&aJouw land en het land &2&l"+land.getName()+" &ahebben nu een vijandige relatie!"));
+                }
+            }
+            return;
+        }
         // Check if sender is player
         if (!(sender instanceof Player)) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -45,7 +97,6 @@ public class RelateEnemy {
             return;
         }
 
-        // Check args
         if (args.length == 2 && sender.hasPermission("k.enemy")) {
             // Check if other land exists
             if (!plugin.SQLSelect.land_exists(args[1])) {
@@ -56,10 +107,10 @@ public class RelateEnemy {
             Land land = plugin.SQLSelect.land_get_by_player(speler);
             Land other = plugin.SQLSelect.land_get_by_name(args[1]);
 
-            // Check if not own kingdom
-            if (land.getUuid().equals(other.getUuid())) {
+            // Check if own land
+            if (other.getUuid().equals(speler.getLand())) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&cJe kan niet je eigen kingdom tot vijand verklaren!"));
+                        plugin.Config.getGeneralPrefix() + "&cJe kan relatie met je eigen land aanmaken!"));
                 return;
             }
 
@@ -70,74 +121,89 @@ public class RelateEnemy {
                 return;
             }
 
-            // Set both on enemy
-            plugin.SQLUpdate.update_relationship(land, other, 2);
-            plugin.SQLUpdate.update_relationship(other, land, 2);
+            // Check if relation is neutral
+            if (land.get_relation_number(other) == 0) {
+                // Other land wants to be neutral already so set both too neutral and delete requests
+                plugin.SQLUpdate.update_relationship(land, other, 2);
+                plugin.SQLUpdate.update_relationship(other, land, 2);
 
-            for (Speler spelers : land.getLeden()) {
-                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
-                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.Config.getGeneralPrefix() + "&4&l"+land.getName()+" &cen &4&l"+other.getName()+" &czijn nu vijanden!"));
+                // Delete relationship request
+                plugin.SQLDelete.table_relationship_request_delete(land, other);
+                plugin.SQLDelete.table_relationship_request_delete(other, land);
+
+                for (Speler kdSpeler : land.getLeden()) {
+                    if (Bukkit.getServer().getPlayer(kdSpeler.getUuid()) != null) {
+                        Player kdPlayer = Bukkit.getServer().getPlayer(kdSpeler.getUuid());
+                        kdPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&aJouw land en het land &2&l"+other.getName()+" &ahebben nu een vijandige relatie!"));
+                    }
                 }
-            }
 
-            for (Speler spelers : other.getLeden()) {
-                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
-                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.Config.getGeneralPrefix() + "&4&l"+other.getName()+" &cen &4&l"+land.getName()+" &czijn nu vijanden!"));
+                for (Speler kdSpeler : other.getLeden()) {
+                    if (Bukkit.getServer().getPlayer(kdSpeler.getUuid()) != null) {
+                        Player kdPlayer = Bukkit.getServer().getPlayer(kdSpeler.getUuid());
+                        kdPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&aJouw land en het land &2&l"+land.getName()+" &ahebben nu een vijandige relatie!"));
+                    }
                 }
-            }
-            return;
-        }
-        if (args.length == 3 && sender.hasPermission("k.enemy.other")) {
-            if (!plugin.SQLSelect.land_exists(args[1])) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[1]+" &cbestaat niet!"));
-                return;
-            }
-            Land land = plugin.SQLSelect.land_get_by_name(args[1]);
-            if (!plugin.SQLSelect.land_exists(args[2])) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[2]+" &cbestaat niet!"));
-                return;
-            }
-            Land other = plugin.SQLSelect.land_get_by_name(args[2]);
-
-            // Check if the kingdoms are not the same
-            if (land.getUuid().equals(other.getUuid())) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&cJe kan niet een kingdom vijand maken van zichzelf!"));
                 return;
             }
 
-            // Check if already enemy
-            if (land.get_relation_number(other) == 2) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&4&l"+land.getName()+" &cen &4&l"+other.getName()+" &czijn al vijanden!"));
-                return;
-            }
+            // Check if relation is ally
+            if (land.get_relation_number(other) == 1) {
+                // You are enemies from each other and you want to be neutral
+                // Check if you already did an request
+                if (plugin.SQLSelect.relationships_request_exists(land, other, "Vijand")) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&aJe hebt al een aanvraag liggen bij dat kingdom voor een vijandige relatie!"));
+                    return;
+                }
 
-            // Set both on enemy
-            plugin.SQLUpdate.update_relationship(land, other, 2);
-            plugin.SQLUpdate.update_relationship(other, land, 2);
+                // Check if their is an request from the other land to be neutral
+                if (plugin.SQLSelect.relationships_request_exists(other, land, "Vijand")) {
+                    // Other land wants to be neutral already so set both too neutral and delete requests
+                    plugin.SQLUpdate.update_relationship(land, other, 2);
+                    plugin.SQLUpdate.update_relationship(other, land, 2);
 
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    plugin.Config.getGeneralPrefix() + "&aSuccesvol &2&l"+land.getName()+" &aen &2&l"+other.getName()+" &avijanden gemaakt!"));
+                    // Delete relationship request
+                    plugin.SQLDelete.table_relationship_request_delete(land, other);
+                    plugin.SQLDelete.table_relationship_request_delete(other, land);
 
-            for (Speler spelers : land.getLeden()) {
-                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
-                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.Config.getGeneralPrefix() + "&4&l"+land.getName()+" &cen &4&l"+other.getName()+" &czijn nu vijanden!"));
+                    for (Speler kdSpeler : land.getLeden()) {
+                        if (Bukkit.getServer().getPlayer(kdSpeler.getUuid()) != null) {
+                            Player kdPlayer = Bukkit.getServer().getPlayer(kdSpeler.getUuid());
+                            kdPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&aJouw land en het land &2&l"+other.getName()+" &ahebben nu een vijandige relatie!"));
+                        }
+                    }
+
+                    for (Speler kdSpeler : other.getLeden()) {
+                        if (Bukkit.getServer().getPlayer(kdSpeler.getUuid()) != null) {
+                            Player kdPlayer = Bukkit.getServer().getPlayer(kdSpeler.getUuid());
+                            kdPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&aJouw land en het land &2&l"+land.getName()+" &ahebben nu een vijandige relatie!"));
+                        }
+                    }
+                    return;
+                } else {
+                    // Send request to other land
+                    plugin.SQLInsert.relationship_request_create(land, other, "Vijand");
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&2&lVijandige &arelatie aangevraagd tussen &2&l"+land.getName()+" &aen &2&l"+other.getName()+"&a!"));
+
+                    // Send to people of that land the request
+                    for (Speler spelers : other.getLeden()) {
+                        if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
+                            Player otherPlayer = Bukkit.getServer().getPlayer(spelers.getUuid());
+                            if (otherPlayer.hasPermission("k.enemy")) {
+                                otherPlayer.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                        plugin.Config.getGeneralPrefix() + "&aHet land &2&l"+land.getName()+" &awilt een vijandige relatie met uw land. Accepteer dit door &2&l/k vijand "+land.getName()+" &ate typen."));
+                            }
+                        }
+                    }
+                    return;
                 }
             }
-
-            for (Speler spelers : other.getLeden()) {
-                if (Bukkit.getServer().getPlayer(spelers.getUuid()) != null) {
-                    Bukkit.getServer().getPlayer(spelers.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
-                            plugin.Config.getGeneralPrefix() + "&4&l"+other.getName()+" &cen &4&l"+land.getName()+" &czijn nu vijanden!"));
-                }
-            }
-
             return;
         }
 

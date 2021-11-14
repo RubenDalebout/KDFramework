@@ -112,4 +112,23 @@ public class SQLiteInsert {
             System.out.println(e.getMessage());
         }
     }
+
+
+    // Relationship request
+    public void relationship_request_create(Land land, Land other, String What) {
+        String sql = "INSERT INTO "
+                + "relationships_request(UUID, Land, Other, What) "
+                + "VALUES(?,?,?,?)";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            pstmt.setString(1, UUID.randomUUID().toString());
+            pstmt.setString(2, land.getUuid().toString());
+            pstmt.setString(3, other.getUuid().toString());
+            pstmt.setString(4, What);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

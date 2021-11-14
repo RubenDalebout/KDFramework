@@ -95,4 +95,20 @@ public class SQLiteDelete {
             System.out.println(e.getMessage());
         }
     }
+
+
+    // Relationship request
+    public void table_relationship_request_delete(Land land, Land other) {
+        String sql = "DELETE FROM relationships_request WHERE Land = ? AND Other = ?";
+
+        try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+            // set the corresponding param
+            pstmt.setString(1, land.getUuid().toString());
+            pstmt.setString(2, other.getUuid().toString());
+            // execute the delete statement
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
