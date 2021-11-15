@@ -28,6 +28,7 @@ public class Sidebar {
 
         Team coins = board.registerNewTeam("coins");
         Team friends = board.registerNewTeam("friends");
+        Team region = board.registerNewTeam("region");
 
         obj.getScore("  ").setScore(9);
         obj.getScore(ChatColor.translateAlternateColorCodes('&', MainColor+"&lKingdom:")).setScore(8);
@@ -58,6 +59,16 @@ public class Sidebar {
         } else {
             friends.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line));
             friends.setSuffix("");
+        }
+
+        region.addEntry("§a");
+        line = PlaceholderAPI.setPlaceholders(p, "%kdf_region%");
+        if (line.length() > 14) {
+            region.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(0, 13)));
+            region.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(14)));
+        } else {
+            region.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line));
+            region.setSuffix("");
         }
         p.setScoreboard(board);
     }
@@ -149,6 +160,7 @@ public class Sidebar {
 
         Team coins = board.getTeam("coins");
         Team friends = board.getTeam("friends");
+        Team region = board.getTeam("region");
 
         if (coins == null || friends == null) return;
 
@@ -168,6 +180,15 @@ public class Sidebar {
         } else {
             friends.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor + line));
             friends.setSuffix("");
+        }
+
+        line = PlaceholderAPI.setPlaceholders(p, "%kdf_region%");
+        if (line.length() > 14) {
+            region.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(0, 13)));
+            region.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(14)));
+        } else {
+            region.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line));
+            region.setSuffix("");
         }
     }
 }

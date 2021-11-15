@@ -1,5 +1,10 @@
 package io.github.deechtezeeuw.kdframework;
 
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.managers.RegionManager;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
@@ -89,6 +94,23 @@ public class PlaceHolders extends PlaceholderExpansion {
                 name = rank.getName();
             }
             return name;
+        }
+
+        if (params.equalsIgnoreCase("region")) {
+            LocalPlayer localPlayer = plugin.worldGuardPlugin.wrapPlayer(p);
+            Vector playerVector = localPlayer.getPosition();
+            RegionManager regionManager = plugin.worldGuardPlugin.getRegionManager(p.getWorld());
+            ApplicableRegionSet applicableRegionSet = regionManager.getApplicableRegions(playerVector);
+
+            for (ProtectedRegion regions : applicableRegionSet) {
+                if (regions.contains(playerVector)) {
+                    return regions.getId();
+                }
+            }
+
+            if (applicableRegionSet.size() == 0) {
+                return "Wildernis";
+            }
         }
 
         return null;

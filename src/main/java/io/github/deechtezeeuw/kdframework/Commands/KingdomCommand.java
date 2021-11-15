@@ -12,6 +12,7 @@ import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
 import io.github.deechtezeeuw.kdframework.Rank.DeleteRank;
 import io.github.deechtezeeuw.kdframework.Rank.EditRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
+import io.github.deechtezeeuw.kdframework.Region.createRegion;
 import io.github.deechtezeeuw.kdframework.Relaties.RelateAlly;
 import io.github.deechtezeeuw.kdframework.Relaties.RelateEnemy;
 import io.github.deechtezeeuw.kdframework.Relaties.RelateNeutral;
@@ -356,6 +357,31 @@ public class KingdomCommand implements CommandExecutor {
                     return true;
                 } else {
                     // No permission to do k.relations
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+            // Region
+            if (args[0].equalsIgnoreCase("region")) {
+                if (sender.hasPermission("k.region")) {
+                    if (args.length > 1) {
+                        if (args[1].equalsIgnoreCase("create")) {
+                            if (sender.hasPermission("k.region.create")) {
+                                new createRegion(plugin, sender, label, args);
+                                return true;
+                            } else {
+                                // No permission to do k.region.create
+                                plugin.Config.noPermission(sender);
+                                return true;
+                            }
+                        }
+                    }
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" "+args[0]+" [create]"));
+                    return true;
+                } else {
+                    // No permission to do k.region
                     plugin.Config.noPermission(sender);
                     return true;
                 }
