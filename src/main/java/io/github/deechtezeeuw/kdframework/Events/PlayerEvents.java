@@ -80,6 +80,17 @@ public class PlayerEvents implements Listener {
                         plugin.Config.getGeneralOnQuit())));
 
         plugin.SpelerPerms.playerPermissions.remove(player.getUniqueId());
+
+        if (plugin.worldGuarding.entered.contains(player) || plugin.worldGuarding.left.contains(player)) {
+            plugin.worldGuarding.left.remove(player);
+            plugin.worldGuarding.entered.remove(player);
+        }
+    }
+
+    @EventHandler
+    public void moveEvent(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        plugin.worldGuarding.enterRegion(player);
     }
 
     @EventHandler(priority = EventPriority.LOW)

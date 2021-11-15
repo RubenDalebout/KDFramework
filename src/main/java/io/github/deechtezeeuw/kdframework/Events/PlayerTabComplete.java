@@ -27,7 +27,9 @@ public class PlayerTabComplete implements TabCompleter {
         List<String> result = new ArrayList<String>();
 
         // Temp add commands
-        subCommands.add("help"); subCommands.add("land");subCommands.add("set");subCommands.add("rank");
+        if (!subCommands.contains("land")) subCommands.add("land");
+        if (!subCommands.contains("set")) subCommands.add("set");
+        if (!subCommands.contains("rank")) subCommands.add("rank");
 
         if (args.length == 1) {
             for (String a : subCommands) {

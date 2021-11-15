@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework;
 
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.github.deechtezeeuw.kdframework.Commands.KingdomCommand;
 import io.github.deechtezeeuw.kdframework.Configuraties.Configuratie;
 import io.github.deechtezeeuw.kdframework.Events.PlayerEvents;
@@ -9,8 +10,8 @@ import io.github.deechtezeeuw.kdframework.SQL.*;
 import io.github.deechtezeeuw.kdframework.Scoreboard.Sidebar;
 import io.github.deechtezeeuw.kdframework.Speler.SpelerPermissions;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -36,6 +37,9 @@ public final class KDFramework extends JavaPlugin {
 
     // Placeholders
     public PlaceHolders KDPlaceholders;
+    // Worldguard
+    public WorldGuardPlugin worldGuardPlugin;
+    public WorldGuarding worldGuarding;
     // Permissions
     public SpelerPermissions SpelerPerms;
     // Sidebar
@@ -99,6 +103,11 @@ public final class KDFramework extends JavaPlugin {
             KDPlaceholders.register();
         }
 
+        worldGuardPlugin = getWorldGuard();
+        if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
+            this.worldGuarding = new WorldGuarding(this);
+        }
+
         this.SpelerPerms = new SpelerPermissions(this);
         this.guiJoin = new GUIJoin(this);
 
@@ -120,5 +129,15 @@ public final class KDFramework extends JavaPlugin {
 
     public static KDFramework getInstance() {
         return instance;
+    }
+
+    public WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldGuard");
+
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+
+        return (WorldGuardPlugin) plugin;
     }
 }
