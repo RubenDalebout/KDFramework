@@ -148,6 +148,8 @@ public class Sidebar {
     public void updateSidebar(Player p) {
         Scoreboard board = p.getScoreboard();
 
+        if (board.getObjective(DisplaySlot.SIDEBAR) == null) return;
+
         // Update static items
         // Colors
         if (!MainColor.equalsIgnoreCase(KDFramework.getInstance().Config.getSidebarColor()))
@@ -162,7 +164,7 @@ public class Sidebar {
         Team friends = board.getTeam("friends");
         Team region = board.getTeam("region");
 
-        if (coins == null || friends == null) return;
+        if (coins == null || friends == null || region == null) return;
 
         String line = PlaceholderAPI.setPlaceholders(p, "%kdf_land%");
         if (line.length() > 14) {

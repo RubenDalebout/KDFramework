@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.Events;
 
+import com.sk89q.worldguard.protection.flags.Flag;
 import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;

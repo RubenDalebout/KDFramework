@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework.Commands;
 
+import com.sk89q.worldguard.protection.flags.Flag;
 import io.github.deechtezeeuw.kdframework.GUI.*;
 import io.github.deechtezeeuw.kdframework.Invite.CreateInvite;
 import io.github.deechtezeeuw.kdframework.Invite.DeleteInvite;
@@ -27,6 +28,7 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.scheduler.BukkitRunnable;

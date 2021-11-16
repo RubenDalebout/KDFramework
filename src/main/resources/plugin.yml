@@ -4,7 +4,7 @@ main: io.github.deechtezeeuw.kdframework.KDFramework
 api-version: 1.12
 authors: [ DeZeeuw, 5lutty ]
 description: KingdomFramework by DeZeeuw and 5lutty
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, WorldGuard, WorldEdit]
 commands:
   kingdom:
     usage: /<command>

@@ -1,0 +1,20 @@
+#__  ___  _______      _______ .______          ___      .___  ___.  ___________    __    ____  ______   .______       __  ___
+#|  |/  / |       \    |   ____||   _  \        /   \     |   \/   | |   ____\   \  /  \  /   / /  __  \  |   _  \     |  |/  /
+#|  '  /  |  .--.  |   |  |__   |  |_)  |      /  ^  \    |  \  /  | |  |__   \   \/    \/   / |  |  |  | |  |_)  |    |  '  /
+#|    <   |  |  |  |   |   __|  |      /      /  /_\  \   |  |\/|  | |   __|   \            /  |  |  |  | |      /     |    <
+#|  .  \  |  '--'  |   |  |     |  |\  \----./  _____  \  |  |  |  | |  |____   \    /\    /   |  `--'  | |  |\  \----.|  .  \
+#|__|\__\ |_______/    |__|     | _| `._____/__/     \__\ |__|  |__| |_______|   \__/  \__/     \______/  | _| `._____||__|\__\
+#
+# Dont touch it if you dont know what your doing
+kingdom-region:
+  dynmap:
+    icon: "temple"
+  rules:
+    - region flag {region} build -g nonmembers -w {world} deny
+    - region flag {region} blocked-cmds -g nonmembers -w {world} /k spawn
+    - region flag {region} use -g nonmembers -w {world} deny
+    - region flag {region} fly -g nonmembers -w {world} deny
+    - region flag {region} glide -g nonmembers -w {world} deny
+    - region flag {region} frostwalker -g nonmembers -w {world} deny
+    - region flag {region} pvp -w {world} deny
+    - region flag {region} deny-message &7&l(&2&lKD&7&l) &cGeen permissie in deze regio!

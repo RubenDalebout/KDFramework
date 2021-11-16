@@ -44,12 +44,16 @@ public class Configuratie {
     private File landConfigFile;
     private FileConfiguration landConfig;
 
+    private File regionConfigFile;
+    private FileConfiguration regionConfig;
+
     private File permissonConfigFile;
     private FileConfiguration permissionConfig;
 
     public Configuratie (KDFramework plugin) {
         this.plugin = plugin;
         createLandConfig();
+        createRegionConfig();
         createPermissionConfig();
         loadVariables();
     }
@@ -141,6 +145,23 @@ public class Configuratie {
         this.sidebarColor = plugin.getConfig().getString("general.scoreboard.color");
     }
 
+    public FileConfiguration getRegionConfig() { return this.regionConfig; }
+
+    private void createRegionConfig() {
+        regionConfigFile = new File(plugin.getDataFolder(), "regions.yml");
+        if (!regionConfigFile.exists()) {
+            regionConfigFile.getParentFile().mkdirs();
+            plugin.saveResource("regions.yml", false);
+        }
+
+        regionConfig = new YamlConfiguration();
+        try {
+            regionConfig.load(regionConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public FileConfiguration getLandConfig() {
         return this.landConfig;
     }
@@ -193,6 +214,16 @@ public class Configuratie {
         if (defaultStream != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStream));
             this.landConfig.setDefaults(defaultConfig);
+        }
+        // regions template
+        if (this.regionConfigFile == null)
+            this.regionConfigFile = new File(this.plugin.getDataFolder(), "regions.yml");
+
+        this.regionConfig = YamlConfiguration.loadConfiguration(this.landConfigFile);
+        InputStream defaultStreamReg = this.plugin.getResource("regions.yml");
+        if (defaultStreamReg != null) {
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStreamReg));
+            this.regionConfig.setDefaults(defaultConfig);
         }
 
         // permission template

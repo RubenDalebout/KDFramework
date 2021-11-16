@@ -20,7 +20,6 @@ public class WorldGuarding {
 
     public ArrayList<Player> entered = new ArrayList<>();
     public ArrayList<Player> left = new ArrayList<>();
-    private int test = 0;
 
     public void enterRegion(Player player) {
         LocalPlayer localPlayer = plugin.worldGuardPlugin.wrapPlayer(player);
@@ -35,6 +34,7 @@ public class WorldGuarding {
                         left.remove(player);
                         entered.add(player);
                         String regionName = regions.getId();
+                        regionName = regionName.substring(0,1).toUpperCase() + regionName.substring(1);
 
                         player.sendTitle("Kingdom", regionName, 1, 20, 1);
                     } catch (Exception e) {

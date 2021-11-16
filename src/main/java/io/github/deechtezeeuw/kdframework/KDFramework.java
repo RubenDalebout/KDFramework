@@ -1,5 +1,6 @@
 package io.github.deechtezeeuw.kdframework;
 
+import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import io.github.deechtezeeuw.kdframework.Commands.KingdomCommand;
 import io.github.deechtezeeuw.kdframework.Configuraties.Configuratie;
@@ -40,6 +41,8 @@ public final class KDFramework extends JavaPlugin {
     // Worldguard
     public WorldGuardPlugin worldGuardPlugin;
     public WorldGuarding worldGuarding;
+    // Worldedit
+    public WorldEditPlugin worldEditPlugin;
     // Permissions
     public SpelerPermissions SpelerPerms;
     // Sidebar
@@ -50,6 +53,10 @@ public final class KDFramework extends JavaPlugin {
     // Cooldown
     public HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
 
+    @Override
+    public void onLoad() {
+
+    }
 
     @Override
     public void onEnable() {
@@ -104,6 +111,7 @@ public final class KDFramework extends JavaPlugin {
         }
 
         worldGuardPlugin = getWorldGuard();
+        worldEditPlugin = getWorldEdit();
         if (Bukkit.getPluginManager().isPluginEnabled("WorldGuard")) {
             this.worldGuarding = new WorldGuarding(this);
         }
@@ -139,5 +147,15 @@ public final class KDFramework extends JavaPlugin {
         }
 
         return (WorldGuardPlugin) plugin;
+    }
+
+    public WorldEditPlugin getWorldEdit() {
+        Plugin plugin = this.getServer().getPluginManager().getPlugin("WorldEdit");
+
+        if (plugin == null || !(plugin instanceof WorldEditPlugin)) {
+            return null;
+        }
+
+        return (WorldEditPlugin) plugin;
     }
 }

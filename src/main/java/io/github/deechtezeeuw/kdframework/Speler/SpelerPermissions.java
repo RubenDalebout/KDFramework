@@ -1,6 +1,7 @@
 package io.github.deechtezeeuw.kdframework.Speler;
 
 import io.github.deechtezeeuw.kdframework.KDFramework;
+import io.github.deechtezeeuw.kdframework.Land.Land;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -38,6 +39,12 @@ public class SpelerPermissions {
         // Get default permissions
         for (String defaultPerms : plugin.Config.getPermissionConfig().getStringList("default")) {
             permissionUser.add(defaultPerms);
+        }
+
+        // Check if user is in a land
+        if (speler.getLand() != null) {
+            Land land = plugin.SQLSelect.land_get_by_player(speler);
+            permissionUser.add("group."+land.getName().toLowerCase());
         }
 
         // Check if user has a rank

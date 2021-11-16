@@ -104,7 +104,9 @@ public class PlaceHolders extends PlaceholderExpansion {
 
             for (ProtectedRegion regions : applicableRegionSet) {
                 if (regions.contains(playerVector)) {
-                    return regions.getId();
+                    String name = regions.getId();
+                    name = name.substring(0, 1).toUpperCase() + name.substring(1);
+                    return name;
                 }
             }
 
