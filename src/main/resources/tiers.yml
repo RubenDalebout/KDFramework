@@ -1,0 +1,78 @@
+#__  ___  _______      _______ .______          ___      .___  ___.  ___________    __    ____  ______   .______       __  ___
+#|  |/  / |       \    |   ____||   _  \        /   \     |   \/   | |   ____\   \  /  \  /   / /  __  \  |   _  \     |  |/  /
+#|  '  /  |  .--.  |   |  |__   |  |_)  |      /  ^  \    |  \  /  | |  |__   \   \/    \/   / |  |  |  | |  |_)  |    |  '  /
+#|    <   |  |  |  |   |   __|  |      /      /  /_\  \   |  |\/|  | |   __|   \            /  |  |  |  | |      /     |    <
+#|  .  \  |  '--'  |   |  |     |  |\  \----./  _____  \  |  |  |  | |  |____   \    /\    /   |  `--'  | |  |\  \----.|  .  \
+#|__|\__\ |_______/    |__|     | _| `._____/__/     \__\ |__|  |__| |_______|   \__/  \__/     \______/  | _| `._____||__|\__\
+#
+# Dont touch it if you dont know what your doing
+
+tiers:
+  1:
+    ranks:
+      Dorpshoofd:
+        prefix: ''
+        level: 50
+        maximum: 1
+      Adviseur:
+        prefix: ''
+        level: 40
+        maximum: 1
+      Inwoner:
+        prefix: ''
+        level: 1
+        default: True
+    icon:
+    conditions:
+  2:
+    ranks:
+      Graaf:
+        prefix: ''
+        level: 50
+        maximum: 1
+      Gravin:
+        prefix: ''
+        level: 49
+        maximum: 1
+      Adviseur:
+        prefix: ''
+        level: 40
+        maximum: 1
+      Adviseuze:
+        prefix: ''
+        level: 39
+        maximum: 1
+      Soldaat:
+        prefix: ''
+        level: 10
+      Architect:
+        prefix: ''
+        level: 9
+      Priester:
+        prefix: ''
+        level: 5
+      Inwoner:
+        prefix: ''
+        level: 1
+        default: True
+    icon:
+    conditions:
+  3:
+    ranks:
+      Hertog:
+        prefix: ''
+        level: 50
+        maximum: 1
+      Hertogin:
+        prefix: ''
+        level: 49
+    icon:
+    conditions:
+  4:
+    ranks:
+    icon:
+    conditions:
+  5:
+    ranks:
+    icon:
+    condition:
