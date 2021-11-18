@@ -295,6 +295,7 @@ public class SQLiteSelect {
                         results.getInt("Level"),
                         results.getInt("Maximum"),
                         results.getString("Prefix"),
+                        results.getString("Tab"),
                         results.getBoolean("KDDefault")
                 );
             }
@@ -326,6 +327,7 @@ public class SQLiteSelect {
                         results.getInt("Level"),
                         Maximum,
                         results.getString("Prefix"),
+                        results.getString("Tab"),
                         results.getBoolean("KDDefault")
                 );
                 ranks.add(rank);

@@ -141,6 +141,9 @@ public class Sidebar {
                     cancel();
                 }
                 KDFramework.getInstance().sidebar.updateSidebar(p);
+                p.setPlayerListName(PlaceholderAPI.setPlaceholders(p,
+                        ChatColor.translateAlternateColorCodes('&',
+                                "%kdf_land_prefix% &f%player_displayname%")));
             }
         }.runTaskTimer(KDFramework.getInstance(), 0, 20);
     }

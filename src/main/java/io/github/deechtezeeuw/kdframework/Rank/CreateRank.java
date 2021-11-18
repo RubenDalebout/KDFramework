@@ -69,7 +69,7 @@ public class CreateRank {
             }
 
             // Create rank in land
-            Rank newRank = new Rank(UUID.randomUUID(), args[3], 1, null, "&7["+args[3]+"&7]", false);
+            Rank newRank = new Rank(UUID.randomUUID(), args[3], 1, null, "&7["+args[3]+"&7]", null, false);
             plugin.SQLInsert.rank_create(land.getUuid(), newRank);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+args[3]+" &ais aangemaakt voor het land &2&l"+land.getName()+"&a!"));
@@ -119,7 +119,7 @@ public class CreateRank {
             }
 
             // Create rank in land
-            Rank newRank = new Rank(UUID.randomUUID(), args[2], 1, null, "&7["+args[2]+"&7]", false);
+            Rank newRank = new Rank(UUID.randomUUID(), args[2], 1, null, "&7["+args[2]+"&7]", null, false);
             plugin.SQLInsert.rank_create(land.getUuid(), newRank);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+args[2]+" &ais aangemaakt voor het land &2&l"+land.getName()+"&a!"));

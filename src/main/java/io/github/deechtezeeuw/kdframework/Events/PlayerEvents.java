@@ -1,6 +1,5 @@
 package io.github.deechtezeeuw.kdframework.Events;
 
-import com.sk89q.worldguard.protection.flags.Flag;
 import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Land.Land;
@@ -8,11 +7,7 @@ import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,10 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.scoreboard.DisplaySlot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerEvents implements Listener {

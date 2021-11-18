@@ -54,11 +54,6 @@ public final class KDFramework extends JavaPlugin {
     public HashMap<UUID, Long> cooldown = new HashMap<UUID, Long>();
 
     @Override
-    public void onLoad() {
-
-    }
-
-    @Override
     public void onEnable() {
         // Plugin startup logic
         PluginDescriptionFile pdfFile = this.getDescription();

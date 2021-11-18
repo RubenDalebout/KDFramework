@@ -38,7 +38,7 @@ public class CreateLand {
                     maximum = null;
 
                 // Create rank
-                Rank newRank = new Rank(UUID.randomUUID(), rank, level, maximum, prefix, rankDefault);
+                Rank newRank = new Rank(UUID.randomUUID(), rank, level, maximum, prefix,null, rankDefault);
                 plugin.SQLInsert.rank_create(newLand.getUuid(), newRank);
             }
 

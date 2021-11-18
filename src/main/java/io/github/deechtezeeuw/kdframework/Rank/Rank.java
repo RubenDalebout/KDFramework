@@ -8,14 +8,16 @@ public class Rank {
     private Integer level;
     private Integer maximum;
     private String prefix;
+    private String tab;
     private Boolean kdDefault;
 
-    public Rank (UUID uuid, String name, Integer level, Integer maximum, String prefix, Boolean kdDefault) {
+    public Rank (UUID uuid, String name, Integer level, Integer maximum, String prefix, String tab, Boolean kdDefault) {
         this.uuid = uuid;
         this.name = name;
         this.level = level;
         this.maximum = maximum;
         this.prefix = prefix;
+        this.tab = tab;
         this.kdDefault = kdDefault;
     }
 
@@ -37,6 +39,10 @@ public class Rank {
 
     public String getPrefix() {
         return this.prefix;
+    }
+
+    public String getTab() {
+        return this.tab;
     }
 
     public Boolean getKdDefault() {
