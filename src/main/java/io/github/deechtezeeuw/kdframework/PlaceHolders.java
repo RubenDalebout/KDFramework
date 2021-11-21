@@ -86,7 +86,7 @@ public class PlaceHolders extends PlaceholderExpansion {
             return tab;
         }
 
-        // rank prefix
+        // rank prefix command
         if (params.equalsIgnoreCase("rank_prefix")) {
             String prefix = "";
             Speler speler = plugin.SQLSelect.player_get_by_uuid(p.getUniqueId());
