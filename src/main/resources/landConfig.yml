@@ -11,23 +11,11 @@ land:
   invite: True
   maximum: 20
   ranks:
-    Koning:
+    Stamhoofd:
       level: 50
       maximum: 1
-      prefix: "&7[&6Koning&7]"
-    Koningin:
-      level: 49
-      maximum: 1
-      prefix: "&7[&6Koningin&7]"
-    Hertog:
-      level: 35
-      maximum: 1
-      prefix: "&7[&9Hertog&7]"
-    Hertogin:
-      level: 34
-      maximum: 1
-      prefix: "&7[&9Hertogin&7]"
-    Burger:
+      prefix: "&7[&6Stamhoofd&7]"
+    Inwoner:
       level: 1
       default: true
-      prefix: "&7[&8Burger&7]"
+      prefix: "&7[&8Inwoner&7]"

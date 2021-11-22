@@ -11,15 +11,15 @@ tiers:
   1:
     ranks:
       Dorpshoofd:
-        prefix: ''
+        prefix: '&7[&6Dorpshoofd&7]'
         level: 50
         maximum: 1
       Adviseur:
-        prefix: ''
+        prefix: '&7[&9Adviseur&7]'
         level: 40
         maximum: 1
       Inwoner:
-        prefix: ''
+        prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
     icon:
@@ -27,32 +27,32 @@ tiers:
   2:
     ranks:
       Graaf:
-        prefix: ''
+        prefix: '&7[&6Graaf&7]'
         level: 50
         maximum: 1
       Gravin:
-        prefix: ''
-        level: 49
+        prefix: '&7[&6Gravin&7]'
+        level: 50
         maximum: 1
       Adviseur:
-        prefix: ''
+        prefix: '&7[&9Adviseur&7]'
         level: 40
         maximum: 1
       Adviseuze:
-        prefix: ''
-        level: 39
+        prefix: '&7[&9Adviseuze&7]'
+        level: 40
         maximum: 1
       Soldaat:
-        prefix: ''
+        prefix: '&7[&8Soldaat&7]'
         level: 10
       Architect:
-        prefix: ''
+        prefix: '&7[&8Architect&7]'
         level: 9
-      Priester:
-        prefix: ''
-        level: 5
+      Bouwer:
+        prefix: '&7[&8Bouwer&7]'
+        level: 2
       Inwoner:
-        prefix: ''
+        prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
     icon:
@@ -60,19 +60,137 @@ tiers:
   3:
     ranks:
       Hertog:
-        prefix: ''
+        prefix: '&7[&6Hertog&7]'
         level: 50
         maximum: 1
       Hertogin:
-        prefix: ''
-        level: 49
+        prefix: '&7[&6Hertogin&7]'
+        level: 50
+        maximum: 1
+      Adviseur:
+        prefix: '&7[&9Adviseur&7]'
+        level: 40
+        maximum: 1
+      Adviseuze:
+        prefix: '&7[&9Adviseuze&7]'
+        level: 40
+        maximum: 1
+      Soldaat:
+        prefix: '&7[&8Soldaat&7]'
+        level: 10
+      Architect:
+        prefix: '&7[&8Architect&7]'
+        level: 9
+      Priester:
+        prefix: '&7[&8Priester&7]'
+        level: 5
+      Inwoner:
+        prefix: '&7[&8Inwoner&7]'
+        level: 1
+        default: True
     icon:
     conditions:
   4:
     ranks:
+      Koning:
+        prefix: '&7[&6Koning&7]'
+        level: 50
+        maximum: 1
+      Koningin:
+        prefix: '&7[&6Koningin&7]'
+        level: 50
+        maximum: 1
+      Hertog:
+        prefix: '&7[&9Hertog&7]'
+        level: 40
+        maximum: 1
+      Hertogin:
+        prefix: '&7[&9Hertogin&7]'
+        level: 40
+        maximum: 1
+      Generaal:
+        prefix: '&7[&4Generaal&7]'
+        level: 30
+        maximum: 5
+      Adviseur:
+        prefix: '&7[&cAdviseur&7]'
+        level: 25
+        maximum: 5
+      Adviseuze:
+        prefix: '&7[&cAdviseuze&7]'
+        level: 25
+        maximum: 5
+      Soldaat:
+        prefix: '&7[&8Soldaat&7]'
+        level: 10
+      Architect:
+        prefix: '&7[&8Architect&7]'
+        level: 9
+      Priester:
+        prefix: '&7[&8Priester&7]'
+        level: 5
+      Inwoner:
+        prefix: '&7[&8Inwoner&7]'
+        level: 1
+        default: True
+      Dorpsgek:
+        prefix: '&7[Dorpsgek&7]'
+        level: 0
+        maximum: 1
     icon:
     conditions:
   5:
     ranks:
+      Koning:
+        prefix: '&7[&6Koning&7]'
+        level: 50
+        maximum: 1
+      Koningin:
+        prefix: '&7[&6Koningin&7]'
+        level: 50
+        maximum: 1
+      Hertog:
+        prefix: '&7[&9Hertog&7]'
+        level: 40
+        maximum: 1
+      Hertogin:
+        prefix: '&7[&9Hertogin&7]'
+        level: 40
+        maximum: 1
+      Generaal:
+        prefix: '&7[&4Generaal&7]'
+        level: 30
+        maximum: 5
+      Adviseur:
+        prefix: '&7[&cAdviseur&7]'
+        level: 25
+        maximum: 5
+      Adviseuze:
+        prefix: '&7[&cAdviseuze&7]'
+        level: 25
+        maximum: 5
+      Bouwmeester:
+        prefix: '&7[&8Bouwmeester&7]'
+        level: 11
+      Soldaat:
+        prefix: '&7[&8Soldaat&7]'
+        level: 10
+      Architect:
+        prefix: '&7[&8Architect&7]'
+        level: 9
+      Smid:
+        prefix: '&7[&8Smid&7]'
+        level: 6
+      Priester:
+        prefix: '&7[&8Priester&7]'
+        level: 5
+      Inwoner:
+        prefix: '&7[&8Inwoner&7]'
+        level: 1
+        default: True
+      Dorpsgek:
+        prefix: '&7[Dorpsgek&7]'
+        level: 0
+        maximum: 1
     icon:
     condition:
