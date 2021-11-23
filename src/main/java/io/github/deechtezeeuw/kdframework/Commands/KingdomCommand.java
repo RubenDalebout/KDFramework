@@ -23,6 +23,7 @@ import io.github.deechtezeeuw.kdframework.Set.SetRank;
 import io.github.deechtezeeuw.kdframework.Set.SetSpawn;
 import io.github.deechtezeeuw.kdframework.Set.SetWorldSpawn;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
+import io.github.deechtezeeuw.kdframework.Upgrade.Tier;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -213,6 +214,8 @@ public class KingdomCommand implements CommandExecutor {
                                                 "&aKingdom: &2&l"+land.getName()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 "&aPrefix: &2&l"+land.getPrefix()+"&a."));
+                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                                "&aTier: &2&l"+land.getTier()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                                                 "&aInvite: &2&l"+land.getInvite()+"&a."));
                                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
@@ -571,6 +574,27 @@ public class KingdomCommand implements CommandExecutor {
                     plugin.Config.noPermission(sender);
                     return true;
                 }
+            }
+        }
+
+        // Tier upgrade
+        if (args[0].equalsIgnoreCase("tier")) {
+            if (sender.hasPermission("k.tier")) {
+                Tier tiers = new Tier(plugin, sender, label, args);
+                if (tiers.arguments()) {
+                    // Upgrade KD
+                    if (args[1].equalsIgnoreCase("upgrade")) {
+                        tiers.upgrade(args[2]);
+                    }
+                    // Downgrade KD
+                    if (args[1].equalsIgnoreCase("downgrade")) {
+
+                    }
+                }
+            } else {
+                // No permission to do k.upgrade
+                plugin.Config.noPermission(sender);
+                return true;
             }
         }
 

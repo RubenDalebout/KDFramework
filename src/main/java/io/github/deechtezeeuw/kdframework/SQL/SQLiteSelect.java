@@ -60,6 +60,7 @@ public class SQLiteSelect {
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"),
                         results.getString("Spawn"),
+                        results.getInt("Tier"),
                         plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
                         plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))),
                         plugin.SQLSelect.invite_get_from_land(UUID.fromString(results.getString("UUID")))
@@ -91,6 +92,7 @@ public class SQLiteSelect {
                         results.getBoolean("Invite"),
                         results.getInt("Maximum"),
                         results.getString("Spawn"),
+                        results.getInt("Tier"),
                         plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
                         plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))),
                         plugin.SQLSelect.invite_get_from_land(UUID.fromString(results.getString("UUID")))
@@ -154,6 +156,7 @@ public class SQLiteSelect {
                             results.getBoolean("Invite"),
                             results.getInt("Maximum"),
                             results.getString("Spawn"),
+                            results.getInt("Tier"),
                             plugin.SQLSelect.land_leden(UUID.fromString(results.getString("UUID"))),
                             plugin.SQLSelect.ranks_list(UUID.fromString(results.getString("UUID"))),
                             plugin.SQLSelect.invite_get_from_land(UUID.fromString(results.getString("UUID")))

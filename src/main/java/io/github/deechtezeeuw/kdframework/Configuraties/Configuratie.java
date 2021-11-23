@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,11 +51,15 @@ public class Configuratie {
     private File permissonConfigFile;
     private FileConfiguration permissionConfig;
 
+    private File tierConfigFile;
+    private FileConfiguration tierConfig;
+
     public Configuratie (KDFramework plugin) {
         this.plugin = plugin;
         createLandConfig();
         createRegionConfig();
         createPermissionConfig();
+        createTierConfig();
         loadVariables();
     }
 
@@ -200,6 +205,25 @@ public class Configuratie {
         }
     }
 
+    public FileConfiguration getTierConfig() {
+        return this.tierConfig;
+    }
+
+    private void createTierConfig() {
+        tierConfigFile = new File(plugin.getDataFolder(), "tiers.yml");
+        if (!tierConfigFile.exists()) {
+            tierConfigFile.getParentFile().mkdirs();
+            plugin.saveResource("tiers.yml", false);
+        }
+
+        tierConfig = new YamlConfiguration();
+        try {
+            tierConfig.load(tierConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Reload command
     public void reloadVariables(CommandSender sender) {
         plugin.reloadConfig();
@@ -235,6 +259,17 @@ public class Configuratie {
         if (defaultStreamPerms != null) {
             YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStreamPerms));
             this.permissionConfig.setDefaults(defaultConfig);
+        }
+
+        // tier template
+        if(this.tierConfigFile == null)
+            this.tierConfigFile = new File(this.plugin.getDataFolder(), "tiers.yml");
+
+        this.tierConfig = YamlConfiguration.loadConfiguration(this.tierConfigFile);
+        InputStream defaultStreamTiers = this.plugin.getResource("tiers.yml");
+        if (defaultStreamTiers != null) {
+            YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStreamTiers));
+            this.tierConfig.setDefaults(defaultConfig);
         }
 
         // Reset permissions of all online players

@@ -16,6 +16,7 @@ public class SQLiteInstall {
     public void createTables() {
         this.table_player();
         this.table_landen();
+        this.table_landen_add_column("Tier");
         this.table_ranks();
         this.table_invites();
         this.table_relations();
@@ -58,6 +59,28 @@ public class SQLiteInstall {
             System.out.println(e.getMessage());
         }
         return;
+    }
+
+    public void table_landen_add_column(String column) {
+        try {
+            DatabaseMetaData md = plugin.SQL.getConnection().getMetaData();
+            ResultSet rs = md.getColumns(null, null, "lands", column);
+
+            if (rs.next()) {
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        String sql = "ALTER TABLE lands ADD COLUMN "+column+" integer(1) default(0)";
+
+        try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
+            // create a new table
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void table_ranks() {
