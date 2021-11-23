@@ -14,15 +14,23 @@ tiers:
         prefix: '&7[&6Dorpshoofd&7]'
         level: 50
         maximum: 1
+      Dorps:
+        prefix: '&7[&6Dorpshoofd&7]'
+        level: 50
+        maximum: 1
       Adviseur:
         prefix: '&7[&9Adviseur&7]'
+        level: 40
+        maximum: 1
+      Adviseuze:
+        prefix: '&7[&9Adviseuze&7]'
         level: 40
         maximum: 1
       Inwoner:
         prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
-    icon:
+    icon: 'tent'
     conditions:
   2:
     ranks:
@@ -55,7 +63,7 @@ tiers:
         prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
-    icon:
+    icon: 'tower'
     conditions:
   3:
     ranks:
@@ -88,7 +96,7 @@ tiers:
         prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
-    icon:
+    icon: 'tower'
     conditions:
   4:
     ranks:
@@ -137,7 +145,7 @@ tiers:
         prefix: '&7[Dorpsgek&7]'
         level: 0
         maximum: 1
-    icon:
+    icon: 'diamond'
     conditions:
   5:
     ranks:
@@ -192,5 +200,5 @@ tiers:
         prefix: '&7[Dorpsgek&7]'
         level: 0
         maximum: 1
-    icon:
+    icon: 'diamond'
     condition:
