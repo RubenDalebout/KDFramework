@@ -9,12 +9,14 @@
 
 land:
   invite: True
-  maximum: 20
+  maximum: 15
+  icon: 'tent'
   ranks:
     Stamhoofd:
       level: 50
       maximum: 1
       prefix: "&7[&6Stamhoofd&7]"
+      tab: '&7[&5❀&7]'
     Inwoner:
       level: 1
       default: true

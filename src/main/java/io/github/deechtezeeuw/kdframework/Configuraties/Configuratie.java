@@ -135,7 +135,7 @@ public class Configuratie {
         int posZ = plugin.getConfig().getInt("general.settings.world.spawn.z");
         float yaw = plugin.getConfig().getInt("general.settings.world.spawn.yaw");
         float pitch = plugin.getConfig().getInt("general.settings.world.spawn.pitch");
-        this.generalWorldSpawn = new Location(Bukkit.getWorld(plugin.getConfig().getString("general.settings.world.name")), posX, posY, posZ, yaw, pitch);
+        this.generalWorldSpawn = new Location(Bukkit.getWorld("Spawn"), posX, posY, posZ, yaw, pitch);
         this.generalSpawnCooldown = plugin.getConfig().getInt("general.settings.world.spawn-delay");
 
         this.generalOnFirst = plugin.getConfig().getString("general.messages.on-first");

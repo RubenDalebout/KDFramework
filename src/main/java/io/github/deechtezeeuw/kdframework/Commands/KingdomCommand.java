@@ -24,6 +24,7 @@ import io.github.deechtezeeuw.kdframework.Set.SetSpawn;
 import io.github.deechtezeeuw.kdframework.Set.SetWorldSpawn;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import io.github.deechtezeeuw.kdframework.Upgrade.Tier;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -504,10 +505,22 @@ public class KingdomCommand implements CommandExecutor {
                             String OtherKD = args[1];
                             if (!plugin.SQLSelect.land_exists(OtherKD)) {
                                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[2]+" &cbestaat niet!"));
+                                        plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[1]+" &cbestaat niet!"));
                                 return true;
                             }
                             land = plugin.SQLSelect.land_get_by_name(OtherKD);
+                            List<String> Locatie = new ArrayList<>();
+                            for (String a : land.getSpawn().split("/")) {
+                                Locatie.add(a);
+                            }
+                            Location tpLocation = player.getLocation();
+                            tpLocation.setWorld(Bukkit.getServer().getWorld("VintageKingdom"));
+                            tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
+
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd!"));
+                            player.teleport(tpLocation);
+                            return true;
                         } else {
                             // Check if user is in a land
                             if (speler == null || speler.getLand() == null) {
@@ -516,6 +529,17 @@ public class KingdomCommand implements CommandExecutor {
                                 return true;
                             }
                             land = plugin.SQLSelect.land_get_by_player(speler);
+
+                            // check if land has an spawn
+                            if (land.getSpawn() == null) {
+                                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                        plugin.Config.getGeneralPrefix() + "&cHet kingdom &4&l"+land.getName()+" &cheeft nog geen spawn!"));
+                                return true;
+                            }
+                            List<String> Locatie = new ArrayList<>();
+                            for (String a : land.getSpawn().split("/")) {
+                                Locatie.add(a);
+                            }
                         }
 
                         // check if land has an spawn
@@ -530,6 +554,7 @@ public class KingdomCommand implements CommandExecutor {
                         }
                         Location LocationOld = player.getLocation();
                         Location tpLocation = player.getLocation();
+                        tpLocation.setWorld(Bukkit.getServer().getWorld("VintageKingdom"));
                         tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
 
                         // Cooldown
@@ -582,13 +607,30 @@ public class KingdomCommand implements CommandExecutor {
             if (sender.hasPermission("k.tier")) {
                 Tier tiers = new Tier(plugin, sender, label, args);
                 if (tiers.arguments()) {
+                    // Tier list
+                    if (args[0].equalsIgnoreCase("tier") && args.length == 1) {
+                        tiers.gui();
+                        return true;
+                    }
                     // Upgrade KD
                     if (args[1].equalsIgnoreCase("upgrade")) {
+                        if (!sender.hasPermission("k.tier.upgrade")) {
+                            // No permission to do k.tier.upgrade
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
                         tiers.upgrade(args[2]);
+                        return true;
                     }
                     // Downgrade KD
                     if (args[1].equalsIgnoreCase("downgrade")) {
-
+                        if (!sender.hasPermission("k.tier.downgrade")) {
+                            // No permission to do k.tier.upgrade
+                            plugin.Config.noPermission(sender);
+                            return true;
+                        }
+                        tiers.downgrade(args[2]);
+                        return true;
                     }
                 }
             } else {

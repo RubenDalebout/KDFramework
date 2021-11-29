@@ -28,7 +28,7 @@ public class PlayerEvents implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
@@ -63,7 +63,7 @@ public class PlayerEvents implements Listener {
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(16);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
@@ -196,7 +196,7 @@ public class PlayerEvents implements Listener {
             }
         }
 
-        if(view.getTitle().contains("invites") && e.getClickedInventory().getType() != InventoryType.PLAYER || view.getTitle().contains("Relaties") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
+        if(view.getTitle().contains("invites") && e.getClickedInventory().getType() != InventoryType.PLAYER || view.getTitle().contains("Relaties") && e.getClickedInventory().getType() != InventoryType.PLAYER || view.getTitle().contains("Tiers") && e.getClickedInventory().getType() != InventoryType.PLAYER) {
             e.setCancelled(true);
             Integer GUISize = e.getClickedInventory().getSize();
             if (e.getSlot() == GUISize-5 && e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.translateAlternateColorCodes('&', "&4&lSluiten"))) {

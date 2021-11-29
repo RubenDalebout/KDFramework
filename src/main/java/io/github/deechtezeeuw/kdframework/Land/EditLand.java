@@ -42,9 +42,9 @@ public class EditLand {
         // Check what he wants to edit
         if (args.length >= 4) {
             // Check if its not one of those
-            if (!args[3].equalsIgnoreCase("prefix") && !args[3].equalsIgnoreCase("invite") && !args[3].equalsIgnoreCase("maximum")) {
+            if (!args[3].equalsIgnoreCase("tab") && !args[3].equalsIgnoreCase("prefix") && !args[3].equalsIgnoreCase("invite") && !args[3].equalsIgnoreCase("maximum")) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&cJe kan alleen &4&lPrefix&c, &4&lInvite &cof &4&lMaximum &ceditten!"));
+                        plugin.Config.getGeneralPrefix() + "&cJe kan alleen &4&lPrefix&c, &4&lInvite&c, &4&lTab &cof &4&lMaximum &ceditten!"));
                 return;
             }
         } else {
@@ -69,6 +69,22 @@ public class EditLand {
                 if (land.getPrefix().equalsIgnoreCase(args[4])) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                             plugin.Config.getGeneralPrefix() + "&cJe prefix is al &4&l"+args[4]+"&c!"));
+                    return;
+                }
+            }
+
+            if (args[3].equalsIgnoreCase("tab")) {
+                // Check if it has more then 36 characters
+                if (args[4].length() > 16) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cJe tab bevat meer dan het maximum van &4&l16 &ckarakters!"));
+                    return;
+                }
+
+                // Check if its not the same as the current value
+                if (land.getPrefix().equalsIgnoreCase(args[4])) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cJe tab is al &4&l"+args[4]+"&c!"));
                     return;
                 }
             }

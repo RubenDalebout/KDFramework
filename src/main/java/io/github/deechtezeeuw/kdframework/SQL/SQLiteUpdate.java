@@ -28,11 +28,19 @@ public class SQLiteUpdate {
         if (Column.equalsIgnoreCase("maximum")) {
             sql = "UPDATE lands SET Maximum = ? WHERE Name = ?";
         }
+        if (Column.equalsIgnoreCase("tab")) {
+            sql = "UPDATE lands SET Tab = ? WHERE Name = ?";
+        }
+        if (Column.equalsIgnoreCase("tier"))
+            sql = "UPDATE lands SET Tier = ? WHERE Name = ?";
 
         try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
 
             // set the corresponding param
             if (Column.equalsIgnoreCase("prefix")) {
+                pstmt.setString(1, Value);
+            }
+            if (Column.equalsIgnoreCase("tab")) {
                 pstmt.setString(1, Value);
             }
             if (Column.equalsIgnoreCase("invite")) {
@@ -41,6 +49,8 @@ public class SQLiteUpdate {
             if (Column.equalsIgnoreCase("maximum")) {
                 pstmt.setInt(1, Integer.parseInt(Value));
             }
+            if (Column.equalsIgnoreCase("tier"))
+                pstmt.setInt(1, Integer.parseInt(Value));
             pstmt.setString(2, Kingdom);
             // update
             pstmt.executeUpdate();
@@ -111,6 +121,17 @@ public class SQLiteUpdate {
     public void update_rank(Rank rank, String Column, String newValue) {
         if (Column.equalsIgnoreCase("prefix")) {
             String sql = "UPDATE ranks SET Prefix = ? WHERE UUID = ?";
+            try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
+                pstmt.setString(1, newValue);
+                pstmt.setString(2, rank.getUuid().toString());
+
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        if (Column.equalsIgnoreCase("tab")) {
+            String sql = "UPDATE ranks SET Tab = ? WHERE UUID = ?";
             try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
                 pstmt.setString(1, newValue);
                 pstmt.setString(2, rank.getUuid().toString());

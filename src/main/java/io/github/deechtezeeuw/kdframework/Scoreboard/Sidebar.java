@@ -143,7 +143,7 @@ public class Sidebar {
                 KDFramework.getInstance().sidebar.updateSidebar(p);
                 p.setPlayerListName(PlaceholderAPI.setPlaceholders(p,
                         ChatColor.translateAlternateColorCodes('&',
-                                "%kdf_land_prefix% &f%player_displayname%")));
+                                "%kdf_land_tab% &f%player_displayname% %kdf_tab%")));
             }
         }.runTaskTimer(KDFramework.getInstance(), 0, 20);
     }

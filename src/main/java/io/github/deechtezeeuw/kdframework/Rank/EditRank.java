@@ -53,9 +53,9 @@ public class EditRank {
             }
 
             // Check if ArgWhat is prefix/level/maximum/default
-            if (!ArgWhat.equalsIgnoreCase("prefix") && !ArgWhat.equalsIgnoreCase("level") && !ArgWhat.equalsIgnoreCase("maximum") && !ArgWhat.equalsIgnoreCase("default")) {
+            if (!ArgWhat.equalsIgnoreCase("tab") && !ArgWhat.equalsIgnoreCase("prefix") && !ArgWhat.equalsIgnoreCase("level") && !ArgWhat.equalsIgnoreCase("maximum") && !ArgWhat.equalsIgnoreCase("default")) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&4&l"+ArgWhat+" &cis niet toegestaan, mag alleen: &4&lprefix&c, &4&llevel&c, &4&lmaximum &cof &4&ldefault &czijn!"));
+                        plugin.Config.getGeneralPrefix() + "&4&l"+ArgWhat+" &cis niet toegestaan, mag alleen: &4&lprefix&c, &4&llevel&c, &4&lmaximum&c, &4&lTab &cof &4&ldefault &czijn!"));
                 return;
             }
 
@@ -71,6 +71,21 @@ public class EditRank {
                 plugin.SQLUpdate.update_rank(editRank, ArgWhat, ArgValue);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu de prefix &2&l"+ArgValue+" &ain het land &2&l"+land.getName()+"&a!"));
+                return;
+            }
+
+            // Check if its tab t he length is not longer then 16
+            if (ArgWhat.equalsIgnoreCase("tab")) {
+                if (ArgValue.length() > 16) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&4&l"+ArgValue+" &cis niet toegestaan, je totale karakters mag niet langer zijn dan &4&l16 &ctekens!"));
+                    return;
+                }
+
+                // Update tab
+                plugin.SQLUpdate.update_rank(editRank, ArgWhat, ArgValue);
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu de tab &2&l"+ArgValue+" &ain het land &2&l"+land.getName()+"&a!"));
                 return;
             }
 
@@ -216,7 +231,7 @@ public class EditRank {
         }
 
         // Check if ArgWhat is prefix/level/maximum/default
-        if (!ArgWhat.equalsIgnoreCase("prefix") && !ArgWhat.equalsIgnoreCase("level") && !ArgWhat.equalsIgnoreCase("maximum") && !ArgWhat.equalsIgnoreCase("default")) {
+        if (!ArgWhat.equalsIgnoreCase("tab") && !ArgWhat.equalsIgnoreCase("prefix") && !ArgWhat.equalsIgnoreCase("level") && !ArgWhat.equalsIgnoreCase("maximum") && !ArgWhat.equalsIgnoreCase("default")) {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&4&l"+ArgWhat+" &cis niet toegestaan, mag alleen: &4&lprefix&c, &4&llevel&c, &4&lmaximum &cof &4&ldefault &czijn!"));
             return;
@@ -234,6 +249,21 @@ public class EditRank {
             plugin.SQLUpdate.update_rank(editRank, ArgWhat, ArgNew);
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                     plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu de prefix &2&l"+ArgNew+" &a!"));
+            return;
+        }
+
+        // Check if its tab t he length is not longer then 16
+        if (ArgWhat.equalsIgnoreCase("tab")) {
+            if (ArgNew.length() > 16) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                        plugin.Config.getGeneralPrefix() + "&4&l"+ArgNew+" &cis niet toegestaan, je totale karakters mag niet langer zijn dan &4&l16 &ctekens!"));
+                return;
+            }
+
+            // Update tab
+            plugin.SQLUpdate.update_rank(editRank, ArgWhat, ArgNew);
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    plugin.Config.getGeneralPrefix() + "&aDe rank &2&l"+editRank.getName()+" &aheeft nu de tab &2&l"+ArgNew+" &a!"));
             return;
         }
 

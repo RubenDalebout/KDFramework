@@ -14,23 +14,23 @@ tiers:
         prefix: '&7[&6Dorpshoofd&7]'
         level: 50
         maximum: 1
-      Dorps:
-        prefix: '&7[&6Dorpshoofd&7]'
-        level: 50
-        maximum: 1
+        tab: '&7[&5❀&7]'
       Adviseur:
         prefix: '&7[&9Adviseur&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✤&7]'
       Adviseuze:
         prefix: '&7[&9Adviseuze&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✥&7]'
       Inwoner:
         prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
     icon: 'tent'
+    maximum: 25
     conditions:
   2:
     ranks:
@@ -38,18 +38,22 @@ tiers:
         prefix: '&7[&6Graaf&7]'
         level: 50
         maximum: 1
+        tab: '&7[&5❀&7]'
       Gravin:
         prefix: '&7[&6Gravin&7]'
         level: 50
         maximum: 1
+        tab: '&7[&5❁&7]'
       Adviseur:
         prefix: '&7[&9Adviseur&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✤&7]'
       Adviseuze:
         prefix: '&7[&9Adviseuze&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✥&7]'
       Soldaat:
         prefix: '&7[&8Soldaat&7]'
         level: 10
@@ -63,26 +67,26 @@ tiers:
         prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
-    icon: 'tower'
+    icon: 'castle'
+    maximum: 35
     conditions:
   3:
     ranks:
-      Hertog:
-        prefix: '&7[&6Hertog&7]'
+      Gouverneur:
+        prefix: '&7[&6Gouverneur&7]'
         level: 50
         maximum: 1
-      Hertogin:
-        prefix: '&7[&6Hertogin&7]'
-        level: 50
-        maximum: 1
+        tab: '&7[&5❀&7]'
       Adviseur:
         prefix: '&7[&9Adviseur&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✤&7]'
       Adviseuze:
         prefix: '&7[&9Adviseuze&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✥&7]'
       Soldaat:
         prefix: '&7[&8Soldaat&7]'
         level: 10
@@ -96,7 +100,8 @@ tiers:
         prefix: '&7[&8Inwoner&7]'
         level: 1
         default: True
-    icon: 'tower'
+    icon: 'castle'
+    maximum: 45
     conditions:
   4:
     ranks:
@@ -104,18 +109,22 @@ tiers:
         prefix: '&7[&6Koning&7]'
         level: 50
         maximum: 1
+        tab: '&7[&5❀&7]'
       Koningin:
         prefix: '&7[&6Koningin&7]'
         level: 50
         maximum: 1
+        tab: '&7[&5❁&7]'
       Hertog:
         prefix: '&7[&9Hertog&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✤&7]'
       Hertogin:
         prefix: '&7[&9Hertogin&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✥&7]'
       Generaal:
         prefix: '&7[&4Generaal&7]'
         level: 30
@@ -145,7 +154,8 @@ tiers:
         prefix: '&7[Dorpsgek&7]'
         level: 0
         maximum: 1
-    icon: 'diamond'
+    icon: 'star'
+    maximum: 55
     conditions:
   5:
     ranks:
@@ -153,18 +163,22 @@ tiers:
         prefix: '&7[&6Koning&7]'
         level: 50
         maximum: 1
+        tab: '&7[&5❀&7]'
       Koningin:
         prefix: '&7[&6Koningin&7]'
         level: 50
         maximum: 1
+        tab: '&7[&5❁&7]'
       Hertog:
         prefix: '&7[&9Hertog&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✤&7]'
       Hertogin:
         prefix: '&7[&9Hertogin&7]'
         level: 40
         maximum: 1
+        tab: '&7[&d✥&7]'
       Generaal:
         prefix: '&7[&4Generaal&7]'
         level: 30
@@ -201,4 +215,5 @@ tiers:
         level: 0
         maximum: 1
     icon: 'diamond'
-    condition:
+    maximum: 60
+    conditions:

@@ -23,6 +23,7 @@ public class SetWorldSpawn {
         Player player = (Player) sender;
 
         Location location = player.getLocation();
+        plugin.getConfig().set("general.settings.world.name", location.getWorld().getName());
         plugin.getConfig().set("general.settings.world.spawn.x", location.getX());
         plugin.getConfig().set("general.settings.world.spawn.y", location.getY());
         plugin.getConfig().set("general.settings.world.spawn.z", location.getZ());

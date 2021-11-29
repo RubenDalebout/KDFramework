@@ -45,6 +45,7 @@ public class SpelerPermissions {
         if (speler.getLand() != null) {
             Land land = plugin.SQLSelect.land_get_by_player(speler);
             permissionUser.add("group."+land.getName().toLowerCase());
+            permissionUser.add("tab.group."+land.getName().toLowerCase());
         }
 
         // Check if user has a rank
@@ -72,6 +73,13 @@ public class SpelerPermissions {
 
         for (String a : permissionUser) {
             attachment.setPermission(a, true);
+        }
+
+        // Remove other permissions for tab
+        for (Land others : plugin.SQLSelect.land_list()) {
+            if (!others.getUuid().equals(speler.getLand())) {
+                attachment.setPermission("tab.group."+others.getName().toLowerCase(), false);
+            }
         }
     }
 

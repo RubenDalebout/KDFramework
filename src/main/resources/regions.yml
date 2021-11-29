@@ -7,8 +7,6 @@
 #
 # Dont touch it if you dont know what your doing
 kingdom-region:
-  dynmap:
-    icon: "tent"
   rules:
     - region flag {region} build -g nonmembers -w {world} deny
     - region flag {region} blocked-cmds -g nonmembers -w {world} /k spawn

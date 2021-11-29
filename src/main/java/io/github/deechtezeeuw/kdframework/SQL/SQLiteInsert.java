@@ -21,8 +21,8 @@ public class SQLiteInsert {
     // Land insert
     public void land_create(Land land) {
         String sql = "INSERT INTO "
-                + "lands(UUID, Name, Prefix, Invite, Maximum) "
-                + "VALUES(?,?,?,?,?)";
+                + "lands(UUID, Name, Prefix, Invite, Maximum, Tab) "
+                + "VALUES(?,?,?,?,?,?)";
 
         try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
             pstmt.setString(1, UUID.randomUUID().toString());
@@ -30,6 +30,7 @@ public class SQLiteInsert {
             pstmt.setString(3, land.getPrefix());
             pstmt.setBoolean(4, land.getInvite());
             pstmt.setInt(5, land.getMaximum());
+            pstmt.setString(6, land.getTab());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -55,12 +56,17 @@ public class SQLiteInsert {
 
     // Rank insert
     public void rank_create(UUID Land, Rank rank) {
+        UUID rankUUID = UUID.randomUUID();
+        if (rank.getUuid() != null) {
+            rankUUID = rank.getUuid();
+        }
+
         String sql = "INSERT INTO "
-                + "ranks(UUID, Land, Name, Prefix, Level, Maximum, KDDefault) "
-                + "VALUES(?,?,?,?,?,?,?)";
+                + "ranks(UUID, Land, Name, Prefix, Level, Maximum, KDDefault, Tab) "
+                + "VALUES(?,?,?,?,?,?,?,?)";
 
         try (PreparedStatement pstmt = plugin.SQL.getConnection().prepareStatement(sql)) {
-            pstmt.setString(1, UUID.randomUUID().toString());
+            pstmt.setString(1, rankUUID.toString());
             pstmt.setString(2, Land.toString());
             pstmt.setString(3, rank.getName());
             pstmt.setString(4, rank.getPrefix());
@@ -71,6 +77,11 @@ public class SQLiteInsert {
                 pstmt.setString(6, null);
             }
             pstmt.setBoolean(7, rank.getKdDefault());
+            if (rank.getTab() != null) {
+                pstmt.setString(8, rank.getTab());
+            } else {
+                pstmt.setString(8, null);
+            }
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

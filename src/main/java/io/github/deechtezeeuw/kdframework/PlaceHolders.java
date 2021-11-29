@@ -75,13 +75,28 @@ public class PlaceHolders extends PlaceholderExpansion {
             return name;
         }
 
-        // rank tab
-        if (params.equalsIgnoreCase("rank_tab")) {
+        if (params.equalsIgnoreCase("tab_land")) {
             String tab = "";
             Speler speler = plugin.SQLSelect.player_get_by_uuid(p.getUniqueId());
-            if (speler.getRank() != null) {
-                Rank rank = plugin.SQLSelect.get_rank(speler.getRank());
-                tab = rank.getTab();
+            if (speler!=null) {
+                if (speler.getLand()!=null) {
+                    Land land = plugin.SQLSelect.land_get_by_player(speler);
+                    if (land.getTab() != null)
+                        tab = land.getTab();
+                }
+            }
+            return tab;
+        }
+
+        if (params.equalsIgnoreCase("tab_rank")) {
+            String tab = "";
+            Speler speler = plugin.SQLSelect.player_get_by_uuid(p.getUniqueId());
+            if (speler!=null) {
+                if (speler.getRank()!=null) {
+                    Rank rank = plugin.SQLSelect.get_rank(speler.getRank());
+                    if (rank.getTab() != null)
+                        tab = rank.getTab();
+                }
             }
             return tab;
         }

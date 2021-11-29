@@ -23,11 +23,12 @@ public class Land {
     private Integer maximum;
     private String spawn;
     private Integer tier;
+    private String tab;
     private List<Speler> leden;
     private List<Rank> ranks;
     private List<Invite> invites;
 
-    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, String Land_Spawn, Integer Land_Tier, List<Speler> Land_Leden, List<Rank> Land_Ranks, List<Invite> Land_Invites) {
+    public Land(UUID Land_ID, String Land_Name, String Land_Prefix, Boolean Land_Invite, Integer Land_Maximum, String Land_Spawn, Integer Land_Tier, List<Speler> Land_Leden, List<Rank> Land_Ranks, List<Invite> Land_Invites, String Land_Tab) {
         this.uuid = Land_ID;
         this.name = Land_Name;
         this.prefix = Land_Prefix;
@@ -38,6 +39,7 @@ public class Land {
         this.invites = Land_Invites;
         this.spawn = Land_Spawn;
         this.tier = Land_Tier;
+        this.tab = Land_Tab;
     }
 
     public UUID getUuid() {
@@ -79,6 +81,8 @@ public class Land {
     public List<Invite> getInvites() {
         return this.invites;
     }
+
+    public String getTab() { return this.tab; }
 
     public String getLeiding() {
         String leiding = "&c&lGeen leiding";
@@ -128,6 +132,7 @@ public class Land {
             Locatie.add(a);
         }
         Location tpLocation = player.getLocation();
+        tpLocation.setWorld(Bukkit.getServer().getWorld("VintageKingdom"));
         tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
         player.teleport(tpLocation);
     }

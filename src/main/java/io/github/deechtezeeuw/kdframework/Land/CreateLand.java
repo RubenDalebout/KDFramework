@@ -13,7 +13,7 @@ public class CreateLand {
 
     public CreateLand(KDFramework plugin, CommandSender sender, String KDName) {
         this.plugin = plugin;
-        land = new Land(UUID.randomUUID(),KDName, "&7[&f"+KDName+"&7]", plugin.Config.getLandConfig().getBoolean("land.invite"), plugin.Config.getLandConfig().getInt("land.maximum"), null, null, null, null, null);
+        land = new Land(UUID.randomUUID(),KDName, "&7[&f"+KDName+"&7]", plugin.Config.getLandConfig().getBoolean("land.invite"), plugin.Config.getLandConfig().getInt("land.maximum"), null, null, null, null, null, "&7[&f"+KDName.substring(0,4)+"&7]");
 
         create_land(sender, KDName);
     }

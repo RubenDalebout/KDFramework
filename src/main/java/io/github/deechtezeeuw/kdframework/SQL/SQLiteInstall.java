@@ -16,7 +16,8 @@ public class SQLiteInstall {
     public void createTables() {
         this.table_player();
         this.table_landen();
-        this.table_landen_add_column("Tier");
+        this.table_landen_add_column("Tier", "integer(1)", "default(0)");
+        this.table_landen_add_column("Tab", "varchar(16)", "");
         this.table_ranks();
         this.table_invites();
         this.table_relations();
@@ -61,7 +62,7 @@ public class SQLiteInstall {
         return;
     }
 
-    public void table_landen_add_column(String column) {
+    public void table_landen_add_column(String column, String type, String SDefault) {
         try {
             DatabaseMetaData md = plugin.SQL.getConnection().getMetaData();
             ResultSet rs = md.getColumns(null, null, "lands", column);
@@ -73,7 +74,7 @@ public class SQLiteInstall {
             System.out.println(e.getMessage());
         }
 
-        String sql = "ALTER TABLE lands ADD COLUMN "+column+" integer(1) default(0)";
+        String sql = "ALTER TABLE lands ADD COLUMN "+column+" "+type+" "+SDefault;
 
         try (Statement stmt = plugin.SQL.getConnection().createStatement()) {
             // create a new table

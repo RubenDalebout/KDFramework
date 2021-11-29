@@ -97,7 +97,11 @@ public class createRegion {
             Bukkit.dispatchCommand(console, cmd);
         }
         // Dmarker
-        command = "dmarker add id:\"kd-"+land.getName().toLowerCase()+"\" \""+land.getName()+"\" icon:"+plugin.Config.getRegionConfig().getString("kingdom-region.dynmap.icon")+" world:"+player.getWorld().getName()+" x:"+player.getLocation().getBlockX()+" y:"+player.getLocation().getBlockY()+" z:"+player.getLocation().getBlockZ();
+        if (land.getTier() == 0) {
+            command = "dmarker add id:\"kd-" + land.getName().toLowerCase() + "\" \"" + land.getName() + "\" icon:" + plugin.Config.getLandConfig().getString("land.icon") + " world:" + player.getWorld().getName() + " x:" + player.getLocation().getBlockX() + " y:" + player.getLocation().getBlockY() + " z:" + player.getLocation().getBlockZ();
+        } else {
+            command = "dmarker add id:\"kd-" + land.getName().toLowerCase() + "\" \"" + land.getName() + "\" icon:" + plugin.Config.getTierConfig().getString("tiers."+land.getTier()+".icon") + " world:" + player.getWorld().getName() + " x:" + player.getLocation().getBlockX() + " y:" + player.getLocation().getBlockY() + " z:" + player.getLocation().getBlockZ();
+        }
         Bukkit.dispatchCommand(console, command);
         command = "plugman reload dynmap-worldguard";
         Bukkit.dispatchCommand(console, command);
