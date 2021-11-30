@@ -38,11 +38,18 @@ public class colony {
     public void addColony(Player player) {
         // Check the tier of the land
         Integer tier = land.getTier();
-        if (tier == null) {
-
+        if (tier != 5) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    KDFramework.getInstance().Config.getGeneralPrefix() + "&cHet kingdom moet &4&ltier 5 &czijn voor kolonies!"));
+            return;
         }
 
         // Check if they have the maximum of their tier
+        if (this.list().size() >= 1) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                    KDFramework.getInstance().Config.getGeneralPrefix() + "&cHet kingdom heeft al een kolonie!"));
+            return;
+        }
 
         // Get worldedit selection
         Selection sel = KDFramework.getInstance().worldEditPlugin.getSelection(player);
@@ -108,21 +115,13 @@ public class colony {
     }
 
     // Deletion
-    public void removeColony(CommandSender sender, String regionID) {
-        // Check if their is an region id
-        if (regionID == "" || regionID == null) {
-            if (sender!=null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        KDFramework.getInstance().Config.getGeneralPrefix() + "&cJe moet een &4&lregion ID &copgeven!"));
-            }
-            return;
-        }
+    public void removeColony(CommandSender sender) {
         boolean regionExists = false;
         ProtectedRegion region = null;
         // Check if region exists
         for (ProtectedRegion r : this.list()) {
-            if (StringUtils.containsIgnoreCase(r.getId(), regionID))
-                region = r; regionExists = true;
+            region = r;
+            regionExists = true;
         }
 
         // Send message if not found
@@ -133,9 +132,12 @@ public class colony {
         }
 
         // Remove marker
-        this.markerDelete(regionID.toLowerCase());
+        this.markerDelete(region.getId().toLowerCase());
         // Remove region
         this.regionDelete(region);
+
+        KDFramework.getInstance().log.info(ChatColor.translateAlternateColorCodes('&',
+                "&aDe kolonie voor &2&l"+land.getName()+" &ais aangemaakt!"));
     }
 
     private void regionDelete(ProtectedRegion region) {

@@ -13,6 +13,7 @@ import io.github.deechtezeeuw.kdframework.Rank.CreateRank;
 import io.github.deechtezeeuw.kdframework.Rank.DeleteRank;
 import io.github.deechtezeeuw.kdframework.Rank.EditRank;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
+import io.github.deechtezeeuw.kdframework.Region.colony;
 import io.github.deechtezeeuw.kdframework.Region.createRegion;
 import io.github.deechtezeeuw.kdframework.Region.deleteRegion;
 import io.github.deechtezeeuw.kdframework.Relaties.RelateAlly;
@@ -57,7 +58,7 @@ public class KingdomCommand implements CommandExecutor {
             // If arguments are null
             if (args.length == 0) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&aVoor hulp gebruik &2&l/"+label+" help&a!"));
+                        plugin.Config.getGeneralPrefix() + "&aVoor hulp gebruik &2&l/help&a!"));
                 return true;
             }
 
@@ -70,6 +71,43 @@ public class KingdomCommand implements CommandExecutor {
                     return true;
                 } else {
                     // No permission to do k.ally
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+            // Colony
+            if (args[0].equalsIgnoreCase("colony") || args[0].equalsIgnoreCase("kolonie")) {
+                if (sender.hasPermission("k.colony")) {
+                    // Check arguments
+                    if (args.length != 3) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/"+label+" "+args[0]+" <create/delete> <kingdom>&c!"));
+                        return true;
+                    }
+                    // Check if land exists
+                    if (!plugin.SQLSelect.land_exists(args[2])) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[2]+" &cbestaat niet!"));
+                        return true;
+                    }
+                    Land land = plugin.SQLSelect.land_get_by_name(args[2]);
+
+                    // Delete
+                    if (args[1].equalsIgnoreCase("delete"))
+                        new colony(land).removeColony(sender);
+
+                    if (!(sender instanceof Player)) {
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                plugin.Config.getGeneralPrefix() + "&cJe kan hem alleen aanmaken in-game!"));
+                        return true;
+                    }
+
+                    // Create
+                    if (args[1].equalsIgnoreCase("create"))
+                        new colony(land).addColony((Player) sender);
+                } else {
+                    // No permission to do k.colony
                     plugin.Config.noPermission(sender);
                     return true;
                 }

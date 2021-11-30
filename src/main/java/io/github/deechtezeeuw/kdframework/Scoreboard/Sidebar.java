@@ -143,7 +143,7 @@ public class Sidebar {
                 KDFramework.getInstance().sidebar.updateSidebar(p);
                 p.setPlayerListName(PlaceholderAPI.setPlaceholders(p,
                         ChatColor.translateAlternateColorCodes('&',
-                                "%kdf_land_tab% &f%player_displayname% %kdf_tab%")));
+                                "%kdf_tab_land% &f%player_displayname% %kdf_tab_rank%")));
             }
         }.runTaskTimer(KDFramework.getInstance(), 0, 20);
     }
@@ -190,7 +190,7 @@ public class Sidebar {
         line = PlaceholderAPI.setPlaceholders(p, "%kdf_region%");
         if (line.length() > 14) {
             region.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(0, 13)));
-            region.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(14)));
+            region.setSuffix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line.substring(13)));
         } else {
             region.setPrefix(ChatColor.translateAlternateColorCodes('&', SecondColor+ line));
             region.setSuffix("");

@@ -32,6 +32,7 @@ tiers:
     icon: 'tent'
     maximum: 25
     conditions:
+      - "&2&lGebouwen&a: 4 huizen, kleine opslagkamer, kleine farm, stallen."
   2:
     ranks:
       Graaf:
@@ -70,6 +71,10 @@ tiers:
     icon: 'castle'
     maximum: 35
     conditions:
+      - "&2&lGebouwen&a: 8 huizen, fatsoenlijke opslag, grote farm"
+      - "geloofsgebouw, kade met decoratie, stallen."
+      - ""
+      - "&2&lInleveren&a: 9 stacks stone, 9 stacks logs, 32 emeralds."
   3:
     ranks:
       Gouverneur:
@@ -103,6 +108,15 @@ tiers:
     icon: 'castle'
     maximum: 45
     conditions:
+      - "&2&lGebouwen&a: 12 huizen, grote opslag, meerdere farms,"
+      - "molen, geloofsgebouw, kade met decoratie, monument,"
+      - "groot gebouw naar keuze (bijv. arena, theater, troonzaal, stallen."
+      - ""
+      - "&2&lInleveren&a: 64 emeralds, 32 dia, 27 stacks leaves,"
+      - "2 stacks haybales, 18 stacks pumpkins, 18 stacks melonblocks,"
+      - "32 boneblocks."
+      - ""
+      - "&2&lExtra&a: Serieus RP verhaal; onstaan, voortgang, toekomst."
   4:
     ranks:
       Koning:
@@ -157,6 +171,18 @@ tiers:
     icon: 'star'
     maximum: 55
     conditions:
+      - "&2&lGebouwen&a: stadsmuur (3 dik), wachttorens, 16 huizen,"
+      - "grote opslag, 1 molen, geloofsgebouw, monument,"
+      - "haven (liefst met boten), kasteel, 3 beroepsgebouwen,"
+      - "herberg, stallen."
+      - ""
+      - "&2&lRelaties&a: 1 alliantie, 1 vijand, 1 goedverlopen oorlog."
+      - ""
+      - "&2&lLaten zien&a: 15 godsets, 2 stacks iron blocks, 64 dia blocks."
+      - ""
+      - "&2&lInleveren&a: 1 stack gold of 8 gapples, 2 stacks dia,"
+      - "9 stacks leather, dub aan bouwmaterialen (geen planks, leaves en cobble),"
+      - "5 stacks black stained glass, dub aan noteblocks."
   5:
     ranks:
       Koning:
@@ -217,3 +243,16 @@ tiers:
     icon: 'diamond'
     maximum: 60
     conditions:
+      - "&2&lGebouwen&a: stadsmuur, wachttorens, 20 huizen,"
+      - "grote opslag, 2 molens, groot geloofsgebouw, monument,"
+      - "grote haven, warenhuis in de haven, kasteelupgrade van tier 4 naar paleis,"
+      - "6 beroepsgebouwen, herberg, stallen."
+      - ""
+      - "&2&lRelaties&a: 2 allianties, 3 vijanden, 3 goed verlopen oorlogen."
+      - ""
+      - "&2&lLaten zien&a: 25 godsets, 2 stacks diablocks, 3 stacks ironblocks."
+      - ""
+      - "&2&lInleveren&a: 27 stacks coalblocks, 10 stacks bookshelfs,"
+      - "3 dubs aan bouwmaterialen(geen planks, leaves of cobble),"
+      - "27 stacks haybales, 27 stacks leather, 3 stacks gold,"
+      - "3 dubs baked potatoes, 3 dubs rotten flesh, 18 saddles."
