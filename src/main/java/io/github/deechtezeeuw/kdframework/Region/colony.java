@@ -66,6 +66,16 @@ public class colony {
                     KDFramework.getInstance().Config.getGeneralPrefix() + "&cEr is iets fout gegaan in het maken van de polygonal region!"));
             return;
         }
+        // Permissions
+        String command = "rg addmember "+colonyRegion.getId()+" g:"+land.getName().toLowerCase() + " -w "+player.getWorld().getName();
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+        Bukkit.dispatchCommand(console, command);
+        for (String cmd : KDFramework.getInstance().Config.getRegionConfig().getStringList("kingdom-region.rules")) {
+            cmd = cmd.replaceAll("\\{region\\}",colonyRegion.getId());
+            cmd = cmd.replaceAll("\\{world\\}", player.getWorld().getName());
+
+            Bukkit.dispatchCommand(console, cmd);
+        }
         // Create region
         try {
             KDFramework.getInstance().worldGuardPlugin.getRegionManager(player.getWorld()).addRegion(colonyRegion);
