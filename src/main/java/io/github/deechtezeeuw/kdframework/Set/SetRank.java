@@ -90,7 +90,7 @@ public class SetRank {
                     peopleWithRank = peopleWithRank+1;
             }
 
-            if (peopleWithRank >= newRank.getMaximum() && newRank.getKdDefault() != true) {
+            if (peopleWithRank >= newRank.getMaximum()) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         plugin.Config.getGeneralPrefix() + "&cde rank &4&l"+newRank.getName()+" &cheeft al het maximum aan spelers van &4&l"+newRank.getMaximum()+"&c!"));
                 return;

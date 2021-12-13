@@ -1,8 +1,10 @@
 package io.github.deechtezeeuw.kdframework.Land;
 
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import io.github.deechtezeeuw.kdframework.Invite.Invite;
 import io.github.deechtezeeuw.kdframework.KDFramework;
 import io.github.deechtezeeuw.kdframework.Rank.Rank;
+import io.github.deechtezeeuw.kdframework.Region.colony;
 import io.github.deechtezeeuw.kdframework.SQL.SQLiteSelect;
 import io.github.deechtezeeuw.kdframework.Speler.Speler;
 import org.apache.commons.lang.StringUtils;
@@ -83,6 +85,14 @@ public class Land {
     }
 
     public String getTab() { return this.tab; }
+
+    public List<ProtectedRegion> getColony() {
+        return new colony(this).list();
+    }
+
+    public Integer getColonyMax() {
+        return 1;
+    }
 
     public String getLeiding() {
         String leiding = "&c&lGeen leiding";

@@ -102,7 +102,7 @@ public class SetLand {
                 }
                 land.goto_spawn(Bukkit.getPlayer(speler.getUuid()));
                 Bukkit.getPlayer(speler.getUuid()).sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd naar je kingdom..."));
+                        plugin.Config.getGeneralPrefix() + "&aJe wordt geteleporteerd naar je kingdom..."));
                 return;
             }
         }

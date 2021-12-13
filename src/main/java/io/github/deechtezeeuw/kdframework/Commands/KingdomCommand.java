@@ -29,6 +29,7 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,9 +58,33 @@ public class KingdomCommand implements CommandExecutor {
         if (label.equalsIgnoreCase("k") || label.equalsIgnoreCase("kingdom")) {
             // If arguments are null
             if (args.length == 0) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        plugin.Config.getGeneralPrefix() + "&aVoor hulp gebruik &2&l/help&a!"));
-                return true;
+                if (sender instanceof Player) {
+                    if (Bukkit.getServer().getWorld("VintageKingdom") != null) {
+                        // Check if player is in a kingdom
+                        Speler speler = plugin.SQLSelect.player_get_by_uuid(((Player) sender).getUniqueId());
+                        if (speler.getLand() == null) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&cJe kan pas naar &4&lde Kingdom &cwereld als je in een kingdom zit!"));
+                            return true;
+                        }
+                        // If your in spawn
+                        if (((Player) sender).getWorld().getName().equalsIgnoreCase("Spawn")) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&aJe wordt naar &2&lde Kingdom &awereld gestuurd!"));
+
+                            Land land = plugin.SQLSelect.land_get_by_player(speler);
+                            land.goto_spawn(((Player) sender).getPlayer());
+                            return true;
+                        }
+
+                        // If your in kingdom world
+                        if (((Player) sender).getWorld().getName().equalsIgnoreCase("vintagekingdom")) {
+                            sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                                    plugin.Config.getGeneralPrefix() + "&cJe bent al in &4&lde Kingdom &cwereld!"));
+                            return true;
+                        }
+                    }
+                }
             }
 
             // Sub commands
@@ -108,6 +133,23 @@ public class KingdomCommand implements CommandExecutor {
                         new colony(land).addColony((Player) sender);
                 } else {
                     // No permission to do k.colony
+                    plugin.Config.noPermission(sender);
+                    return true;
+                }
+            }
+
+            // Info
+            if (args[0].equalsIgnoreCase("info")) {
+                if (sender.hasPermission("k.info")) {
+                    if (sender instanceof Player) {
+                        new GUI().information((Player) sender);
+                        return true;
+                    }
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
+                            plugin.Config.getGeneralPrefix() + "&cJe kan alleen in-game de informatie krijgen!"));
+                    return true;
+                } else {
+                    // No permission to do k.info
                     plugin.Config.noPermission(sender);
                     return true;
                 }
@@ -232,57 +274,6 @@ public class KingdomCommand implements CommandExecutor {
                                 }
                             } else {
                                 // No permission to do k.land.delete
-                                plugin.Config.noPermission(sender);
-                                return true;
-                            }
-                        }
-
-                        // Info land
-                        if (args[1].equalsIgnoreCase("info")) {
-                            // Check if user has permission to do that
-                            if (sender.hasPermission("k.land.info")) {
-                                // Check if there is an kingdom given
-                                if (args.length == 3) {
-                                    // Check if kingdom exists
-                                    if (plugin.SQLSelect.land_exists(args[2])) {
-                                        // Land does exists
-                                        Land land = plugin.SQLSelect.land_get_by_name(args[2]);
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&7&l(&2&l------------ "+plugin.Config.getGeneralPrefix()+"&a------------&7&l)"));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aKingdom: &2&l"+land.getName()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aPrefix: &2&l"+land.getPrefix()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aTier: &2&l"+land.getTier()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aInvite: &2&l"+land.getInvite()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aMaximum: &2&l"+land.getMaximum()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aLeiding: &2&l"+land.getLeiding()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aDefault: &2&l"+land.get_defaultRank().getName()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aRanks: &2&l"+land.getRanks().size()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&aLeden: &2&l"+land.getLeden().size()+"&a."));
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                "&7&l(&2&l------------ "+plugin.Config.getGeneralPrefix()+"&a------------&7&l)"));
-                                        return true;
-                                    } else {
-                                        // Land does not exists
-                                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                                plugin.Config.getGeneralPrefix() + "&cHet land &4&l"+args[2]+" &cbestaat niet!"));
-                                        return true;
-                                    }
-                                } else {
-                                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                            plugin.Config.getGeneralPrefix() + "&cFoutief: &4&l/" + label + " " + args[0] + " " + args[1] + " <kd-naam>"));
-                                    return true;
-                                }
-                            } else {
-                                // No permission to do k.land.info
                                 plugin.Config.noPermission(sender);
                                 return true;
                             }
@@ -556,7 +547,7 @@ public class KingdomCommand implements CommandExecutor {
                             tpLocation.setX(Integer.parseInt(Locatie.get(0)));tpLocation.setY(Integer.parseInt(Locatie.get(1)));tpLocation.setZ(Integer.parseInt(Locatie.get(2)));
 
                             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                    plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd!"));
+                                    plugin.Config.getGeneralPrefix() + "&aJe wordt geteleporteerd!"));
                             player.teleport(tpLocation);
                             return true;
                         } else {
@@ -598,7 +589,7 @@ public class KingdomCommand implements CommandExecutor {
                         // Cooldown
                         Timer = 0;
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                plugin.Config.getGeneralPrefix() + "&aJe word over &2&l"+plugin.Config.getGeneralSpawnCooldown()+" &aseconden geteleporteerd! Niet bewegen!"));
+                                plugin.Config.getGeneralPrefix() + "&aJe wordt over &2&l"+plugin.Config.getGeneralSpawnCooldown()+" &aseconden geteleporteerd! Niet bewegen!"));
                         Integer cooldown = plugin.Config.getGeneralSpawnCooldown();
                         new BukkitRunnable() {
                             @Override
@@ -615,7 +606,7 @@ public class KingdomCommand implements CommandExecutor {
 
                                 if (Timer == cooldown) {
                                     sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                                            plugin.Config.getGeneralPrefix() + "&aJe word geteleporteerd!"));
+                                            plugin.Config.getGeneralPrefix() + "&aJe wordt geteleporteerd!"));
                                     player.teleport(tpLocation);
                                     cancel();
                                 }
