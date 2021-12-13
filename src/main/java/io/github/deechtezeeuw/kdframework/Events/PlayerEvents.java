@@ -86,6 +86,7 @@ public class PlayerEvents implements Listener {
         plugin.worldGuarding.enterRegion(player);
     }
 
+    // Playerchat
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player eventPlayer = event.getPlayer();
