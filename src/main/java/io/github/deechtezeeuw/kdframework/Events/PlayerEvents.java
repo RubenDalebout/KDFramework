@@ -132,9 +132,7 @@ public class PlayerEvents implements Listener {
                             }
                         }
                     }
-                    event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer,
-                            ChatColor.translateAlternateColorCodes('&',
-                                    plugin.Config.getGeneralChats().getString(section+".format") + event.getMessage())));
+                    event.setFormat(PlaceholderAPI.setPlaceholders(eventPlayer, ChatColor.translateAlternateColorCodes('&', plugin.Config.getGeneralChats().getString(section+".format") + "testje")));
                     break;
                 }
             }
